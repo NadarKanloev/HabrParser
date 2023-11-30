@@ -32,22 +32,16 @@ public class HubParser {
         }
     }
     public static void writeCsv(Path hubDir, List<String[]> data, String[] header) throws IOException {
-        // Имя файла по умолчанию
         String fileName = "articles.csv";
 
-        // Создаем полный путь к файлу
         Path filePath = hubDir.resolve(fileName);
 
-        // Создаем директорию, если она не существует
         Files.createDirectories(filePath.getParent());
 
-        // Записываем в файл
         try (BufferedWriter writer = Files.newBufferedWriter(filePath, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
-            // Записываем заголовок
             writer.write(String.join(",", header));
             writer.newLine();
-
-            // Записываем данные
+            
             for (String[] row : data) {
                 writer.write(String.join(",", row));
                 writer.newLine();
