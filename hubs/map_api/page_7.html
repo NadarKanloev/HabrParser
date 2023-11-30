@@ -1,0 +1,1473 @@
+<!doctype html>
+<html lang="ru" data-vue-meta="%7B%22lang%22:%7B%22ssr%22:%22ru%22%7D%7D">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,maximum-scale=1,user-scalable=0">
+  <meta name="referrer" content="unsafe-url">
+  <title>Maps API — API картографических сервисов / Хабр</title>
+  <style>
+    /* cyrillic-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSxf6TF0.woff2) format('woff2');
+      unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveQhf6TF0.woff2) format('woff2');
+      unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* latin-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSBf6TF0.woff2) format('woff2');
+      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveRhf6.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* non-breaking hyphen */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/l/font?kit=KFOlCnqEu92Fr1MmEU9vBh0_IsHAlmrO6g&skey=ee881451c540fdec&v=v29) format('woff2');
+      unicode-range: U+02011;
+    }
+  </style>
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/chunk-vendors.0da14ebf.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/chunk-vendors.a9207891.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/app.b42efa13.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/app.5b8f7247.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/page-hub.a4eacd3e.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/page-hub.1572dac4.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/7298.c8f1d73c.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/8684.f283f98f.js" as="script">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/chunk-vendors.0da14ebf.css">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/app.b42efa13.css">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/page-hub.a4eacd3e.css">
+  <script>window.i18nFetch = new Promise((res, rej) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', '/js/i18n/ru-compiled.d229fa61213aa884a102911fd18b62b0.json');
+          xhr.responseType = 'json';
+          xhr.onload = function(e) {
+            if (this.status === 200) {
+              res({ru: xhr.response});
+            } else {
+              rej(e);
+            }
+          };
+          xhr.send();
+        });</script>
+  <style>.grecaptcha-badge{visibility: hidden;}</style>
+  <meta name="habr-version" content="2.155.1">
+  <meta data-vue-meta="ssr" itemprop="image" content="/img/habr_ru.png" data-vmid="image:itemprop">
+  <meta data-vue-meta="ssr" property="og:image" content="/img/habr_ru.png" data-vmid="og:image">
+  <meta data-vue-meta="ssr" property="og:image:width" content="1200" data-vmid="og:image:width">
+  <meta data-vue-meta="ssr" property="og:image:height" content="630" data-vmid="og:image:height">
+  <meta data-vue-meta="ssr" property="aiturec:image" content="/img/habr_ru.png" data-vmid="aiturec:image">
+  <meta data-vue-meta="ssr" name="twitter:image" content="/img/habr_ru.png" data-vmid="twitter:image">
+  <meta data-vue-meta="ssr" property="vk:image" content="/img/habr_ru.png?format=vk" data-vmid="vk:image">
+  <meta data-vue-meta="ssr" property="fb:app_id" content="444736788986613">
+  <meta data-vue-meta="ssr" property="fb:pages" content="472597926099084">
+  <meta data-vue-meta="ssr" name="twitter:card" content="summary_large_image">
+  <meta data-vue-meta="ssr" name="twitter:site" content="@habr_com">
+  <meta data-vue-meta="ssr" property="og:locale" content="ru_RU" data-vmid="og:locale">
+  <meta data-vue-meta="ssr" property="og:type" content="website" data-vmid="og:type">
+  <meta data-vue-meta="ssr" property="og:site_name" content="Хабр" data-vmid="og:site_name">
+  <meta data-vue-meta="ssr" property="og:url" content="https://habr.com/ru/hubs/map_api/articles/page7/" data-vmid="og:url">
+  <meta data-vue-meta="ssr" property="og:title" content="Maps API — API картографических сервисов / Хабр" data-vmid="og:title">
+  <meta data-vue-meta="ssr" name="description" content="Google Maps, Яндекс.Карты и другие картографические сервисы — практически все из них предоставляют разработчикам свои API.">
+  <meta data-vue-meta="ssr" property="og:description" content="Google Maps, Яндекс.Карты и другие картографические сервисы — практически все из них предоставляют разработчикам свои API.">
+  <meta data-vue-meta="ssr" name="keywords" content="карты,maps,google maps,javascript,maps api,leaflet,2гис,mapbox,api,map,yandex map api,яндекс.карты,google,api 2гис,android,2гис онлайн,api карт,google maps api,геокодирование,openstreetmap,map api,api Яндекс.Карт">
+  <link data-vue-meta="ssr" rel="image_src" href="/img/habr_ru.png" data-vmid="image:href">
+  <link data-vue-meta="ssr" href="https://habr.com/ru/hubs/map_api/" rel="canonical" data-vmid="canonical">
+  <link data-vue-meta="ssr" href="https://habr.com/ru/rss/hubs/map_api/articles/?fl=ru" type="application/rss+xml" title="" rel="alternate" name="rss">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#303b44">
+  <meta name="msapplication-TileColor" content="#629FBC">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="shortcut icon" type="image/png" sizes="16x16" href="https://assets.habr.com/habr-web/img/favicons/favicon-16.png">
+  <link rel="shortcut icon" type="image/png" sizes="32x32" href="https://assets.habr.com/habr-web/img/favicons/favicon-32.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-76.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-152.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-180.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="256x256" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-256.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1136x640.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2436x1125.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1792x828.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_828x1792.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1334x750.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2668.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2208x1242.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1125x2436.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2208.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2732x2048.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2688x1242.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2224x1668.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_750x1334.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x2732.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2388x1668.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2224.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_640x1136.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2388.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x1536.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1536x2048.png">
+  <link rel="mask-icon" color="#77a2b6" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.svg">
+  <link crossorigin="use-credentials" href="/manifest.webmanifest" rel="manifest">
+  <script async src="https://unpkg.com/pwacompat" crossorigin="anonymous"></script>
+  <script>window.yaContextCb = window.yaContextCb || []</script>
+  <script src="https://yandex.ru/ads/system/context.js" async></script>
+ </head>
+ <body>
+  <div id="app" data-server-rendered="true" data-async-called="true">
+   <div class="tm-layout__wrapper">
+    <!---->
+    <div></div><!---->
+    <header class="tm-header">
+     <div class="tm-page-width">
+      <div class="tm-header__container">
+       <!----> <span class="tm-header__logo-wrap"><a href="/ru/" class="tm-header__logo tm-header__logo_ru">
+         <svg height="16" width="16" class="tm-svg-img tm-header__icon">
+          <title>
+           Хабр
+          </title> <use xlink:href="/img/habr-logo-ru.svg#logo"></use>
+         </svg></a> <span class="tm-header__beta-sign" style="display:none;">β</span></span>
+       <div class="tm-dropdown tm-header__projects">
+        <div class="tm-dropdown__head">
+         <button class="tm-header__dropdown-toggle">
+          <svg height="16" width="16" class="tm-svg-img tm-header__icon tm-header__icon_dropdown">
+           <title>
+            Открыть список
+           </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#arrow-down"></use>
+          </svg></button>
+        </div><!---->
+       </div><a href="/ru/sandbox/start/" class="tm-header__become-author-btn"> Как стать автором </a>
+       <div class="tm-feature tm-header__feature tm-feature tm-feature_variant-inline">
+        <!---->
+       </div><!----> <!---->
+      </div>
+     </div>
+    </header>
+    <div class="tm-layout">
+     <div class="tm-page-progress-bar"></div>
+     <div data-menu-sticky="true" class="tm-base-layout__header tm-base-layout__header_is-sticky">
+      <div class="tm-page-width">
+       <div class="tm-base-layout__header-wrapper">
+        <div class="tm-main-menu">
+         <div class="tm-main-menu__section">
+          <nav class="tm-main-menu__section-content">
+           <!----> <a href="/ru/articles/" class="tm-main-menu__item"> Все потоки </a> <a href="/ru/flows/develop/" class="tm-main-menu__item"> Разработка </a><a href="/ru/flows/admin/" class="tm-main-menu__item"> Администрирование </a><a href="/ru/flows/design/" class="tm-main-menu__item"> Дизайн </a><a href="/ru/flows/management/" class="tm-main-menu__item"> Менеджмент </a><a href="/ru/flows/marketing/" class="tm-main-menu__item"> Маркетинг </a><a href="/ru/flows/popsci/" class="tm-main-menu__item"> Научпоп </a>
+          </nav>
+         </div>
+        </div>
+        <div class="tm-header-user-menu tm-base-layout__user-menu">
+         <a href="/ru/search/" class="tm-header-user-menu__item tm-header-user-menu__search">
+          <svg height="24" width="24" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_search tm-header-user-menu__icon_dark">
+           <title>
+            Поиск
+           </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#search"></use>
+          </svg></a> <!----> <!----> <!---->
+         <div class="tm-header-user-menu__item">
+          <button class="tm-header-user-menu__toggle">
+           <svg height="24" width="24" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_dark">
+            <title>
+             Настройки
+            </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#page-settings"></use>
+           </svg></button>
+         </div><a href="https://habr.com/kek/v1/auth/habrahabr/?back=/ru/hubs/map_api/articles/page7/&amp;hl=ru" rel="nofollow" class="tm-header-user-menu__item"><button type="button" class="tm-header-user-menu__login btn btn_solid btn_small"> Войти </button></a> <!---->
+         <div class="v-portal" style="display:none;"></div>
+        </div>
+       </div>
+      </div>
+     </div><!---->
+     <div class="tm-page-width"></div>
+     <main class="tm-layout__container">
+      <div data-async-called="true" class="tm-page">
+       <div class="tm-page-width">
+        <!---->
+        <div class="tm-page__wrapper">
+         <div class="tm-page__main tm-page__main_has-sidebar">
+          <div class="pull-down">
+           <!---->
+           <div class="pull-down__header" style="height:0px;">
+            <div class="pull-down__content" style="bottom:10px;">
+             <svg height="24" width="24" class="tm-svg-img pull-down__icon pull-down__arrow">
+              <title>
+               Обновить
+              </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#pull-arrow"></use>
+             </svg>
+            </div>
+           </div><!---->
+           <div class="tm-page__top">
+            <!---->
+            <div class="tm-hub-card tm-hub-card tm-hub-card_variant-base">
+             <div class="tm-hub-card__header tm-hub-card__header tm-hub-card__header_variant-base">
+              <div class="tm-hub-card__data">
+               <div class="tm-hub-card__avatar">
+                <div class="tm-entity-image">
+                 <img alt src="//habrastorage.org/getpro/habr/hub/19a/718/967/19a718967053bff532f6294609413270.png" class="tm-entity-image__pic">
+                </div>
+               </div>
+               <div class="tm-counter-container">
+                <div class="tm-counter-container__header">
+                 <div class="tm-votes-lever tm-votes-lever tm-votes-lever_appearance-rating">
+                  <!---->
+                  <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-rating">
+                   <span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_rating"> 0 </span>
+                  </div><!---->
+                 </div>
+                </div>
+                <div class="tm-counter-container__footer">
+                 <span class="tm-rating__text tm-rating__text"> Рейтинг </span>
+                </div>
+               </div>
+              </div>
+              <div></div>
+             </div>
+             <h1 class="tm-hub-card__name tm-hub-card__name tm-hub-card__name_variant-base"><span>Maps API</span> <span title="Профильный хаб" class="tm-hub-card__profiled"> *</span></h1>
+             <p class="tm-hub-card__description tm-hub-card__description tm-hub-card__description_variant-base">API картографических сервисов</p>
+             <div></div><!----> <!---->
+            </div>
+            <div class="tm-tabs tm-tabs_page-header tm-tabs tm-tabs_variant-default">
+             <div class="tm-tabs__scroll-area">
+              <span class="tm-tabs__tab-item"><a href="/ru/hubs/map_api/" data-test-id="tab-link-active" class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_active"> Статьи <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/ru/hubs/map_api/posts/" class="tm-tabs__tab-link tm-tabs__tab-link"> Посты <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/ru/hubs/map_api/news/" class="tm-tabs__tab-link tm-tabs__tab-link"> Новости <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/ru/hubs/map_api/authors/" class="tm-tabs__tab-link tm-tabs__tab-link"> Авторы <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/ru/hubs/map_api/companies/" class="tm-tabs__tab-link tm-tabs__tab-link"> Компании <!----> <!----></a></span>
+             </div><!---->
+            </div>
+            <div class="tm-navigation-filter">
+             <div class="tm-navigation-filters-spoiler">
+              <div class="tm-navigation-filters-spoiler__wrapper">
+               <button type="button" class="tm-navigation-filters-spoiler__button"> Все подряд 
+                <svg height="16" width="16" class="tm-svg-img icon_dropdown-arrow">
+                 <title>
+                  Открыть список
+                 </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#arrow-down"></use>
+                </svg></button> <button class="tm-rss-button tm-hub__rss tm-rss-button_default"><span class="tm-svg-icon__wrapper tm-rss-button__icon">
+                 <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+                  <title>
+                   Скопировать ссылку на RSS
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#rss"></use>
+                 </svg></span></button>
+              </div>
+              <div class="tm-navigation-filters-spoiler__content">
+               <div class="tm-navigation-filters__options">
+                <div class="tm-navigation-filters__list-label">
+                 Сначала показывать
+                </div>
+                <div class="tm-navigation-filters__tabs">
+                 <ul class="tm-navigation-filters-tabs__list">
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button tm-navigation-filters-tabs__option-button_active"> Новые </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> Лучшие </button></li>
+                 </ul>
+                </div>
+                <div class="tm-navigation-filters__list-label">
+                 Порог рейтинга
+                </div>
+                <div class="tm-navigation-filters__tabs">
+                 <ul class="tm-navigation-filters-tabs__list">
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button tm-navigation-filters-tabs__option-button_active"> Все </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> ≥0 </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> ≥10 </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> ≥25 </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> ≥50 </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> ≥100 </button></li>
+                 </ul>
+                </div>
+                <div>
+                 <div class="tm-navigation-filters__list-label">
+                  Уровень сложности
+                 </div>
+                 <ul class="tm-navigation-filters__list">
+                  <li class="tm-navigation-filters__option"><button tabindex="-1" class="tm-navigation-filters__option-button tm-navigation-filters__option-button_active"> Все </button></li>
+                  <li class="tm-navigation-filters__option"><button tabindex="-1" class="tm-navigation-filters__option-button"> Простой </button></li>
+                  <li class="tm-navigation-filters__option"><button tabindex="-1" class="tm-navigation-filters__option-button"> Средний </button></li>
+                  <li class="tm-navigation-filters__option"><button tabindex="-1" class="tm-navigation-filters__option-button"> Сложный </button></li>
+                 </ul>
+                </div><button type="button" tabindex="-1" class="tm-navigation-filters__apply btn btn_solid btn_small"> Применить </button>
+               </div>
+              </div>
+             </div>
+            </div><!---->
+           </div>
+           <div data-async-called="true" class="tm-articles-subpage">
+            <div>
+             <div class="tm-articles-list">
+              <!---->
+              <article id="140033" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/JiLiZART/" title="JiLiZART" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="//habrastorage.org/r/w48/getpro/habr/avatars/f05/e6c/33e/f05e6c33ec8760a3e685408e9fe20249.jpg" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/JiLiZART/" class="tm-user-info__username"> JiLiZART <!----></a> <span class="tm-article-datetime-published"><time datetime="2012-03-15T11:41:48.000Z" title="2012-03-15, 15:41">15 мар 2012 в 15:41</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/140033/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Kartograph — фреймворк для создания интерактивных карт</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 1 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">19K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/open_source/" class="tm-publication-hub__link"><span>Open source</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-publication-hub__link-container"><a href="/ru/hubs/javascript/" class="tm-publication-hub__link"><span>JavaScript</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-publication-hub__link-container"><a href="/ru/hubs/map_api/" class="router-link-active tm-publication-hub__link"><span>Maps API</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    <a href="http://kartograph.org/">Kartograph</a> — это новый фреймворк для создания интерактивных картографических веб приложений без использования Google Maps/Bing Maps или любого другого сервиса. Он создавался с учетом потребностей <a href="http://kartograph.org/showcase/italia/">дизайнеров</a> и <a href="http://kartograph.org/showcase/charts/">журналистов</a>.
+                    <br>
+                    <br>
+                     Можно поглядеть на <a href="http://kartograph.org/showcase/">демки</a>, чтобы узнать на что способен Kartograph.
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/140033/" class="tm-article-snippet__readmore"><span>или узнать как это все работает.</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 67: ↑66 и ↓1
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 67: ↑66 и ↓1" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+65</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 321 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/140033/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 16 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div><!---->
+              <article id="139444" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/gromozeka07b9/" title="gromozeka07b9" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="https://assets.habr.com/habr-web/img/avatars/034.png" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/gromozeka07b9/" class="tm-user-info__username"> gromozeka07b9 <!----></a> <span class="tm-article-datetime-published"><time datetime="2012-03-05T12:17:07.000Z" title="2012-03-05, 16:17">5 мар 2012 в 16:17</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/139444/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Google.Maps + 1c: Предприятие 8.2</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 5 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">38K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/map_api/" class="router-link-active tm-publication-hub__link"><span>Maps API</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div>
+                <div class="tm-article-labels">
+                 <div class="tm-article-labels__container">
+                  <!---->
+                  <div class="tm-publication-label tm-publication-label_variant-sandbox">
+                   <a href="/ru/sandbox/"> Из песочницы </a>
+                  </div>
+                 </div>
+                </div><!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    В этом посте я хочу показать пример того, как может быть использован сервис Google.Maps в конфигурациях 1с: Предприятие 8.2. Как вы все знаете, 1с прижилась (мягко сказать) практически во всех коммерческих структурах — вот и нас не обошла. Сфера применения картографических систем в 1с достаточно широка, например — возможность накладывания отчетности на карту, расчет стоимости маршрутов, и, конечно, поиск объектов на карте по географическим координатам, что вполне может использоваться операторами колл-центров при консультации клиентов.
+                    <br>
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/139444/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 4: ↑4 и ↓0
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 4: ↑4 и ↓0" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+4</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 40 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/139444/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 4 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div><!---->
+              <article id="133509" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/ANRIK/" title="ANRIK" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="https://assets.habr.com/habr-web/img/avatars/174.png" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/ANRIK/" class="tm-user-info__username"> ANRIK <!----></a> <span class="tm-article-datetime-published"><time datetime="2011-11-28T09:08:01.000Z" title="2011-11-28, 13:08">28 ноя 2011 в 13:08</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/133509/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Новая библиотека Drawing в Google Maps API V3</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 3 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">17K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/map_api/" class="router-link-active tm-publication-hub__link"><span>Maps API</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div>
+                <div class="tm-article-labels">
+                 <div class="tm-article-labels__container">
+                  <!---->
+                  <div class="tm-publication-label tm-publication-label_variant-sandbox">
+                   <a href="/ru/sandbox/"> Из песочницы </a>
+                  </div>
+                 </div>
+                </div><!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    Недавно в Google Maps API V3 <a href="http://googlegeodevelopers.blogspot.com/2011/11/make-your-map-interactive-with-shape.html">появилась</a> новая библиотека <b>Drawing</b>. Она предоставляет набор инструментов, с помощью которых пользователи могут ставить маркеры, рисовать на карте линии, круги, прямоугольники, многоугольники, чтобы выделить различные места на карте.
+                    <br>
+                    <br><img src="http://kovtun-andrei.narod2.ru/habr/i/google_maps_drawing.gif" alt="image">
+                    <br>
+                    <br>
+                     Данные инструменты могут быть использованы для сбора разной информации от пользователей. Приложение может прослушивать события и реагировать соответствующим образом, например, сделать поисковый запрос или сохранить информацию в базе данных.
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/133509/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 42: ↑40 и ↓2
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 42: ↑40 и ↓2" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+38</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 86 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/133509/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 42 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div><!---->
+              <article id="131654" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/vitvad/" title="vitvad" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="//habrastorage.org/r/w48/getpro/habr/avatars/fe8/114/f6d/fe8114f6d94cc0b1714e12fe5f90957d.jpg" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/vitvad/" class="tm-user-info__username"> vitvad <!----></a> <span class="tm-article-datetime-published"><time datetime="2011-11-02T06:14:09.000Z" title="2011-11-02, 10:14">2 ноя 2011 в 10:14</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/131654/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Google Map API (custom labels and tooltips)</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 4 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">67K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/map_api/" class="router-link-active tm-publication-hub__link"><span>Maps API</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div>
+                <div class="tm-article-labels">
+                 <div class="tm-article-labels__container">
+                  <!---->
+                  <div class="tm-publication-label tm-publication-label_variant-sandbox">
+                   <a href="/ru/sandbox/"> Из песочницы </a>
+                  </div>
+                 </div>
+                </div><!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    Всем привет!
+                    <br>
+                     Только что заметил новый топик в песочнице <a href="http://habrahabr.ru/blogs/map_api/131249/">link</a>, про карты.
+                    <br>
+                     Попытаюсь дополнить его своим опытом в общении с гугло-картами.
+                    <br>
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/131654/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 12: ↑9 и ↓3
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 12: ↑9 и ↓3" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+6</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 56 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/131654/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 3 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <div class="tm-article-feed-blocks">
+                <section data-navigatable="" tabindex="0" id="stories_block_4" data-async-called="true" class="tm-block tm-stories-block tm-block tm-block_spacing-around">
+                 <header class="tm-block__header tm-block__header">
+                  <div class="tm-block__header-container">
+                   <h2 class="tm-block__title tm-block__title">Истории</h2>
+                  </div><!---->
+                 </header>
+                 <div class="tm-block__body tm-block__body tm-block__body_variant-equal">
+                  <div class="tm-stories-empty">
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                  </div><!---->
+                 </div><!---->
+                </section>
+               </div>
+              </div><!---->
+              <article id="131249" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/OlegSol/" title="OlegSol" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="//habrastorage.org/r/w48/getpro/habr/avatars/41f/420/dca/41f420dca94bf02bfb6d6c6c73836ae3.jpg" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/OlegSol/" class="tm-user-info__username"> OlegSol <!----></a> <span class="tm-article-datetime-published"><time datetime="2011-10-26T11:40:10.000Z" title="2011-10-26, 15:40">26 окт 2011 в 15:40</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/131249/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Примеры работы с разными map API</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 6 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">82K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/map_api/" class="router-link-active tm-publication-hub__link"><span>Maps API</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div>
+                <div class="tm-article-labels">
+                 <div class="tm-article-labels__container">
+                  <!---->
+                  <div class="tm-publication-label tm-publication-label_variant-sandbox">
+                   <a href="/ru/sandbox/"> Из песочницы </a>
+                  </div>
+                 </div>
+                </div><!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    <img src="https://habrastorage.org/storage1/cb35f60f/56ab07e4/43f2f353/bd72073c.jpg">
+                    <br>
+                     Есть много статей на тему знакомства с Google Map Api и Yandex Map Api, но про остальные картографические сервисы не так много практического материала. В недавнем времени работал с Api:
+                    <br>
+                    <ol>
+                     <li>Google map</li>
+                     <li>Yandex map</li>
+                     <li>Yahoo map</li>
+                     <li>Bing map</li>
+                     <li>OpenStreet map</li>
+                    </ol>
+                    <br>
+                     И хотел обобщить работу с вышеупомянутыми сервисами, а именно инициализация карты и установление маркеров по клику мышки. Материалы в статье представлены в виде Html кода, javascript и результата — скриншота, а так же исходники на vs 2010 MVC3.
+                    <br>
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/131249/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 63: ↑59 и ↓4
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 63: ↑59 и ↓4" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+55</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 384 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/131249/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 22 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div><!---->
+              <article id="42439" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/BmW/" title="BmW" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="//habrastorage.org/r/w48/getpro/habr/avatars/e82/81d/dbd/e8281ddbd551d4ad1b95dfe547d6f280.jpg" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/BmW/" class="tm-user-info__username"> BmW <!----></a> <span class="tm-article-datetime-published"><time datetime="2008-10-15T08:31:51.000Z" title="2008-10-15, 12:31">15 окт 2008 в 12:31</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/42439/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>На запад</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 1 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">585</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/map_api/" class="router-link-active tm-publication-hub__link"><span>Maps API</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div>
+                <div class="tm-article-labels">
+                 <div class="tm-article-labels__container">
+                  <!---->
+                  <div class="tm-publication-label tm-publication-label_variant-translation">
+                   <span> Перевод </span>
+                  </div>
+                 </div>
+                </div><!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    <a href="http://xkcd.com/489/"><img src="https://habrastorage.org/getpro/geektimes/post_images/a84/3bf/0a5/a843bf0a56f4c5158966ad34412b26a5.png" title="Слушай, они требуют, чтобы ты перестал отмечать свой дом как «МЕСТО, ГДЕ ТЫ РАЗБИЛА МНЕ СЕРДЦЕ»."></a>
+                    <br>
+                    <br>
+                     Спасибо <a href="https://habr.com/ru/users/coldflame/" class="user_link">coldFlame</a> за <a href="http://habrahabr.ru/blogs/xkcd_ru/42439/#comment_1045539">перевод</a> тайтла.
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/42439/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 130: ↑98 и ↓32
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 130: ↑98 и ↓32" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+66</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 5 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/42439/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 47 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div><!---->
+              <article id="39707" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/shalomman/" title="shalomman" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="https://assets.habr.com/habr-web/img/avatars/161.png" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/shalomman/" class="tm-user-info__username"> shalomman <!----></a> <span class="tm-article-datetime-published"><time datetime="2008-09-12T18:07:26.000Z" title="2008-09-12, 22:07">12 сен 2008 в 22:07</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/39707/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Как загрузить большую карту с Google maps</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 2 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">17K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/map_api/" class="router-link-active tm-publication-hub__link"><span>Maps API</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    <b>Н</b>едавно я начал планировать свое путшествие по испании на машине. Очень удобно заниматься сим непотребством используя <a href="http://maps.google.com/">гугл мэпс</a>. Но у гугл мэпс есть один существенный недостаток — проделаную работу(маршрут поездки) нельзя сохранить в хорошем разрешении картинкой. Порывшись в интернете, я нашел замечательный способ сохранять гугл мэпс карты с проложеными маршрутами или без. Данной технологией я и спешу поделится с хабрасообществом.
+                    <br>
+                    <br>
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/39707/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 111: ↑100 и ↓11
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 111: ↑100 и ↓11" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+89</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 130 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/39707/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 73 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <div class="tm-article-feed-blocks">
+                <div id="promo_block_7" data-navigatable="" tabindex="0">
+                 <div class="placeholder-wrapper">
+                  <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!---->
+                  <div class="tm-placeholder-promo">
+                   <div class="tm-placeholder-promo__header">
+                    <div class="tm-placeholder__line tm-placeholder__line_promo-title"></div>
+                   </div>
+                   <div class="tm-placeholder-promo__body">
+                    <div class="tm-placeholder-promo__posts">
+                     <div class="tm-placeholder-promo__post">
+                      <div class="tm-placeholder-promo__image"></div>
+                      <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                     </div>
+                     <div class="tm-placeholder-promo__post">
+                      <div class="tm-placeholder-promo__image"></div>
+                      <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                     </div>
+                     <div class="tm-placeholder-promo__post">
+                      <div class="tm-placeholder-promo__image"></div>
+                      <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                     </div>
+                    </div>
+                    <div class="tm-placeholder-promo__dots">
+                     <div class="tm-placeholder-promo__dot"></div>
+                     <div class="tm-placeholder-promo__dot"></div>
+                     <div class="tm-placeholder-promo__dot"></div>
+                    </div>
+                   </div>
+                  </div><!----> <!----> <!----> <!----> <!---->
+                 </div>
+                </div>
+               </div>
+              </div><!---->
+              <article id="37645" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/xxicb/" title="xxicb" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="//habrastorage.org/r/w48/getpro/habr/avatars/4da/541/a9e/4da541a9eaa14f368481fff616886cf9.jpg" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/xxicb/" class="tm-user-info__username"> xxicb <!----></a> <span class="tm-article-datetime-published"><time datetime="2008-08-21T09:04:14.000Z" title="2008-08-21, 13:04">21 авг 2008 в 13:04</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/37645/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Интересные кадры Google Maps. Продолжение</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 2 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">2.4K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/map_api/" class="router-link-active tm-publication-hub__link"><span>Maps API</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    И снова здравствуйте, желаю вам продуктивного рабочего дня, а для того, чтобы он был таковым, надо иногда отвлекаться. Предлагаю новую подборку с карт Google maps. Надеюсь, она понравится вам не меньше, чем предыдущая. Итак
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/37645/" class="tm-article-snippet__readmore"><span>поехали</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 79: ↑72 и ↓7
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 79: ↑72 и ↓7" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+65</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 11 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/37645/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 64 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div>
+             </div><!---->
+             <div class="tm-pagination">
+              <a href="/ru/hubs/map_api/articles/page6/" id="pagination-prev-page" data-pagination-prev="" rel="prev" class="tm-pagination__navigation-link tm-pagination__navigation-link_active">
+               <svg height="16" width="16" class="tm-svg-img tm-pagination__arrow tm-pagination__arrow_prev">
+                <title>
+                 Назад
+                </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#arrow-back"></use>
+               </svg><span class="tm-pagination__navigation-link-title"> Сюда </span></a>
+              <div class="tm-pagination__pages">
+               <div class="tm-pagination__page-group">
+                <a href="/ru/hubs/map_api/articles/page1/" class="tm-pagination__page"> 1 </a><a href="/ru/hubs/map_api/articles/page2/" class="tm-pagination__page"> 2 </a> <span class="tm-pagination__page tm-pagination__page_skip"> ... </span>
+               </div>
+               <div class="tm-pagination__page-group">
+                <a href="/ru/hubs/map_api/articles/page5/" class="tm-pagination__page"> 5 </a><a href="/ru/hubs/map_api/articles/page6/" class="tm-pagination__page"> 6 </a> <!---->
+               </div><span class="tm-pagination__page tm-pagination__page_current"> 7 </span>
+              </div>
+              <div id="pagination-next-page" data-pagination-next="" event="" rel="next" class="tm-pagination__navigation-link">
+               <span class="tm-pagination__navigation-link-title"> Туда </span>
+               <svg height="16" width="16" class="tm-svg-img tm-pagination__arrow tm-pagination__arrow_next">
+                <title>
+                 Назад
+                </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#arrow-back"></use>
+               </svg>
+              </div>
+             </div>
+            </div>
+           </div><!---->
+          </div>
+         </div>
+         <div class="tm-page__sidebar">
+          <div data-async-called="true" class="tm-layout-sidebar">
+           <div class="tm-layout-sidebar__ads tm-layout-sidebar__ads_initial">
+            <div class="tm-adfox-banner__container tm-layout-sidebar__banner tm-layout-sidebar__banner_top">
+             <!---->
+             <div id="adfox_164725680533065327" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-half-page"></div>
+            </div>
+           </div>
+           <div class="tm-sexy-sidebar tm-sexy-sidebar_initial" style="margin-top:0px;">
+            <!---->
+            <section class="tm-block tm-block tm-block_spacing-bottom">
+             <header class="tm-block__header tm-block__header">
+              <div class="tm-block__header-container">
+               <h2 class="tm-block__title tm-block__title">Вклад авторов</h2>
+              </div><!---->
+             </header>
+             <div class="tm-block__body tm-block__body">
+              <ul class="tm-contribution-list">
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/jetfreeman/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/c71/ed5/846/c71ed5846b6714c61342e05cddd36585.jpg" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/jetfreeman/" class="tm-authors-block__author-name">jetfreeman</a>
+                  <div class="tm-contribution-list__contribution">
+                   235.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:100%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/sereje4kin/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/cfc/d4c/38e/cfcd4c38e30cecded3a79dda42424c4e.png" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/sereje4kin/" class="tm-authors-block__author-name">sereje4kin</a>
+                  <div class="tm-contribution-list__contribution">
+                   165.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:70.2127659574468%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/Kukabarra/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/141/943/48a/14194348add699cb3b4245a346291698.jpg" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/Kukabarra/" class="tm-authors-block__author-name">Kukabarra</a>
+                  <div class="tm-contribution-list__contribution">
+                   125.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:53.191489361702125%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/shalomman/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="https://assets.habr.com/habr-web/img/avatars/161.png" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/shalomman/" class="tm-authors-block__author-name">shalomman</a>
+                  <div class="tm-contribution-list__contribution">
+                   89.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:37.87234042553192%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/alizar/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/cc3/97d/54c/cc397d54c2161005908a3034c5fabbea.png" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/alizar/" class="tm-authors-block__author-name">alizar</a>
+                  <div class="tm-contribution-list__contribution">
+                   87.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:37.02127659574468%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/tbicr/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/a7a/66a/ec5/a7a66aec50c200029416df334579074a.png" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/tbicr/" class="tm-authors-block__author-name">tbicr</a>
+                  <div class="tm-contribution-list__contribution">
+                   87.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:37.02127659574468%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/evnuh/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/5c5/b51/53f/5c5b5153f90f9e441e8b46c5a0ea9683.jpg" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/evnuh/" class="tm-authors-block__author-name">evnuh</a>
+                  <div class="tm-contribution-list__contribution">
+                   84.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:35.744680851063826%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/m1rko/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/4ec/bd0/85d/4ecbd085d692835a931d03174ff19539.png" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/m1rko/" class="tm-authors-block__author-name">m1rko</a>
+                  <div class="tm-contribution-list__contribution">
+                   83.2
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:35.40425531914894%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/upronin/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/53c/406/4be/53c4064be50e7a9e579dd15469af0b15.jpg" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/upronin/" class="tm-authors-block__author-name">upronin</a>
+                  <div class="tm-contribution-list__contribution">
+                   76.8
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:32.680851063829785%;"></div>
+                 </div>
+                </div></li>
+              </ul>
+             </div>
+             <footer class="tm-block__footer">
+              <a href="/ru/hubs/map_api/authors/" class="tm-block-extralink"> 100 лучших авторов </a>
+             </footer>
+            </section><!----> <!---->
+            <div class="tm-adfox-banner__container tm-layout-sidebar__banner tm-layout-sidebar__banner_bottom">
+             <!---->
+             <div id="adfox_164725691003361602" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-medium-rectangle"></div>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </main><!---->
+    </div>
+    <div class="tm-footer-menu">
+     <div class="tm-page-width">
+      <div class="tm-footer-menu__container">
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title">Ваш аккаунт</p>
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr/?back=/ru/hubs/map_api/articles/page7/&amp;hl=ru" rel="nofollow" target="_self"> Войти </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr-register/?back=/ru/hubs/map_api/articles/page7/&amp;hl=ru" rel="nofollow" target="_self"> Регистрация </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title">Разделы</p>
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/" class="footer-menu__item-link router-link-active"> Статьи </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/news/" class="footer-menu__item-link"> Новости </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/hubs/" class="footer-menu__item-link router-link-active"> Хабы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/companies/" class="footer-menu__item-link"> Компании </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/users/" class="footer-menu__item-link"> Авторы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/sandbox/" class="footer-menu__item-link"> Песочница </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title">Информация</p>
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/help/" class="footer-menu__item-link"> Устройство сайта </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/authors/codex/" class="footer-menu__item-link"> Для авторов </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/companies/corpblogs/" class="footer-menu__item-link"> Для компаний </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/docs/transparency/" class="footer-menu__item-link"> Документы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/agreement/?hl=ru_RU" target="_blank"> Соглашение </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/confidential/?hl=ru_RU" target="_blank"> Конфиденциальность </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title">Услуги</p>
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/corporate-blogs/" target="_blank"> Корпоративный блог </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/advertising/" target="_blank"> Медийная реклама </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/native-special/" target="_blank"> Нативные проекты </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/education-programs/" target="_blank"> Образовательные программы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/hello-startup/" target="_blank"> Стартапам </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/specials/" class="footer-menu__item-link"> Спецпроекты </a></li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="tm-footer">
+     <div class="tm-page-width">
+      <div class="tm-footer__container">
+       <!---->
+       <div class="tm-footer__social">
+        <a href="https://www.facebook.com/habrahabr.ru" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Facebook
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-facebook"></use>
+         </svg></a><a href="https://twitter.com/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Twitter
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-twitter"></use>
+         </svg></a><a href="https://vk.com/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           VK
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-vk"></use>
+         </svg></a><a href="https://telegram.me/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Telegram
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-telegram"></use>
+         </svg></a><a href="https://www.youtube.com/channel/UCd_sTwKqVrweTt4oAKY5y4w" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Youtube
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-youtube"></use>
+         </svg></a><a href="https://dzen.ru/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Яндекс Дзен
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-dzen"></use>
+         </svg></a>
+       </div>
+       <div class="v-portal" style="display:none;"></div><button class="tm-footer__link"><!----> Настройка языка </button> <a href="/ru/feedback/" class="tm-footer__link"> Техническая поддержка </a>
+       <div class="tm-footer-copyright">
+        <span class="tm-copyright"><span class="tm-copyright__years">© 2006–2023, </span> <span class="tm-copyright__name"><a href="https://company.habr.com/" rel="noopener" target="_blank" class="tm-copyright__link">Habr</a></span></span>
+       </div>
+      </div>
+     </div>
+    </div><!----> <!---->
+   </div>
+   <div class="vue-portal-target"></div>
+  </div>
+  <script>window.__INITIAL_STATE__={"adblock":{"hasAcceptableAdsFilter":false,"hasAdblock":false},"articlesList":{"articlesList":{"37645":{"id":"37645","timePublished":"2008-08-21T09:04:14+00:00","isCorporative":false,"lang":"ru","titleHtml":"Интересные кадры Google Maps. Продолжение","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"9086","alias":"xxicb","fullname":"Кирилл Мурашов","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F4da\u002F541\u002Fa9e\u002F4da541a9eaa14f368481fff616886cf9.jpg","speciality":"Пользователь"},"statistics":{"commentsCount":64,"favoritesCount":11,"readingCount":2430,"score":65,"votesCount":79,"votesCountPlus":72,"votesCountMinus":7},"hubs":[{"id":"17419","alias":"map_api","type":"collective","title":"Maps API","titleHtml":"Maps API","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"И снова здравствуйте, желаю вам продуктивного рабочего дня, а для того, чтобы он был таковым, надо иногда отвлекаться. Предлагаю новую подборку с карт Google maps. Надеюсь, она понравится вам не меньше, чем предыдущая. Итак ","imageUrl":null,"buttonTextHtml":"поехали","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":2,"complexity":null,"tags":[{"titleHtml":"google"},{"titleHtml":"maps"},{"titleHtml":"интересно"},{"titleHtml":"занимательно"},{"titleHtml":"отвлечёмся?"},{"titleHtml":"продолжаем"}]},"39707":{"id":"39707","timePublished":"2008-09-12T18:07:26+00:00","isCorporative":false,"lang":"ru","titleHtml":"Как загрузить большую карту с Google maps","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"28806","alias":"shalomman","fullname":"shalomman","avatarUrl":"","speciality":""},"statistics":{"commentsCount":73,"favoritesCount":130,"readingCount":16908,"score":89,"votesCount":111,"votesCountPlus":100,"votesCountMinus":11},"hubs":[{"id":"17419","alias":"map_api","type":"collective","title":"Maps API","titleHtml":"Maps API","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Cb\u003EН\u003C\u002Fb\u003Eедавно я начал планировать свое путшествие по испании на машине. Очень удобно заниматься сим непотребством используя \u003Ca href=\"http:\u002F\u002Fmaps.google.com\u002F\"\u003Eгугл мэпс\u003C\u002Fa\u003E. Но у гугл мэпс есть один существенный недостаток — проделаную работу(маршрут поездки) нельзя сохранить в хорошем разрешении картинкой. Порывшись в интернете, я нашел замечательный способ сохранять гугл мэпс карты с проложеными маршрутами или без. Данной технологией я и спешу поделится с хабрасообществом.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":2,"complexity":null,"tags":[{"titleHtml":"lifehack"},{"titleHtml":"google maps"},{"titleHtml":"map"}]},"42439":{"id":"42439","timePublished":"2008-10-15T08:31:51+00:00","isCorporative":false,"lang":"ru","titleHtml":"На запад","editorVersion":"1.0","postType":"article","postLabels":[{"type":"translation","typeOf":"system","title":"Перевод","data":{"originalAuthorName":"xkcd","originalUrl":"http:\u002F\u002Fxkcd.com\u002F489\u002F"}}],"author":{"id":"7348","alias":"BmW","fullname":"Misha","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fe82\u002F81d\u002Fdbd\u002Fe8281ddbd551d4ad1b95dfe547d6f280.jpg","speciality":""},"statistics":{"commentsCount":47,"favoritesCount":5,"readingCount":585,"score":66,"votesCount":130,"votesCountPlus":98,"votesCountMinus":32},"hubs":[{"id":"17419","alias":"map_api","type":"collective","title":"Maps API","titleHtml":"Maps API","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Ca href=\"http:\u002F\u002Fxkcd.com\u002F489\u002F\"\u003E\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fpost_images\u002Fa84\u002F3bf\u002F0a5\u002Fa843bf0a56f4c5158966ad34412b26a5.png\" title=\"Слушай, они требуют, чтобы ты перестал отмечать свой дом как «МЕСТО, ГДЕ ТЫ РАЗБИЛА МНЕ СЕРДЦЕ».\"\u003E\u003C\u002Fa\u003E\u003Cbr\u003E\r\n\u003Cbr\u003E\r\nСпасибо \u003Ca href=\"https:\u002F\u002Fhabr.com\u002Fru\u002Fusers\u002Fcoldflame\u002F\" class=\"user_link\"\u003EcoldFlame\u003C\u002Fa\u003E за \u003Ca href=\"http:\u002F\u002Fhabrahabr.ru\u002Fblogs\u002Fxkcd_ru\u002F42439\u002F#comment_1045539\"\u003Eперевод\u003C\u002Fa\u003E тайтла.","imageUrl":null,"buttonTextHtml":"Читать дальше →","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":1,"complexity":null,"tags":[{"titleHtml":"xkcd"},{"titleHtml":"юмор"},{"titleHtml":"google maps"}]},"131249":{"id":"131249","timePublished":"2011-10-26T11:40:10+00:00","isCorporative":false,"lang":"ru","titleHtml":"Примеры работы с разными map API","editorVersion":"1.0","postType":"article","postLabels":[{"type":"sandbox","typeOf":"system","title":"Из песочницы","data":{"url":null}}],"author":{"id":"90541","alias":"OlegSol","fullname":"Олег Солонец","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F41f\u002F420\u002Fdca\u002F41f420dca94bf02bfb6d6c6c73836ae3.jpg","speciality":""},"statistics":{"commentsCount":22,"favoritesCount":384,"readingCount":81766,"score":55,"votesCount":63,"votesCountPlus":59,"votesCountMinus":4},"hubs":[{"id":"17419","alias":"map_api","type":"collective","title":"Maps API","titleHtml":"Maps API","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fstorage1\u002Fcb35f60f\u002F56ab07e4\u002F43f2f353\u002Fbd72073c.jpg\"\u002F\u003E\u003Cbr\u002F\u003E\r\nЕсть много статей на тему знакомства с Google Map Api и Yandex Map Api, но про остальные картографические сервисы не так много практического материала. В недавнем времени работал с Api:\u003Cbr\u002F\u003E\r\n\u003Col\u003E\r\n\u003Cli\u003EGoogle map\u003C\u002Fli\u003E\r\n\u003Cli\u003EYandex map\u003C\u002Fli\u003E\r\n\u003Cli\u003EYahoo map\u003C\u002Fli\u003E\r\n\u003Cli\u003EBing map\u003C\u002Fli\u003E\r\n\u003Cli\u003EOpenStreet map\u003C\u002Fli\u003E\r\n\u003C\u002Fol\u003E\u003Cbr\u002F\u003E\r\nИ хотел обобщить работу с вышеупомянутыми сервисами, а именно инициализация карты и установление маркеров по клику мышки. Материалы в статье представлены в виде Html кода, javascript и результата — скриншота, а так же исходники на vs 2010 MVC3.\u003Cbr\u002F\u003E\r\n","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":6,"complexity":null,"tags":[{"titleHtml":"Google map api"},{"titleHtml":"Yandex map api"},{"titleHtml":"Yahoo map api"},{"titleHtml":"bing map api"},{"titleHtml":"open street map api"}]},"131654":{"id":"131654","timePublished":"2011-11-02T06:14:09+00:00","isCorporative":false,"lang":"ru","titleHtml":"Google Map API (custom labels and tooltips)","editorVersion":"1.0","postType":"article","postLabels":[{"type":"sandbox","typeOf":"system","title":"Из песочницы","data":{"url":null}}],"author":{"id":"79804","alias":"vitvad","fullname":"Виталий","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Ffe8\u002F114\u002Ff6d\u002Ffe8114f6d94cc0b1714e12fe5f90957d.jpg","speciality":"Пользователь"},"statistics":{"commentsCount":3,"favoritesCount":56,"readingCount":66777,"score":6,"votesCount":12,"votesCountPlus":9,"votesCountMinus":3},"hubs":[{"id":"17419","alias":"map_api","type":"collective","title":"Maps API","titleHtml":"Maps API","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"Всем привет!\u003Cbr\u002F\u003E\r\nТолько что заметил новый топик в песочнице \u003Ca href=\"http:\u002F\u002Fhabrahabr.ru\u002Fblogs\u002Fmap_api\u002F131249\u002F\"\u003Elink\u003C\u002Fa\u003E, про карты.\u003Cbr\u002F\u003E\r\nПопытаюсь дополнить его своим опытом в общении с гугло-картами.\u003Cbr\u002F\u003E\r\n","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":4,"complexity":null,"tags":[{"titleHtml":"google maps API v3"},{"titleHtml":"javascript"}]},"133509":{"id":"133509","timePublished":"2011-11-28T09:08:01+00:00","isCorporative":false,"lang":"ru","titleHtml":"Новая библиотека Drawing в Google Maps API V3","editorVersion":"1.0","postType":"article","postLabels":[{"type":"sandbox","typeOf":"system","title":"Из песочницы","data":{"url":null}}],"author":{"id":"117405","alias":"ANRIK","fullname":"Андрей","avatarUrl":"","speciality":""},"statistics":{"commentsCount":42,"favoritesCount":86,"readingCount":16938,"score":38,"votesCount":42,"votesCountPlus":40,"votesCountMinus":2},"hubs":[{"id":"17419","alias":"map_api","type":"collective","title":"Maps API","titleHtml":"Maps API","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"Недавно в Google Maps API V3 \u003Ca href=\"http:\u002F\u002Fgooglegeodevelopers.blogspot.com\u002F2011\u002F11\u002Fmake-your-map-interactive-with-shape.html\"\u003Eпоявилась\u003C\u002Fa\u003E новая библиотека \u003Cb\u003EDrawing\u003C\u002Fb\u003E. Она предоставляет набор инструментов, с помощью которых пользователи могут ставить маркеры, рисовать на карте линии, круги, прямоугольники, многоугольники, чтобы выделить различные места на карте.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Cimg src=\"http:\u002F\u002Fkovtun-andrei.narod2.ru\u002Fhabr\u002Fi\u002Fgoogle_maps_drawing.gif\" alt=\"image\"\u002F\u003E\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nДанные инструменты могут быть использованы для сбора разной информации от пользователей. Приложение может прослушивать события и реагировать соответствующим образом, например, сделать поисковый запрос или сохранить информацию в базе данных.","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":3,"complexity":null,"tags":[{"titleHtml":"drawing library"},{"titleHtml":"drawing"},{"titleHtml":"google maps"},{"titleHtml":"google maps api v3"},{"titleHtml":"рисование на карте"},{"titleHtml":"маркеры"}]},"139444":{"id":"139444","timePublished":"2012-03-05T12:17:07+00:00","isCorporative":false,"lang":"ru","titleHtml":"Google.Maps + 1c: Предприятие 8.2","editorVersion":"1.0","postType":"article","postLabels":[{"type":"sandbox","typeOf":"system","title":"Из песочницы","data":{"url":null}}],"author":{"id":"111651","alias":"gromozeka07b9","fullname":"Сергей Дьяченко","avatarUrl":"","speciality":""},"statistics":{"commentsCount":4,"favoritesCount":40,"readingCount":37926,"score":4,"votesCount":4,"votesCountPlus":4,"votesCountMinus":0},"hubs":[{"id":"17419","alias":"map_api","type":"collective","title":"Maps API","titleHtml":"Maps API","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"В этом посте я хочу показать пример того, как может быть использован сервис Google.Maps в конфигурациях 1с: Предприятие 8.2. Как вы все знаете, 1с прижилась (мягко сказать) практически во всех коммерческих структурах — вот и нас не обошла. Сфера применения картографических систем в 1с достаточно широка, например — возможность накладывания отчетности на карту, расчет стоимости маршрутов, и, конечно, поиск объектов на карте по географическим координатам, что вполне может использоваться операторами колл-центров при консультации клиентов.\u003Cbr\u002F\u003E\r\n","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":5,"complexity":null,"tags":[{"titleHtml":"google"},{"titleHtml":"maps"},{"titleHtml":"1c"},{"titleHtml":"предприятие"},{"titleHtml":"карта"}]},"140033":{"id":"140033","timePublished":"2012-03-15T11:41:48+00:00","isCorporative":false,"lang":"ru","titleHtml":"Kartograph — фреймворк для создания интерактивных карт","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"50996","alias":"JiLiZART","fullname":"Николай Костюрин","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Ff05\u002Fe6c\u002F33e\u002Ff05e6c33ec8760a3e685408e9fe20249.jpg","speciality":"JS Dev. Ex JS Dev in Muse Group (Musescore)"},"statistics":{"commentsCount":16,"favoritesCount":321,"readingCount":19248,"score":65,"votesCount":67,"votesCountPlus":66,"votesCountMinus":1},"hubs":[{"id":"144","alias":"open_source","type":"collective","title":"Open source","titleHtml":"Open source","isProfiled":true,"relatedData":null},{"id":"357","alias":"javascript","type":"collective","title":"JavaScript","titleHtml":"JavaScript","isProfiled":true,"relatedData":null},{"id":"17419","alias":"map_api","type":"collective","title":"Maps API","titleHtml":"Maps API","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Ca href=\"http:\u002F\u002Fkartograph.org\u002F\"\u003EKartograph\u003C\u002Fa\u003E — это новый фреймворк для создания интерактивных картографических веб приложений без использования Google Maps\u002FBing Maps или любого другого сервиса. Он создавался с учетом потребностей \u003Ca href=\"http:\u002F\u002Fkartograph.org\u002Fshowcase\u002Fitalia\u002F\"\u003Eдизайнеров\u003C\u002Fa\u003E и \u003Ca href=\"http:\u002F\u002Fkartograph.org\u002Fshowcase\u002Fcharts\u002F\"\u003Eжурналистов\u003C\u002Fa\u003E.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nМожно поглядеть на \u003Ca href=\"http:\u002F\u002Fkartograph.org\u002Fshowcase\u002F\"\u003Eдемки\u003C\u002Fa\u003E, чтобы узнать на что способен Kartograph. ","imageUrl":null,"buttonTextHtml":"или узнать как это все работает.","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":1,"complexity":null,"tags":[{"titleHtml":"Kartograph"},{"titleHtml":"maps"},{"titleHtml":"jquery"},{"titleHtml":"raphaël"},{"titleHtml":"kartograph.js"},{"titleHtml":"kartograph.py"}]}},"articlesIds":{"ARTICLES_LIST_BY_HUB_ALL_PAGES_MAP_API_7":["140033","139444","133509","131654","131249","42439","39707","37645"]},"isLoading":false,"pagesCount":{"ARTICLES_LIST_BY_HUB_ALL_PAGES_MAP_API_7":7},"route":{"name":"ARTICLES_LIST_BY_HUB_ALL_PAGES","params":{"hl":"ru","hubName":"map_api","pageNum":"7"},"query":{}},"reasonsList":null,"postReasonsList":null,"view":"cards","lastVisitedRoute":{},"ssrCommentsArticleIds":[],"viewedPosts":[],"karma":{"userReasonsList":null}},"authorContribution":{"authors":{"hub_map_api":[{"id":"47311","alias":"jetfreeman","fullname":"Антон Молокоедов","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fc71\u002Fed5\u002F846\u002Fc71ed5846b6714c61342e05cddd36585.jpg","speciality":null,"scoreStats":{"score":43,"votesCount":133},"rating":0,"invest":235,"relatedData":null,"lastPost":null},{"id":"154147","alias":"sereje4kin","fullname":"Сергей","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fcfc\u002Fd4c\u002F38e\u002Fcfcd4c38e30cecded3a79dda42424c4e.png","speciality":"Пользователь","scoreStats":{"score":37,"votesCount":89},"rating":-2,"invest":165,"relatedData":null,"lastPost":null},{"id":"63683","alias":"Kukabarra","fullname":"Марина Перескокова","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F141\u002F943\u002F48a\u002F14194348add699cb3b4245a346291698.jpg","speciality":"Пользователь","scoreStats":{"score":107,"votesCount":155},"rating":0,"invest":125,"relatedData":null,"lastPost":null},{"id":"28806","alias":"shalomman","fullname":"shalomman","avatarUrl":null,"speciality":null,"scoreStats":{"score":40,"votesCount":102},"rating":0,"invest":89,"relatedData":null,"lastPost":null},{"id":"5","alias":"alizar","fullname":"Анатолий Ализар","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fcc3\u002F97d\u002F54c\u002Fcc397d54c2161005908a3034c5fabbea.png","speciality":"автор, фрилансер","scoreStats":{"score":1040,"votesCount":4240},"rating":344,"invest":87,"relatedData":null,"lastPost":null},{"id":"183265","alias":"tbicr","fullname":"Павел Тысляцкі","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fa7a\u002F66a\u002Fec5\u002Fa7a66aec50c200029416df334579074a.png","speciality":"Пользователь","scoreStats":{"score":36,"votesCount":58},"rating":0,"invest":87,"relatedData":null,"lastPost":null},{"id":"184639","alias":"evnuh","fullname":"Мишган","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F5c5\u002Fb51\u002F53f\u002F5c5b5153f90f9e441e8b46c5a0ea9683.jpg","speciality":"Извините, но я старался","scoreStats":{"score":10,"votesCount":164},"rating":0,"invest":84,"relatedData":null,"lastPost":null},{"id":"1371978","alias":"m1rko","fullname":"Анатолий Ализар","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F4ec\u002Fbd0\u002F85d\u002F4ecbd085d692835a931d03174ff19539.png","speciality":"автор, переводчик, редактор","scoreStats":{"score":1285,"votesCount":1563},"rating":0,"invest":83.2,"relatedData":null,"lastPost":null},{"id":"2485639","alias":"upronin","fullname":"Александр Пронин","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F53c\u002F406\u002F4be\u002F53c4064be50e7a9e579dd15469af0b15.jpg","speciality":"Инженер-картограф","scoreStats":{"score":33,"votesCount":45},"rating":0,"invest":76.8,"relatedData":null,"lastPost":null}]}},"betaTest":{"currentAnnouncement":null,"announcements":{},"announcementCards":null,"announcementComments":{},"announcementCommentThreads":{},"announcementCommentingStatuses":{},"archivedList":[]},"authorStatistics":{"articleRefs":{},"articleIds":{},"pagesCount":{},"route":{},"viewsCount":[],"maxStatsCount":{}},"career":{"seoLandings":[],"hubs":"map_api"},"comments":{"articleComments":{},"articlePinnedComments":{},"searchCommentsResults":null,"pagesCount":null,"commentAccess":{},"scrollParents":{},"pageArticleComments":{"lastViewedComment":0,"postId":null,"lastCommentTimestamp":"","moderated":[],"moderatedIds":[],"commentRoute":""}},"companies":{"companyRefs":{},"companyIds":{},"companyTopIds":{},"pagesCount":{},"companyProfiles":{},"companiesCategories":[],"companiesCategoriesTotalCount":0,"companiesWidgets":{},"companiesWorkers":{},"companiesFans":{},"multiwidgets":{},"route":{},"isLoading":false,"companyWorkersLoading":false,"companyFansLoading":false,"multiwidgetLoading":false,"vacancies":{},"companiesGalleries":{},"companiesBanners":{},"companiesLandingVacancies":{},"companiesTechnologies":{},"workplaceInfo":null},"companyAdmin":{"companyInfo":null,"companyInfoLoading":false,"faqArticles":null,"brandingPreviewImageUrl":null,"jivoStatus":0,"adminNotifications":null},"companiesContribution":{"hubs":{},"flows":{},"companyRefs":{}},"companyHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"conversation":{"messages":[],"respondent":null,"isLoadMore":false},"conversations":{"conversations":[],"unreadCount":0,"pagesCount":0},"docs":{"menu":{},"articles":{},"mainMenu":[],"loading":{"main":false,"dropdown":false,"article":false}},"feature":{"isProbablyVisible":true},"flows":{"updates":{"countNewPostsBySubscription":null,"countNewThreadsBySubscription":null,"countNewNewsBySubscription":null,"countNewPostsAll":34,"countNewNewsAll":12,"countNewThreadsAll":4},"flows":[{"alias":"develop","id":"1","route":{"name":"FLOW_PAGE","params":{"flowName":"develop"}}},{"alias":"admin","id":"6","route":{"name":"FLOW_PAGE","params":{"flowName":"admin"}}},{"alias":"design","id":"2","route":{"name":"FLOW_PAGE","params":{"flowName":"design"}}},{"alias":"management","id":"3","route":{"name":"FLOW_PAGE","params":{"flowName":"management"}}},{"alias":"marketing","id":"4","route":{"name":"FLOW_PAGE","params":{"flowName":"marketing"}}},{"alias":"popsci","id":"7","route":{"name":"FLOW_PAGE","params":{"flowName":"popsci"}}}]},"global":{"isPwa":false,"device":"desktop","isHabrCom":true},"hubs":{"hubRefs":{"map_api":{"id":"17419","alias":"map_api","titleHtml":"Maps API","descriptionHtml":"API картографических сервисов","fullDescriptionHtml":"Google Maps, Яндекс.Карты и другие картографические сервисы — практически все из них предоставляют разработчикам свои API.","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F19a\u002F718\u002F967\u002F19a718967053bff532f6294609413270.png","relatedData":null,"statistics":{"subscribersCount":77103,"rating":0,"authorsCount":99,"postsCount":131},"sponsorship":null,"keywords":["карты","maps","google maps","javascript","maps api","leaflet","2гис","mapbox","api","map","yandex map api","яндекс.карты","google","api 2гис","android","2гис онлайн","api карт","google maps api","геокодирование","openstreetmap","map api","api Яндекс.Карт"],"flow":{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"},"isProfiled":true}},"hubIds":{},"pagesCount":{},"isLoading":false,"route":{}},"hubsBlock":{"hubRefs":{"infosecurity":{"id":"50","alias":"infosecurity","titleHtml":"Information Security","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F135\u002F2db\u002F187\u002F1352db18765addaa6e0b2ac013d386d8.png","descriptionHtml":"Data protection","relatedData":null,"statistics":{"subscribersCount":575291,"rating":728.41,"authorsCount":4765,"postsCount":18569},"commonTags":["cybersecurity","elliptic curve cryptography","digital signature","drp","elliptics","signature"],"isProfiled":true,"isOfftop":false},"programming":{"id":"359","alias":"programming","titleHtml":"Programming","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fdb2\u002Fc8f\u002F4a1\u002Fdb2c8f4a1974bf334d01595732f339c1.png","descriptionHtml":"The art of creating computer programs","relatedData":null,"statistics":{"subscribersCount":352023,"rating":707.89,"authorsCount":6673,"postsCount":17828},"commonTags":["java","программирование","dsl","programming languages","python","c","chatgpt","spring data jpa","kotlin"],"isProfiled":true,"isOfftop":false},"popular_science":{"id":"21910","alias":"popular_science","titleHtml":"Popular science","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002F02f\u002F206\u002F0b9\u002F02f2060b99e6f4d9403eee0420d7d5b8.png","descriptionHtml":"Popular science as is","relatedData":null,"statistics":{"subscribersCount":174828,"rating":575.63,"authorsCount":2108,"postsCount":15162},"commonTags":["gravity","special relativity"],"isProfiled":false,"isOfftop":false},"career":{"id":"20740","alias":"career","titleHtml":"IT career","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fcab\u002Ff82\u002F067\u002Fcabf82067c7be08c90a5903f860c9abf.png","descriptionHtml":"Work, work and work (in IT)","relatedData":null,"statistics":{"subscribersCount":79261,"rating":452.75,"authorsCount":3117,"postsCount":8141},"commonTags":["career","presale","russian","america online","international business","relocation"],"isProfiled":false,"isOfftop":false},"games":{"id":"21980","alias":"games","titleHtml":"Games and game consoles","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002F250\u002Fe19\u002F5fa\u002F250e195faa1708e4df5cb8664394a54f.png","descriptionHtml":"Rock Paper Scissors","relatedData":null,"statistics":{"subscribersCount":107942,"rating":448.48,"authorsCount":1101,"postsCount":5587},"commonTags":[],"isProfiled":false,"isOfftop":false},"DIY":{"id":"21976","alias":"DIY","titleHtml":"DIY","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002F0ac\u002F9b4\u002F828\u002F0ac9b48281cd7ba7401b4a4f5d9cd8d8.png","descriptionHtml":"For those who is not all thumbs","relatedData":null,"statistics":{"subscribersCount":426019,"rating":418.89,"authorsCount":2564,"postsCount":6200},"commonTags":["circuit calculator","electronics design","circuit design","diy","arduino","robotics","active filter","dso138 upgrade","servo","bldc"],"isProfiled":false,"isOfftop":false},"antikvariat":{"id":"21930","alias":"antikvariat","titleHtml":"Old hardware","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002F064\u002Fe29\u002F0f4\u002F064e290f484ad3bf745ebe9163b9276a.png","descriptionHtml":"How it was when we were young","relatedData":null,"statistics":{"subscribersCount":161811,"rating":382.21,"authorsCount":606,"postsCount":2195},"commonTags":["музыка","chiptune","demoscene","z80","nes","assembler","6502"],"isProfiled":false,"isOfftop":false},"machine_learning":{"id":"19439","alias":"machine_learning","titleHtml":"Machine learning","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F882\u002F37a\u002Fb33\u002F88237ab33b6f8acc090d443651c4f2f9.png","descriptionHtml":"The basis of artificial intelligence","relatedData":null,"statistics":{"subscribersCount":80519,"rating":383.98,"authorsCount":2402,"postsCount":6575},"commonTags":["neural networks","image processing","ml","ai","artificial intelligence","machine learning","transformers","graphic design","neural paintings","stablediffusion"],"isProfiled":true,"isOfftop":false},"artificial_intelligence":{"id":"21922","alias":"artificial_intelligence","titleHtml":"Artificial Intelligence","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002F445\u002F6b9\u002F287\u002F4456b92870815e30ca14f4f66b6cb443.png","descriptionHtml":"AI, ANN and other forms of an artificial Intelligence\n","relatedData":null,"statistics":{"subscribersCount":113944,"rating":386.52,"authorsCount":2087,"postsCount":6291},"commonTags":["chatgpt","ai","artificial intelligence"],"isProfiled":false,"isOfftop":false},"network_technologies":{"id":"17123","alias":"network_technologies","titleHtml":"Network technologies","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fb2e\u002F13f\u002F8fc\u002Fb2e13f8fcaf2711677c87418b98e85fe.png","descriptionHtml":"From Ethernet to IPv6","relatedData":null,"statistics":{"subscribersCount":159555,"rating":353.17,"authorsCount":1467,"postsCount":4130},"commonTags":["bgp","qrator labs","ddos attack","python","bgp incidents","network","network security","ddos attacks","ipv6","cisco"],"isProfiled":true,"isOfftop":false}},"hubIds":{"all":["infosecurity","programming","popular_science","career","games","DIY","antikvariat","machine_learning","artificial_intelligence","network_technologies"]}},"i18n":{"fl":"ru","hl":"ru"},"info":{"welcomePage":{},"isLoading":true},"location":{"urlStruct":{"protocol":null,"slashes":null,"auth":null,"host":null,"port":null,"hostname":null,"hash":null,"query":{},"pathname":"\u002F","path":"\u002F","href":"\u002F"}},"me":{"user":null,"uuid":null,"ppgDemanded":false,"karmaResetInfo":{"canReincarnate":null,"wasReincarnated":null,"currentScore":null},"notes":null},"modal":{"modals":[]},"mostReadingList":{"mostReadingListIds":[],"mostReadingListRefs":null,"promoPost":null},"ppa":{"articles":{},"card":null,"transactions":null,"totalTransactions":null,"isAccessible":null},"projectsBlocks":{"activeBlocks":{}},"promoData":{"isLoading":false,"hasLoaded":false,"featurer":null,"megaposts":null,"promoLinks":null,"promoPosts":null},"pullRefresh":{"shouldRefresh":false},"sandbox":{"articleIds":[],"articleRefs":{},"pagesCount":null,"route":{},"lastVisitedRoute":{},"isLoading":false},"search":{"searchQueryError":null},"settingsOther":{"inputs":{"uiLang":{"errors":[],"ref":null,"value":""},"articlesLangEnglish":{"errors":[],"ref":null,"value":false},"articlesLangRussian":{"errors":[],"ref":null,"value":false},"agreement":{"errors":[],"ref":null,"value":false},"email":{"errors":[],"ref":null,"value":true},"digest":{"errors":[],"ref":null,"value":true}}},"similarList":{"similarListIds":[],"similarListRefs":null},"ssr":{"error":null,"isDataLoaded":false,"isDataLoading":false,"isHydrationFailed":false,"isServer":false},"stories":{"stories":[{"id":"story-634","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe80\u002F14f\u002F9b0\u002Fe8014f9b0b323e26f89fb65c07367da7.png","title":"Т1","link":"https:\u002F\u002Fu.habr.com\u002FT1"},"title":"Идём на «Импульс Т1» по дороге из жёлтого кирпича","lang":"ru","startTime":"2023-11-21T12:00:00+03:00","finishTime":"2023-12-01T23:59:00+03:00","slides":[{"id":"story-634_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fb83\u002F6f2\u002F4a3\u002Fb836f24a39bedec1aca21003cea65537.jpg","button":null},{"id":"story-634_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F267\u002F0f1\u002F28c\u002F2670f128c419da5750280fe02731a19c.jpg","button":{"title":"«Импульс Т1»","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F98d\u002Fdf8\u002F18e\u002F98ddf818ef47cbe33d8a3de0dac94864.jpg","button":{"title":"Список лекций","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F240\u002Fbc2\u002F4a1\u002F240bc24a10b8f3aa544f03bcdcddbb92.jpg","button":{"title":"Посмотреть питчинг","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F88b\u002Fa1e\u002F34f\u002F88ba1e34f63db6c2fd335c4cbed97ceb.jpg","button":{"title":"Прокачать софт-скилы","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F9a7\u002Fda6\u002F18a\u002F9a7da618aec78c4e7faa2bc7ee3cd8ec.jpg","button":{"title":"Ого! Это нам надо","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa62\u002Fd3b\u002Faaa\u002Fa62d3baaa3434123e969450ae2e99bda.jpg","button":{"title":"Записаться","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}}]},{"id":"story-632","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2d7\u002F718\u002F3c9\u002F2d77183c9e0bca19c45ba4d026645c38.png","title":"Росатом","link":"https:\u002F\u002Fu.habr.com\u002Frstm1"},"title":"Как стать супергероем","lang":"ru","startTime":"2023-11-21T09:47:00+03:00","finishTime":"2023-12-06T09:47:00+03:00","slides":[{"id":"story-632_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F659\u002F578\u002Ff3f\u002F659578f3f9579fbf36a89b2503a6aa23.jpg","button":{"title":"К реальным задачам","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}},{"id":"story-632_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8d0\u002F28d\u002F731\u002F8d028d7310db4fd62d8830795b23b6c6.jpg","button":null},{"id":"story-632_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe51\u002F332\u002F994\u002Fe51332994d7680d1568660a70ba2b9fa.png","button":{"title":"Повторить путь героя","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}},{"id":"story-632_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F374\u002F6ae\u002F4f4\u002F3746ae4f4a94208739455e21c8af57ed.jpg","button":{"title":"Повторить путь героя","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}},{"id":"story-632_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F808\u002Fcd7\u002Faa6\u002F808cd7aa68b649f6c8a460bcaf3f820f.jpg","button":{"title":"Повторить путь героя","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}},{"id":"story-632_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F021\u002F9e8\u002F162\u002F0219e81629dac451e3a44be1723eb0c5.jpg","button":null},{"id":"story-632_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8b2\u002F5b1\u002F21e\u002F8b25b121e5479943bd82d28818a5bf36.jpg","button":null},{"id":"story-632_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F73a\u002F80d\u002F744\u002F73a80d744242c9b7097f7d9c90d54046.jpg","button":null},{"id":"story-632_9","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Faec\u002Fbdd\u002Fe53\u002Faecbdde530d7eefbd0a7830502f78c39.jpg","button":{"title":"Стать супергероем","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}}]},{"id":"story-630","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd63\u002F68e\u002F29d\u002Fd6368e29d27f127a71853042a809b2ab.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002F9xZDQ"},"title":"Рейтинг IT-брендов работодателей 2023","lang":"ru","startTime":"2023-11-17T11:46:00+03:00","finishTime":"2023-12-03T23:59:00+03:00","slides":[{"id":"story-630_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F51e\u002F5eb\u002Fa38\u002F51e5eba3845ee8a1ff6f58932e40cf2c.jpg","button":{"title":"Результаты","link":"https:\u002F\u002Fu.habr.com\u002F9xZDQ","colorType":"light"}},{"id":"story-630_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbe5\u002Feac\u002Fbdc\u002Fbe5eacbdc2348ca76508d2afcef8eaeb.jpg","button":{"title":"Весь рейтинг","link":"https:\u002F\u002Fu.habr.com\u002F9xZDQ","colorType":"light"}},{"id":"story-630_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5be\u002F87f\u002F381\u002F5be87f3810e8ffc6f65bddbe6ae284e4.jpg","button":null},{"id":"story-630_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5e5\u002F2f0\u002F98b\u002F5e52f098b64e5cfbd03d537b47e72376.jpg","button":null},{"id":"story-630_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffcd\u002F665\u002F465\u002Ffcd6654656b8589a78347ede27b4935e.jpg","button":{"title":"Больше статистики","link":"https:\u002F\u002Fu.habr.com\u002F9xZDQ","colorType":"light"}}]},{"id":"story-628","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F360\u002F396\u002Fbc9\u002F360396bc9df8ca528d6ffcc23514c822.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002FxlEaI"},"title":"Активность найма в 3 квартале 2023","lang":"ru","startTime":"2023-11-16T16:16:00+03:00","finishTime":"2023-11-26T23:59:00+03:00","slides":[{"id":"story-628_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2e4\u002F053\u002Fe8d\u002F2e4053e8dedaa5220b1bbf756f8e6a64.png","button":null},{"id":"story-628_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbdd\u002F642\u002Ffe9\u002Fbdd642fe98e7ba4531b0175e4cef6d0c.png","button":null},{"id":"story-628_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff37\u002F4b7\u002Fc5f\u002Ff374b7c5feeb95e49b44d33ee1f97d24.png","button":null},{"id":"story-628_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F762\u002Ff3f\u002F2dd\u002F762f3f2dda3e5244291b3f178b014def.png","button":{"title":"Читать","link":"https:\u002F\u002Fu.habr.com\u002FxlEaI","colorType":"dark"}}]},{"id":"story-552","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F310\u002Fb6d\u002F097\u002F310b6d09710575fad755fc8ed317c7ec.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002Fcalendar_story_2"},"title":"Перевернуть календарь и добавить событие","lang":"ru","startTime":"2023-10-09T10:39:00+03:00","finishTime":"2023-11-26T23:59:00+03:00","slides":[{"id":"story-552_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffd3\u002F1a4\u002F6ab\u002Ffd31a46abecfbc6f654e64a66cb66260.jpg","button":{"title":"Прямо сюда","link":"https:\u002F\u002Fu.habr.com\u002F0RBBA","colorType":"dark"}},{"id":"story-552_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffef\u002F3e3\u002Fb5d\u002Ffef3e3b5d8379c976167169334348272.jpg","button":{"title":"Разместить событие","link":"https:\u002F\u002Fu.habr.com\u002F0RBBA","colorType":"light"}},{"id":"story-552_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8b9\u002Fea9\u002F638\u002F8b9ea9638d36013b31e365ec79b96d2d.jpg","button":{"title":"Тык","link":"https:\u002F\u002Fu.habr.com\u002F0RBBA","colorType":"dark"}}]}]},"technotext":{"years":[],"technotextDocForNominees":null,"technotextDocForWinners":null,"technotextInfo":{},"technotextInfoLoading":false,"technotextWinners":{},"technotextWinnersLoading":false},"userHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"userInvites":{"availableInvites":0,"usedInvitesIds":[],"usedInvitesRefs":{},"usedInvitesPagesCount":0,"unusedInvitesIds":[],"unusedInvitesRefs":{},"unusedInvitesPagesCount":0},"userVotes":{"karmaVotesList":[],"karmaVotesPagesCount":null,"karmaVotesListLoading":false,"commentsVotesList":[],"commentsVotesPagesCount":null,"commentsVotesListLoading":false,"postsVotesList":[],"postsVotesPagesCount":null,"postsVotesListLoading":false,"userVotesList":[],"userVotesPagesCount":null,"userVotesListLoading":false},"users":{"authorRefs":{},"authorIds":{},"pagesCount":{},"authorProfiles":{},"userHubs":{},"userInvitations":{},"authorFollowers":{},"authorFollowed":{},"userSpecialization":{},"karmaStats":[],"statistics":null,"isLoading":false,"authorFollowersLoading":false,"authorFollowedLoading":false,"userHubsLoading":false,"userInvitationsLoading":false,"route":{}},"viewport":{"prevScrollY":{},"scrollY":0,"width":0},"tracker":{"notificationsLoading":false,"notificationsList":[],"notificationsPageCount":0,"pendingMarkNotificationsRead":[],"publicationsLoading":true,"publicationsList":[],"publicationsPageCount":0,"pendingDeletePublications":false,"pendingMarkPublicationsRead":false},"events":{"events":[{"id":"events_46","titleHtml":"Битва пет-проектов","startDay":"2023-09-25","finishDay":"2023-11-30","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fq4\u002Fbl\u002Ftl\u002Fq4bltl5nykwetj_aaaauhdaow6u.png","eventUrl":"https:\u002F\u002Fpet-project.habr.com\u002F?utm_source=special&utm_medium=calendar&utm_campaign=pet_project","geo":[],"isOnline":true,"descriptionHtml":"\u003Cp\u003EСобрали две команды стажеров и&#160;джунов, которые будут работать над пет-проектами под кураторством опытных менторов. А&#160;определять победителей, которые получат стажировку в&#160;компании, будете&#160;вы.\u003C\u002Fp\u003E\u003Cp\u003EВнутри много движухи для зрителей: воркшопы по&#160;разработке, разборы резюме, публичные собеседования, Q&#38;A-сессии и&#160;даже чат, где можно найти себе команду и&#160;запилить какой-нибудь крутой пет-проект. \u003C\u002Fp\u003E\u003Cp xmlns=\"http:\u002F\u002Fwww.w3.org\u002F1999\u002Fxhtml\"\u003EЕсть отличный бонус для начинающих: будем собирать стажировки и&#160;джуновские вакансии с&#160;рынка для еженедельной рассылки в&#160;рамках битвы. \u003C\u002Fp\u003E\u003Cp xmlns=\"http:\u002F\u002Fwww.w3.org\u002F1999\u002Fxhtml\"\u003EРегистрируйтесь, чтобы ничего не&#160;пропустить!\u003C\u002Fp\u003E\u003Cbr \u002F\u003E"},{"id":"events_72","titleHtml":"Яндекс Backend Tour","startDay":"2023-11-13","finishDay":"2023-11-26","startTime":"18:00","finishTime":"23:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fye\u002F_b\u002Fyw\u002Fye_bywa1ytcnzpi5yjpdwdb0eky.png","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_ybt","geo":["Москва","Нижний Новгород","Екатеринбург","Новосибирск","Санкт-Петербург"],"isOnline":true,"descriptionHtml":"\u003Cp\u003EВ&nbsp;ноябре Яндекс организует Backend Tour по&nbsp;городам России, в&nbsp;рамках которого можно будет познакомиться офлайн с&nbsp;нанимающими командами и&nbsp;получить оффер за&nbsp;неделю.\u003C\u002Fp\u003E \u003Cp\u003EВстречи пройдут в&nbsp;Москве, Нижнем Новгороде, Екатеринбурге, Новосибирске и&nbsp;Санкт-Петербурге. Инженеры расскажут о&nbsp;своих сервисах и&nbsp;технологиях, а&nbsp;после знакомства вас ждет небольшая вечеринка с&nbsp;выступлением стендап-комика Севы Ловкачева.\u003C\u002Fp\u003E \u003Cp\u003EРасписание встреч:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003E13&nbsp;ноября Москва офлайн (будет онлайн-трансляция)\u003C\u002Fli\u003E \u003Cli\u003E14&nbsp;ноября Нижний Новгород\u003C\u002Fli\u003E \u003Cli\u003E15&nbsp;ноября Екатеринбург\u003C\u002Fli\u003E \u003Cli\u003E16&nbsp;ноября Новосибирск\u003C\u002Fli\u003E \u003Cli\u003E17&nbsp;ноября Санкт-Петербург\u003C\u002Fli\u003E\u003C\u002Ful\u003E \u003Cp\u003E20&ndash;26 ноября Week Offer Backend: все секции и&nbsp;оффер за&nbsp;неделю для соискателей с&nbsp;опытом разработки от&nbsp;трёх лет на&nbsp;С++, С#, Python, Java, Go&nbsp;и&nbsp;Scala.\u003C\u002Fp\u003E \u003Cp\u003EЗаявки на&nbsp;Week Offer принимаются до&nbsp;19&nbsp;ноября.\u003C\u002Fp\u003E"},{"id":"events_53","titleHtml":"HighLoad++ 2023","startDay":"2023-11-27","finishDay":"2023-11-28","startTime":"9:00","finishTime":"20:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fxo\u002F6u\u002Fw1\u002Fxo6uw1o3hf9y9tsxzq4pvya719y.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_hld","geo":["Москва"],"isOnline":true,"descriptionHtml":"\u003Cp\u003EHighLoad++ 2023&nbsp;&mdash; юбилейная, 20-я конференция HighLoad++. И&nbsp;это будет больше, чем конференция: 3000&nbsp;участников, 120+&nbsp;спикеров, 11&nbsp;залов, 5+&nbsp;мастер-классов.\u003C\u002Fp\u003E \u003Cp\u003EВ&nbsp;этом году в&nbsp;рамках HighLoad++ 2023 пройдет Golang Conf 2023&nbsp;&mdash; конференция для Go-разработчиков. Поговорим о&nbsp;лучших практиках, технологиях, архитектуре и&nbsp;фреймворках, добавим хардкора. И, конечно, 2&nbsp;дня живого общения с&nbsp;единомышленниками и&nbsp;коллегами, нетворкинг, интересные кейсы, последние новости индустрии и&nbsp;современные подходы в&nbsp;разработке высоконагруженных систем.\u003C\u002Fp\u003E \u003Cp\u003EЖдем вас 27&nbsp;и&nbsp;28&nbsp;ноября в&nbsp;Москве на&nbsp;HighLoad 2023&nbsp;&mdash; мероприятии с&nbsp;самой высокой концентрацией IT- профессионалов страны.\u003C\u002Fp\u003E"},{"id":"events_83","titleHtml":"Открытая трансляция Главного зала HighLoad++ 2023","startDay":"2023-11-27","finishDay":"2023-11-28","startTime":"10:00","finishTime":"20:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fnx\u002Fj7\u002F0c\u002Fnxj70czlrvofb_ilwzbxteekkao.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_hldtr","geo":[],"isOnline":true,"descriptionHtml":"\u003Cp\u003E27&nbsp;и&nbsp;28&nbsp;ноября будет открытая трансляция Главного зала HighLoad++ 2023. Это стало возможным благодаря поддержке нашего генерального партнёра, компании Яндекс.\u003C\u002Fp\u003E \u003Cp\u003EВ&nbsp;программе открытого трека&nbsp;&mdash; доклады лучших спикеров и&nbsp;трансляция церемонии награждения Премии HighLoad++ 2023.\u003C\u002Fp\u003E \u003Cp\u003EЗарегистрируйтесь, чтобы получить бесплатный доступ к&nbsp;открытому треку.\u003C\u002Fp\u003E"},{"id":"events_77","titleHtml":"Конференция «Новая эра ИТ: путь к вершинам технологий»","startDay":"2023-11-28","finishDay":"2023-11-28","startTime":"10:00","finishTime":"17:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fk_\u002F6k\u002F_l\u002Fk_6k_l-xttxdnpdk9ltuaikrvhq.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_k2","geo":["Москва"],"isOnline":true,"descriptionHtml":"\u003Cp\u003EМы&nbsp;живем в&nbsp;новой реальности российского технологического рынка. Для устойчивого развития крупным компаниям приходится перестраивать традиционные стратегии и&nbsp;искать нестандартные решения для привычных задач.\u003C\u002Fp\u003E \u003Cp\u003EПриглашаем вас обсудить актуальные сценарии развития ИТ-ландшафта с&nbsp;лидерами отрасли на&nbsp;конференции &laquo;Новая Эра&nbsp;ИТ: путь к&nbsp;вершинам технологий&raquo; 28&nbsp;ноября в&nbsp;Москве.\u003C\u002Fp\u003E \u003Cp\u003EУчастие будет полезно, если вам необходимо:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003EРазобраться в&nbsp;новой картине рынка\u003C\u002Fli\u003E\u003Cli\u003EПодобрать альтернативы для миграции с&nbsp;зарубежных ИТ-систем\u003C\u002Fli\u003E\u003Cli\u003EИнтегрировать российские и&nbsp;другие доступные решения в&nbsp;инфраструктуру\u003C\u002Fli\u003E\u003C\u002Ful\u003E"},{"id":"events_80","titleHtml":"Business Code Conference","startDay":"2023-11-30","finishDay":"2023-11-30","startTime":"17:30","finishTime":"00:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fwd\u002F7s\u002Fsr\u002Fwd7ssrwcqti7tfyvodmoho8rbcs.png","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_bcc","geo":["Москва"],"isOnline":false,"descriptionHtml":"\u003Cp\u003EКоманда платформы МТС Exolve готовит вечер-знакомство с&nbsp;передовыми фишками&nbsp;AI и&nbsp;наработками, о&nbsp;которых расскажут ведущие специалисты сервиса и&nbsp;эксперты этой сферы.\u003C\u002Fp\u003E \u003Cp\u003EГости вечера изучат процессы создания&nbsp;AI и&nbsp;практические кейсы с&nbsp;использованием AI-технологий. Каждый из&nbsp;них основан на&nbsp;реальном опыте и&nbsp;проблемах.\u003C\u002Fp\u003E \u003Cp\u003EУчастники смогут обсудить любую деталь и&nbsp;новые возможности для своих повседневных задач и&nbsp;будущих вызовов рынка, в&nbsp;том числе на&nbsp;основе опыта Китая. Спикеры конференции знают о&nbsp;внедрении&nbsp;AI в&nbsp;бизнес если не&nbsp;все, то&nbsp;больше всех и&nbsp;готовы рассказать о&nbsp;феномене его популярности и&nbsp;факторах роста технологий в&nbsp;Китае. Участники оценят темпы развития AI-компаний России и&nbsp;скачок технологических и&nbsp;AI-компаний в&nbsp;Китае, поймут все возможности и&nbsp;ограничения.\u003C\u002Fp\u003E \u003Cp\u003EМероприятие откроют первый вице-президент МТС Инесса Галактионова и&nbsp;директор MTC Exolve Рамиль Биккужин.\u003C\u002Fp\u003E"},{"id":"events_71","titleHtml":"Импульс Т1","startDay":"2023-12-01","finishDay":"2023-12-01","startTime":"12:30","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Faw\u002Fji\u002Fao\u002Fawjiaov7a6ix4aybmzwnvw0c6qq.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_t1msk","geo":["Москва"],"isOnline":true,"descriptionHtml":"\u003Cp\u003EФинальная конференция из&nbsp;цикла бесплатных IT-событий &laquo;Импульс&nbsp;Т1&raquo; в&nbsp;2023&nbsp;году. Ежегодно холдинг Т1&nbsp;проводит конференции &laquo;Импульс&nbsp;Т1&raquo; для формирования и&nbsp;укрепления российской инженерной школы в&nbsp;разных городах России.\u003C\u002Fp\u003E \u003Cp\u003EКонференции адресованы широкой аудитории IT-специалистов и&nbsp;предпринимателей в&nbsp;IT. В&nbsp;программе&nbsp;&mdash; лекции о&nbsp;разработке, тестировании, инженерном деле от&nbsp;разработчиков крупных компаний и&nbsp;научных популяризаторов.\u003C\u002Fp\u003E \u003Cp\u003EХолдинг Т1&nbsp;&mdash; одна из&nbsp;крупнейших IТ-компаний России. Цель организатора&nbsp;&mdash; привлечь молодежь в&nbsp;российские компании и&nbsp;помочь новаторам превратить идею в&nbsp;бизнес-проект.\u003C\u002Fp\u003E"},{"id":"events_81","titleHtml":"YaTalks 2023 — главная конференция Яндекса для IT сообщества","startDay":"2023-12-05","finishDay":"2023-12-06","startTime":"9:00","finishTime":"23:59","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fzu\u002Fre\u002Fcn\u002Fzurecne_sihfslk0efj2c_bcova.png","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fyatalks2023","geo":["Москва","Белград"],"isOnline":true,"descriptionHtml":"\u003Cp\u003EГлавная конференция Яндекса для IT-сообщества&nbsp;&mdash; YaTalks 2023.\u003C\u002Fp\u003E \u003Cp\u003EБолее 100 экспертов IT-индустрии и&nbsp;учёных. Технические доклады о&nbsp;разработке и&nbsp;ML. Научно-популярные лекции и&nbsp;выступления об&nbsp;управлении командами. Можно послушать вживую доклады учёных и&nbsp;экспертов индустрии, напрямую задать вопросы спикерам, познакомиться и&nbsp;пообщаться с&nbsp;коллегами из&nbsp;разных компаний и&nbsp;направлений в&nbsp;IT.\u003C\u002Fp\u003E \u003Cp\u003EГлавная тема YaTalks 2023&nbsp;&mdash; &laquo;Явления&raquo;.Обсудим макротренды и&nbsp;гейм-чейнджеры в&nbsp;технологиях и&nbsp;науке, большие процессы в&nbsp;IT, менеджерские практики и&nbsp;новые подходы.\u003C\u002Fp\u003E \u003Cp\u003E\u003Cstrong\u003EПервый день\u003C\u002Fstrong\u003E посвятим хардовым технологиям: фронтенду, мобильной разработке, бэкенду, DevOps, базам данных, GPT, NLP, а&nbsp;также трендам в&nbsp;этих направлениях.\u003C\u002Fp\u003E \u003Cp\u003E\u003Cstrong\u003EВо&nbsp;второй день\u003C\u002Fstrong\u003E узнаем об&nbsp;управленческих практиках в&nbsp;IT и&nbsp;научных фронтирах, которые вот-вот изменят индустрию.\u003C\u002Fp\u003E \u003Cp\u003EПереходите на&nbsp;сайт и&nbsp;узнайте больше о&nbsp;спикерах конференции.\u003C\u002Fp\u003E"},{"id":"events_50","titleHtml":"Курс «Разработка высокоскоростных устройств и систем передачи данных»","startDay":"2023-12-09","finishDay":"2023-12-11","startTime":"10:00","finishTime":"17:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fsc\u002Fie\u002Ffp\u002Fsciefp-fox1b1kyqn9bwa5ll2um.png","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_nish","geo":["Москва"],"isOnline":false,"descriptionHtml":"\u003Cp\u003EНовая Инженерная Школа проводит курс повышения квалификации, рассчитанный на&nbsp;инженеров-схемотехников, а&nbsp;также системных инженеров, занимающихся разработкой высокоскоростных устройств.\u003C\u002Fp\u003E\u003Cp\u003EИзучение курса позволит слушателям осознанно подходить к&nbsp;разработке, используя определенный маршрут проектирования, в&nbsp;частности:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003Eпонимать сущность высокоскоростных сигналов;\u003C\u002Fli\u003E\u003Cli\u003Eпонимать проблемы и&nbsp;риски, возникающие при разработке высокоскоростных устройств;\u003C\u002Fli\u003E\u003Cli\u003Eпрогнозировать и&nbsp;нивелировать проблемы на&nbsp;этапе эскизной разработки;\u003C\u002Fli\u003E\u003Cli\u003Eанализировать и&nbsp;устранять проблемы на&nbsp;этапе верификации разработанного устройства;\u003C\u002Fli\u003E\u003Cli\u003Eпроверять прототипы с&nbsp;использованием современной измерительной аппаратуры.\u003C\u002Fli\u003E\u003C\u002Ful\u003E\u003Cp\u003EТемы курса:\u003C\u002Fp\u003E\u003Col\u003E\u003Cli\u003EВведение. История развития проблем целостности сигналов и&nbsp;питания.\u003C\u002Fli\u003E\u003Cli\u003EОсновные положения.\u003C\u002Fli\u003E\u003Cli\u003EИдеальная линия передач.\u003C\u002Fli\u003E\u003Cli\u003EПерекрестные помехи.\u003C\u002Fli\u003E\u003Cli\u003EРеальные проводники.\u003C\u002Fli\u003E\u003Cli\u003EДиэлектрики.\u003C\u002Fli\u003E\u003Cli\u003EОсновы теории цепей.\u003C\u002Fli\u003E\u003Cli\u003EСхемотехника.\u003C\u002Fli\u003E\u003Cli\u003EЭквализация.\u003C\u002Fli\u003E\u003Cli\u003EБюджет.\u003C\u002Fli\u003E\u003Cli\u003EПримеры высокоскоростных интерфейсов.\u003C\u002Fli\u003E\u003Cli\u003EЦелостность питания.\u003C\u002Fli\u003E\u003Cli\u003EИзмерения и&nbsp;моделирование.\u003C\u002Fli\u003E\u003C\u002Fol\u003E"},{"id":"events_58","titleHtml":"Курс «Обеспечение электромагнитной совместимости изделий современной техники»","startDay":"2023-12-18","finishDay":"2023-12-20","startTime":"10:00","finishTime":"17:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fsl\u002Flv\u002Fe0\u002Fsllve0c9tpnoqnc20iidt7p9ue8.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_nsh","geo":["Москва"],"isOnline":false,"descriptionHtml":"\u003Cp\u003EНовая Инженерная Школа проводит курс повышения квалификации, направленный на&nbsp;формирование или совершенствование профессиональных компетенций в&nbsp;области внутрисистемной электромагнитной совместимости (ЭМС) изделий современной техники для конструкторов радиоэлектронных средств (РЭС).\u003C\u002Fp\u003E \u003Cp\u003EНастоящая программа рассчитана на&nbsp;инженерно-технических работников с&nbsp;высшим профессиональным образованием, занимающихся конструкторским и&nbsp;технологическим проектированием радиоэлектронной, электронно-вычислительной аппаратуры, систем автоматики и&nbsp;управления и&nbsp;т.п. различного назначения, а&nbsp;также на&nbsp;руководителей среднего звена проектных организаций.\u003C\u002Fp\u003E \u003Cp\u003EТемы курса:\u003C\u002Fp\u003E\u003Col\u003E\u003Cli\u003EВведение в&nbsp;проблему ЭМС.\u003C\u002Fli\u003E \u003Cli\u003EСертификационные требования ЭМС.\u003C\u002Fli\u003E \u003Cli\u003EСхемотехнические методы обеспечения ЭМС.\u003C\u002Fli\u003E \u003Cli\u003EПомехи в&nbsp;межсоединениях.\u003C\u002Fli\u003E \u003Cli\u003EЭкранирование аппаратуры.\u003C\u002Fli\u003E \u003Cli\u003EМощные электромагнитные воздействия на&nbsp;технические средства и&nbsp;методы защиты.\u003C\u002Fli\u003E \u003Cli\u003EОбеспечение радиационной стойкости современной РЭА.\u003C\u002Fli\u003E\u003C\u002Fol\u003E"},{"id":"events_78","titleHtml":"«Спокойно, договоримся!» — тренинг по переговорам и отношениям с клиентами в B2B","startDay":"2024-01-19","finishDay":"2024-01-20","startTime":"10:00","finishTime":"18:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fpb\u002F1w\u002Fob\u002Fpb1wobpfv_crqwdsb6eqiho4co0.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_hflb2","geo":["Москва"],"isOnline":false,"descriptionHtml":"\u003Cp\u003EПрокачаем навыки переговорщика и&nbsp;научим, как пересобрать отношения с&nbsp;клиентами в&nbsp;B2B. Мы&nbsp;не&nbsp;коучи, а&nbsp;топ-менеджеры с&nbsp;реальным опытом в&nbsp;большом бизнесе. За&nbsp;10+&nbsp;лет работы мы&nbsp;научились дружить с&nbsp;клиентами не&nbsp;только на&nbsp;начальном этапе, но&nbsp;и&nbsp;развивать зрелые проекты.\u003C\u002Fp\u003E\u003Cp\u003EТренинг будет полезен, если&nbsp;вы:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003Eотвечаете за&nbsp;отношения с&nbsp;клиентами, ведение проектов и&nbsp;управление людьми,\u003C\u002Fli\u003E \u003Cli\u003Eмного и&nbsp;тесно работаете с&nbsp;заказчиками&nbsp;&mdash; внешними и&nbsp;внутренними,\u003C\u002Fli\u003E \u003Cli\u003Eработаете в&nbsp;b2b-продажах в&nbsp;IT.\u003C\u002Fli\u003E\u003C\u002Ful\u003E \u003Cp\u003EКто проведет:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003EКонстантин Степанов, исполнительный директор HFLabs. За&nbsp;три года привлек 14&nbsp;крупных клиентов.\u003C\u002Fli\u003E \u003Cli\u003EНикита Назаров, технический директор HFLabs. Умеет делать так, чтобы клиент становился постоянным клиентом.\u003C\u002Fli\u003E\u003C\u002Ful\u003E \u003Cp\u003EСтань участником закрытого клуба по&nbsp;переговорам с&nbsp;разбором личных кейсов и&nbsp;поддержкой экспертов.\u003C\u002Fp\u003E"}]}};(function(){var s;(s=document.currentScript||document.scripts[document.scripts.length-1]).parentNode.removeChild(s);}());</script>
+  <script src="https://assets.habr.com/habr-web/js/chunk-vendors.a9207891.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/page-hub.1572dac4.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/7298.c8f1d73c.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/8684.f283f98f.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/app.5b8f7247.js" defer></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S28W1WC23F"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    </script>
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(24049213, "init", {
+      defer:true,
+      trackLinks:true,
+      accurateTrackBounce:true,
+      webvisor:false,
+    });
+  </script>
+  <noscript>
+   <div>
+    <img src="https://mc.yandex.ru/watch/24049213" style="position:absolute; left:-9999px;" alt="">
+   </div>
+  </noscript>
+  <script type="text/javascript">
+      window.addEventListener('load', function () {
+        setTimeout(() => {
+          const img = new Image();
+          img.src = 'https://vk.com/rtrg?p=VK-RTRG-421343-57vKE';
+        }, 0);
+      });
+    </script>
+  <script src="/js/ads.js" onload="window['zhY4i4nJ9K'] = true"></script>
+ </body>
+</html>

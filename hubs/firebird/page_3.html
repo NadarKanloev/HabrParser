@@ -1,0 +1,1634 @@
+<!doctype html>
+<html lang="ru" data-vue-meta="%7B%22lang%22:%7B%22ssr%22:%22ru%22%7D%7D">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,maximum-scale=1,user-scalable=0">
+  <meta name="referrer" content="unsafe-url">
+  <title>Firebird/Interbase — Система управления базами данных / Хабр</title>
+  <style>
+    /* cyrillic-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSxf6TF0.woff2) format('woff2');
+      unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveQhf6TF0.woff2) format('woff2');
+      unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* latin-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSBf6TF0.woff2) format('woff2');
+      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveRhf6.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* non-breaking hyphen */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/l/font?kit=KFOlCnqEu92Fr1MmEU9vBh0_IsHAlmrO6g&skey=ee881451c540fdec&v=v29) format('woff2');
+      unicode-range: U+02011;
+    }
+  </style>
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/chunk-vendors.0da14ebf.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/chunk-vendors.a9207891.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/app.b42efa13.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/app.5b8f7247.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/page-hub.a4eacd3e.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/page-hub.1572dac4.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/7298.c8f1d73c.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/8684.f283f98f.js" as="script">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/chunk-vendors.0da14ebf.css">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/app.b42efa13.css">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/page-hub.a4eacd3e.css">
+  <script>window.i18nFetch = new Promise((res, rej) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', '/js/i18n/ru-compiled.d229fa61213aa884a102911fd18b62b0.json');
+          xhr.responseType = 'json';
+          xhr.onload = function(e) {
+            if (this.status === 200) {
+              res({ru: xhr.response});
+            } else {
+              rej(e);
+            }
+          };
+          xhr.send();
+        });</script>
+  <style>.grecaptcha-badge{visibility: hidden;}</style>
+  <meta name="habr-version" content="2.155.1">
+  <meta data-vue-meta="ssr" itemprop="image" content="/img/habr_ru.png" data-vmid="image:itemprop">
+  <meta data-vue-meta="ssr" property="og:image" content="/img/habr_ru.png" data-vmid="og:image">
+  <meta data-vue-meta="ssr" property="og:image:width" content="1200" data-vmid="og:image:width">
+  <meta data-vue-meta="ssr" property="og:image:height" content="630" data-vmid="og:image:height">
+  <meta data-vue-meta="ssr" property="aiturec:image" content="/img/habr_ru.png" data-vmid="aiturec:image">
+  <meta data-vue-meta="ssr" name="twitter:image" content="/img/habr_ru.png" data-vmid="twitter:image">
+  <meta data-vue-meta="ssr" property="vk:image" content="/img/habr_ru.png?format=vk" data-vmid="vk:image">
+  <meta data-vue-meta="ssr" property="fb:app_id" content="444736788986613">
+  <meta data-vue-meta="ssr" property="fb:pages" content="472597926099084">
+  <meta data-vue-meta="ssr" name="twitter:card" content="summary_large_image">
+  <meta data-vue-meta="ssr" name="twitter:site" content="@habr_com">
+  <meta data-vue-meta="ssr" property="og:locale" content="ru_RU" data-vmid="og:locale">
+  <meta data-vue-meta="ssr" property="og:type" content="website" data-vmid="og:type">
+  <meta data-vue-meta="ssr" property="og:site_name" content="Хабр" data-vmid="og:site_name">
+  <meta data-vue-meta="ssr" property="og:url" content="https://habr.com/ru/hubs/firebird/articles/page3/" data-vmid="og:url">
+  <meta data-vue-meta="ssr" property="og:title" content="Firebird/Interbase — Система управления базами данных / Хабр" data-vmid="og:title">
+  <meta data-vue-meta="ssr" name="description" content="Firebird (FirebirdSQL) — кроссплатформенная система управления базами данных (СУБД), работающая на Mac OS X, Linux, Microsoft Windows и разнообразных Unix платформах.">
+  <meta data-vue-meta="ssr" property="og:description" content="Firebird (FirebirdSQL) — кроссплатформенная система управления базами данных (СУБД), работающая на Mac OS X, Linux, Microsoft Windows и разнообразных Unix платформах.">
+  <meta data-vue-meta="ssr" name="keywords" content="firebird,sql,firebirdsql,базы данных,субд,php,open source,c++,c,бекап,firemonkey,pvs-studio,статический анализ кода,laravel,импортозамещение,nodejs,.net,delphi,backup,firedac,interbase">
+  <link data-vue-meta="ssr" rel="image_src" href="/img/habr_ru.png" data-vmid="image:href">
+  <link data-vue-meta="ssr" href="https://habr.com/ru/hubs/firebird/" rel="canonical" data-vmid="canonical">
+  <link data-vue-meta="ssr" href="https://habr.com/ru/rss/hubs/firebird/articles/?fl=ru" type="application/rss+xml" title="" rel="alternate" name="rss">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#303b44">
+  <meta name="msapplication-TileColor" content="#629FBC">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="shortcut icon" type="image/png" sizes="16x16" href="https://assets.habr.com/habr-web/img/favicons/favicon-16.png">
+  <link rel="shortcut icon" type="image/png" sizes="32x32" href="https://assets.habr.com/habr-web/img/favicons/favicon-32.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-76.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-152.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-180.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="256x256" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-256.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1136x640.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2436x1125.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1792x828.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_828x1792.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1334x750.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2668.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2208x1242.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1125x2436.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2208.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2732x2048.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2688x1242.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2224x1668.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_750x1334.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x2732.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2388x1668.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2224.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_640x1136.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2388.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x1536.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1536x2048.png">
+  <link rel="mask-icon" color="#77a2b6" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.svg">
+  <link crossorigin="use-credentials" href="/manifest.webmanifest" rel="manifest">
+  <script async src="https://unpkg.com/pwacompat" crossorigin="anonymous"></script>
+  <script>window.yaContextCb = window.yaContextCb || []</script>
+  <script src="https://yandex.ru/ads/system/context.js" async></script>
+ </head>
+ <body>
+  <div id="app" data-server-rendered="true" data-async-called="true">
+   <div class="tm-layout__wrapper">
+    <!---->
+    <div></div><!---->
+    <header class="tm-header">
+     <div class="tm-page-width">
+      <div class="tm-header__container">
+       <!----> <span class="tm-header__logo-wrap"><a href="/ru/" class="tm-header__logo tm-header__logo_ru">
+         <svg height="16" width="16" class="tm-svg-img tm-header__icon">
+          <title>
+           Хабр
+          </title> <use xlink:href="/img/habr-logo-ru.svg#logo"></use>
+         </svg></a> <span class="tm-header__beta-sign" style="display:none;">β</span></span>
+       <div class="tm-dropdown tm-header__projects">
+        <div class="tm-dropdown__head">
+         <button class="tm-header__dropdown-toggle">
+          <svg height="16" width="16" class="tm-svg-img tm-header__icon tm-header__icon_dropdown">
+           <title>
+            Открыть список
+           </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#arrow-down"></use>
+          </svg></button>
+        </div><!---->
+       </div><a href="/ru/sandbox/start/" class="tm-header__become-author-btn"> Как стать автором </a>
+       <div class="tm-feature tm-header__feature tm-feature tm-feature_variant-inline">
+        <!---->
+       </div><!----> <!---->
+      </div>
+     </div>
+    </header>
+    <div class="tm-layout">
+     <div class="tm-page-progress-bar"></div>
+     <div data-menu-sticky="true" class="tm-base-layout__header tm-base-layout__header_is-sticky">
+      <div class="tm-page-width">
+       <div class="tm-base-layout__header-wrapper">
+        <div class="tm-main-menu">
+         <div class="tm-main-menu__section">
+          <nav class="tm-main-menu__section-content">
+           <!----> <a href="/ru/articles/" class="tm-main-menu__item"> Все потоки </a> <a href="/ru/flows/develop/" class="tm-main-menu__item"> Разработка </a><a href="/ru/flows/admin/" class="tm-main-menu__item"> Администрирование </a><a href="/ru/flows/design/" class="tm-main-menu__item"> Дизайн </a><a href="/ru/flows/management/" class="tm-main-menu__item"> Менеджмент </a><a href="/ru/flows/marketing/" class="tm-main-menu__item"> Маркетинг </a><a href="/ru/flows/popsci/" class="tm-main-menu__item"> Научпоп </a>
+          </nav>
+         </div>
+        </div>
+        <div class="tm-header-user-menu tm-base-layout__user-menu">
+         <a href="/ru/search/" class="tm-header-user-menu__item tm-header-user-menu__search">
+          <svg height="24" width="24" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_search tm-header-user-menu__icon_dark">
+           <title>
+            Поиск
+           </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#search"></use>
+          </svg></a> <!----> <!----> <!---->
+         <div class="tm-header-user-menu__item">
+          <button class="tm-header-user-menu__toggle">
+           <svg height="24" width="24" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_dark">
+            <title>
+             Настройки
+            </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#page-settings"></use>
+           </svg></button>
+         </div><a href="https://habr.com/kek/v1/auth/habrahabr/?back=/ru/hubs/firebird/articles/page3/&amp;hl=ru" rel="nofollow" class="tm-header-user-menu__item"><button type="button" class="tm-header-user-menu__login btn btn_solid btn_small"> Войти </button></a> <!---->
+         <div class="v-portal" style="display:none;"></div>
+        </div>
+       </div>
+      </div>
+     </div><!---->
+     <div class="tm-page-width"></div>
+     <main class="tm-layout__container">
+      <div data-async-called="true" class="tm-page">
+       <div class="tm-page-width">
+        <!---->
+        <div class="tm-page__wrapper">
+         <div class="tm-page__main tm-page__main_has-sidebar">
+          <div class="pull-down">
+           <!---->
+           <div class="pull-down__header" style="height:0px;">
+            <div class="pull-down__content" style="bottom:10px;">
+             <svg height="24" width="24" class="tm-svg-img pull-down__icon pull-down__arrow">
+              <title>
+               Обновить
+              </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#pull-arrow"></use>
+             </svg>
+            </div>
+           </div><!---->
+           <div class="tm-page__top">
+            <!---->
+            <div class="tm-hub-card tm-hub-card tm-hub-card_variant-base">
+             <div class="tm-hub-card__header tm-hub-card__header tm-hub-card__header_variant-base">
+              <div class="tm-hub-card__data">
+               <div class="tm-hub-card__avatar">
+                <div class="tm-entity-image">
+                 <img alt src="//habrastorage.org/getpro/habr/hub/567/b4a/77a/567b4a77aae9db45aa5dad5a5c8dd11a.png" class="tm-entity-image__pic">
+                </div>
+               </div>
+               <div class="tm-counter-container">
+                <div class="tm-counter-container__header">
+                 <div class="tm-votes-lever tm-votes-lever tm-votes-lever_appearance-rating">
+                  <!---->
+                  <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-rating">
+                   <span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_rating"> 0 </span>
+                  </div><!---->
+                 </div>
+                </div>
+                <div class="tm-counter-container__footer">
+                 <span class="tm-rating__text tm-rating__text"> Рейтинг </span>
+                </div>
+               </div>
+              </div>
+              <div></div>
+             </div>
+             <h1 class="tm-hub-card__name tm-hub-card__name tm-hub-card__name_variant-base"><span>Firebird/Interbase</span> <span title="Профильный хаб" class="tm-hub-card__profiled"> *</span></h1>
+             <p class="tm-hub-card__description tm-hub-card__description tm-hub-card__description_variant-base">Система управления базами данных</p>
+             <div></div><!----> <!---->
+            </div>
+            <div class="tm-tabs tm-tabs_page-header tm-tabs tm-tabs_variant-default">
+             <div class="tm-tabs__scroll-area">
+              <span class="tm-tabs__tab-item"><a href="/ru/hubs/firebird/" data-test-id="tab-link-active" class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_active"> Статьи <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/ru/hubs/firebird/posts/" class="tm-tabs__tab-link tm-tabs__tab-link"> Посты <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/ru/hubs/firebird/news/" class="tm-tabs__tab-link tm-tabs__tab-link"> Новости <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/ru/hubs/firebird/authors/" class="tm-tabs__tab-link tm-tabs__tab-link"> Авторы <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/ru/hubs/firebird/companies/" class="tm-tabs__tab-link tm-tabs__tab-link"> Компании <!----> <!----></a></span>
+             </div><!---->
+            </div>
+            <div class="tm-navigation-filter">
+             <div class="tm-navigation-filters-spoiler">
+              <div class="tm-navigation-filters-spoiler__wrapper">
+               <button type="button" class="tm-navigation-filters-spoiler__button"> Все подряд 
+                <svg height="16" width="16" class="tm-svg-img icon_dropdown-arrow">
+                 <title>
+                  Открыть список
+                 </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#arrow-down"></use>
+                </svg></button> <button class="tm-rss-button tm-hub__rss tm-rss-button_default"><span class="tm-svg-icon__wrapper tm-rss-button__icon">
+                 <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+                  <title>
+                   Скопировать ссылку на RSS
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#rss"></use>
+                 </svg></span></button>
+              </div>
+              <div class="tm-navigation-filters-spoiler__content">
+               <div class="tm-navigation-filters__options">
+                <div class="tm-navigation-filters__list-label">
+                 Сначала показывать
+                </div>
+                <div class="tm-navigation-filters__tabs">
+                 <ul class="tm-navigation-filters-tabs__list">
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button tm-navigation-filters-tabs__option-button_active"> Новые </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> Лучшие </button></li>
+                 </ul>
+                </div>
+                <div class="tm-navigation-filters__list-label">
+                 Порог рейтинга
+                </div>
+                <div class="tm-navigation-filters__tabs">
+                 <ul class="tm-navigation-filters-tabs__list">
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button tm-navigation-filters-tabs__option-button_active"> Все </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> ≥0 </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> ≥10 </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> ≥25 </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> ≥50 </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> ≥100 </button></li>
+                 </ul>
+                </div>
+                <div>
+                 <div class="tm-navigation-filters__list-label">
+                  Уровень сложности
+                 </div>
+                 <ul class="tm-navigation-filters__list">
+                  <li class="tm-navigation-filters__option"><button tabindex="-1" class="tm-navigation-filters__option-button tm-navigation-filters__option-button_active"> Все </button></li>
+                  <li class="tm-navigation-filters__option"><button tabindex="-1" class="tm-navigation-filters__option-button"> Простой </button></li>
+                  <li class="tm-navigation-filters__option"><button tabindex="-1" class="tm-navigation-filters__option-button"> Средний </button></li>
+                  <li class="tm-navigation-filters__option"><button tabindex="-1" class="tm-navigation-filters__option-button"> Сложный </button></li>
+                 </ul>
+                </div><button type="button" tabindex="-1" class="tm-navigation-filters__apply btn btn_solid btn_small"> Применить </button>
+               </div>
+              </div>
+             </div>
+            </div><!---->
+           </div>
+           <div data-async-called="true" class="tm-articles-subpage">
+            <div>
+             <div class="tm-articles-list">
+              <!---->
+              <article id="201586" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/arni/" title="arni" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="//habrastorage.org/r/w48/getpro/habr/avatars/b1d/3e5/48f/b1d3e548fe10df573804c558420ead10.jpg" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/arni/" class="tm-user-info__username"> arni <!----></a> <span class="tm-article-datetime-published"><time datetime="2013-11-10T20:17:17.000Z" title="2013-11-11, 00:17">11 ноя 2013 в 00:17</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/201586/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Установка актуальной версии Firebird на Ubuntu</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 4 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">33K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/firebird/" class="router-link-active tm-publication-hub__link"><span>Firebird/Interbase</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div>
+                <div class="tm-article-labels">
+                 <div class="tm-article-labels__container">
+                  <div class="tm-publication-label tm-publication-label_variant-tutorial">
+                   <span> Туториал </span>
+                  </div>
+                 </div>
+                </div><!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    <img src="https://habrastorage.org/getpro/habr/post_images/5f5/fe5/649/5f5fe5649ff975e079f7a052d533a796.gif">
+                    <br>
+                    <br>
+                     В официальных репозиториях Ubuntu можно найти пакеты Firebird не самой первой свежести. Например для моего текущего LTS-релиза 10.04.4 Lucid Lynx (да-да, я ретроград, надух не переваривающий Unity и Gnome3) это будет Firebird 2.5.0.26074. В то время как последний официальный релиз — <a href="http://www.firebirdsql.org/en/firebird-2-5-2-upd1/">2.5.2.26540 Security Update 1</a>. Если нужен последний релиз, нужно либо собирать птицу из исходников, либо подключить сторонний репозиторий. Далее рассматривается второй вариант.
+                    <br>
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/201586/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 10: ↑4 и ↓6
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 10: ↑4 и ↓6" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_negative tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">-2</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 8 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/201586/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 3 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div><!---->
+              <article id="200490" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/FireMonkey/" title="FireMonkey" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="https://assets.habr.com/habr-web/img/avatars/018.png" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/FireMonkey/" class="tm-user-info__username"> FireMonkey <!----></a> <span class="tm-article-datetime-published"><time datetime="2013-11-01T11:16:30.000Z" title="2013-11-01, 15:16">1 ноя 2013 в 15:16</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/companies/delphi/articles/200490/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Разработка кроссплатформенных мобильных приложений в Delphi #2</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 8 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">59K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/companies/delphi/articles/" class="tm-publication-hub__link"><span>Блог компании «Embarcadero (Borland)»</span> <!----></a></span><span class="tm-publication-hub__link-container"><a href="/ru/hubs/delphi/" class="tm-publication-hub__link"><span>Delphi</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-publication-hub__link-container"><a href="/ru/hubs/firebird/" class="router-link-active tm-publication-hub__link"><span>Firebird/Interbase</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    <img src="https://habrastorage.org/getpro/habr/post_images/3b9/0d7/2d5/3b90d72d591dbfc5e36d73294fe3478f.png" alt="Delphi for Android" align="left">
+                    <br>
+                    <br><a href="http://habrahabr.ru/company/delphi/blog/199026/">Часть #1</a>
+                    <br>
+                    <br>
+                     В предыдущей части цикла мы сделали обзор основных возможностей новой <b>RAD Studio XE5. </b>Сегодня же перейдем к практике. Прежде всего, давайте определимся с задачей.
+                    <br>
+                    <br>
+                    <h5>Постановка задачи</h5>
+                    <br>
+                    <br>
+                     Не смотря на некоторую академичность задачи, в качестве примера мы выбрали кулинарную книгу. А для придания оригинальности разрабатываемому приложению, попытаемся расширить обычный для подобных программ функционал несколькими дополнительными функциями:
+                    <br>
+                    <br>
+                    <blockquote>
+                     <h6>Пересчет количества требуемых продуктов.</h6>
+                     <br>
+                      Обычно в рецептах указывается точное количество используемых продуктов. Но если требуется изменить количество порций, то соответственно, необходимо пересчитывать и количество продуктов. В процессе приготовления блюда это не всегда удобно.
+                     <br>
+                     <br>
+                     <h6>Таймер.</h6>
+                     <br>
+                      Если вы новичок в кулинарии, то, вам следует использовать рецепты, в которых четко указано время той или иной операции. И таймер на планшете, телефоне или нетбуке вполне может стать удобной заменой кухонному таймеру.
+                     <br>
+                      Часто бывает, что несколько операций выполняются параллельно. Каждая операция может иметь свой «таймер». 
+                     <br>
+                      При этом нас интересует, как «настольная», так и мобильная реализация приложения. Мобильное приложение будет использоваться в качестве пособия для визуализации рецепта и сопровождения процесса подготовки. Настольная версия может быть использована в более расширенном функционале для, например, формирования новых рецептов.
+                    </blockquote>
+                    <br>
+                    <br>
+                     Здесь следует оговориться, что в принципе, поваренные книги, как и книги по программированию, могут быть рассчитаны на разный уровень подготовленности читателей. В нашем случае речь идет о «рецептах для чайников», т. е. тех, в которых указывается точное количество продуктов и точное время того или иного действия. 
+                    <br>
+                    <br>
+                     Данное приложение мы реализуем для <b>Windows </b>и для <b>Android</b>. Затем на основе единой базы исходных кодов мы сможем выполнить портирование приложения на <b>MacOS </b>и <b>iOS</b>.
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/companies/delphi/articles/200490/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 57: ↑43 и ↓14
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 57: ↑43 и ↓14" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+29</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 146 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/companies/delphi/articles/200490/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 65 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div><!---->
+              <article id="158575" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/arni/" title="arni" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="//habrastorage.org/r/w48/getpro/habr/avatars/b1d/3e5/48f/b1d3e548fe10df573804c558420ead10.jpg" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/arni/" class="tm-user-info__username"> arni <!----></a> <span class="tm-article-datetime-published"><time datetime="2012-11-14T05:41:44.000Z" title="2012-11-14, 09:41">14 ноя 2012 в 09:41</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/158575/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Комплексная автоматизация резервного копирования баз данных Firebird/InterBase на Windows-серверах</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 35 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">30K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/firebird/" class="router-link-active tm-publication-hub__link"><span>Firebird/Interbase</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div>
+                <div class="tm-article-labels">
+                 <div class="tm-article-labels__container">
+                  <div class="tm-publication-label tm-publication-label_variant-tutorial">
+                   <span> Туториал </span>
+                  </div>
+                  <div class="tm-publication-label tm-publication-label_variant-sandbox">
+                   <a href="/ru/sandbox/"> Из песочницы </a>
+                  </div>
+                 </div>
+                </div><!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    <img src="https://habrastorage.org/getpro/habr/post_images/493/01e/546/49301e546e3b00631a04e4f61ad1796e.png" alt="image">
+                    <br>
+                     Приведенный ниже материал может быть полезен начинающим администраторам баз данных, которые осознали важность создания системы резервного копирования, но пока не разжились собственными скриптами или утилитами. Ниже я приведу скрипт в виде командного bat-файла, используемого в нашей организации для автоматизации снятия бекапов с баз данных Firebird, разберу его ключевые фрагменты и приведу примеры использования. Он также подойдет для баз данных Interbase или Yaffil, но полагаю, что с минимальной переделкой вызова утилиты-бекапера, его можно адаптировать практически для любой СУБД.
+                    <br>
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/158575/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 12: ↑11 и ↓1
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 12: ↑11 и ↓1" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+10</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 104 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/158575/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 8 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div><!---->
+              <article id="137664" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/DenisioDelBoro/" title="DenisioDelBoro" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="//habrastorage.org/r/w48/getpro/habr/avatars/713/089/b6e/713089b6e9f77118841083e430a7aa57.jpg" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/DenisioDelBoro/" class="tm-user-info__username"> DenisioDelBoro <!----></a> <span class="tm-article-datetime-published"><time datetime="2012-02-06T05:42:59.000Z" title="2012-02-06, 09:42">6 фев 2012 в 09:42</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/137664/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Почему стоит пользоваться PDO для работы с базой данных</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 9 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">319K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/php/" class="tm-publication-hub__link"><span>PHP</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-publication-hub__link-container"><a href="/ru/hubs/firebird/" class="router-link-active tm-publication-hub__link"><span>Firebird/Interbase</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div>
+                <div class="tm-article-labels">
+                 <div class="tm-article-labels__container">
+                  <!---->
+                  <div class="tm-publication-label tm-publication-label_variant-translation">
+                   <span> Перевод </span>
+                  </div>
+                 </div>
+                </div><!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    <img src="https://habrastorage.org/getpro/habr/post_images/2d0/154/a4b/2d0154a4bc396ea264af74833f19c112.png" align="left">
+                    <br><i>Перевод статьи <a href="http://net.tutsplus.com/tutorials/php/why-you-should-be-using-phps-pdo-for-database-access/">Why you Should be using PHP’s PDO for Database Access.</a></i>
+                    <br>
+                    <br>
+                     Множество PHP-разработчиков привыкли использовать для работы с базами данных расширения mysql и mysqli. Но с версии 5.1 в PHP существует более удобный способ — <a href="http://www.php.net/manual/en/intro.pdo.php">PHP Data Objects</a>. Этот класс, сокращенно именуемый PDO, предоставляет методы для работы с объектами и <a href="http://en.wikipedia.org/wiki/Prepared_statement">prepared statements</a>, которые заметно повысят вашу продуктивность!
+                    <br>
+                    <br>
+                    <h1>Введение в PDO</h1>
+                    <br>
+                    <blockquote>
+                     «PDO – PHP Data Objects – это прослойка, которая предлагает универсальный способ работы с несколькими базами данных.»
+                    </blockquote>
+                    <br>
+                     Заботу об особенностях синтаксиса различных СУБД она оставляет разработчику, но делает процесс переключения между платформами гораздо менее болезненным. Нередко для этого требуется лишь изменить строку подключения к базе данных.
+                    <br><img src="https://habrastorage.org/getpro/habr/post_images/d82/078/923/d82078923b96f594fa24ab614aac02cd.png">
+                    <br>
+                     Эта статья написана для людей, которые пользуются mysql и mysqli, чтобы помочь им в переходе на более мощный и гибкий PDO.
+                    <br>
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/137664/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 127: ↑115 и ↓12
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 127: ↑115 и ↓12" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+103</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 1045 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/137664/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 165 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <div class="tm-article-feed-blocks">
+                <section data-navigatable="" tabindex="0" id="stories_block_4" data-async-called="true" class="tm-block tm-stories-block tm-block tm-block_spacing-around">
+                 <header class="tm-block__header tm-block__header">
+                  <div class="tm-block__header-container">
+                   <h2 class="tm-block__title tm-block__title">Истории</h2>
+                  </div><!---->
+                 </header>
+                 <div class="tm-block__body tm-block__body tm-block__body_variant-equal">
+                  <div class="tm-stories-empty">
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                  </div><!---->
+                 </div><!---->
+                </section>
+               </div>
+              </div><!---->
+              <article id="133763" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/ToLive/" title="ToLive" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="https://assets.habr.com/habr-web/img/avatars/196.png" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/ToLive/" class="tm-user-info__username"> ToLive <!----></a> <span class="tm-article-datetime-published"><time datetime="2011-12-01T09:26:36.000Z" title="2011-12-01, 13:26">1 дек 2011 в 13:26</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/133763/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Логгирование приложения на C# в базу данных FireBird Embedded с помощью NLog 2.0</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 4 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">8.5K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/net/" class="tm-publication-hub__link"><span>.NET</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-publication-hub__link-container"><a href="/ru/hubs/firebird/" class="router-link-active tm-publication-hub__link"><span>Firebird/Interbase</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div>
+                <div class="tm-article-labels">
+                 <div class="tm-article-labels__container">
+                  <!---->
+                  <div class="tm-publication-label tm-publication-label_variant-sandbox">
+                   <a href="/ru/sandbox/"> Из песочницы </a>
+                  </div>
+                 </div>
+                </div><!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    Приступая к своему первому десктопному приложению на С#, я задался вопросом ведения логов. Изучив предложения по данной теме, за хорошие отзывы и отсутствие платы за использование, мой выбор пал на NLog 2.0. После чтения документации на сайте, а также местных статьей, я легко настроил вывод отладочной информации в текстовый файл. Но пытливый ум на месте не стоит, и так как в моем приложении используется база данных FireBird Embedded, то я решил настроить логгирование в нее. Вот тут я и получил пазл длиной в 5 часов.
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/133763/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 26: ↑24 и ↓2
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 26: ↑24 и ↓2" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+22</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 32 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/133763/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 4 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div><!---->
+              <article id="133633" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/xdenser/" title="xdenser" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="https://assets.habr.com/habr-web/img/avatars/162.png" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/xdenser/" class="tm-user-info__username"> xdenser <!----></a> <span class="tm-article-datetime-published"><time datetime="2011-11-30T07:11:10.000Z" title="2011-11-30, 11:11">30 ноя 2011 в 11:11</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/133633/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>и Firebird SQL Server</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 6 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">13K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/nodejs/" class="tm-publication-hub__link"><span>Node.JS</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-publication-hub__link-container"><a href="/ru/hubs/firebird/" class="router-link-active tm-publication-hub__link"><span>Firebird/Interbase</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    <img align="left" src="https://habrastorage.org/getpro/habr/post_images/1ea/090/457/1ea0904574260dd681edcefa842a5d08.png">
+                    <br>
+                    <br>
+                    <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;О чем это</h4>
+                    <br>
+                     Являясь автором модуля подключения к Firebird для NodeJS, я долго откладывал публикацию о нем, считая, что модуль еще достаточно сырой. Кроме того, развитие модуля несколько застопорилось, поскольку весь необходимый мне функционал в нем уже присутствует (однако он еще далек от универсальности). 
+                    <br>
+                     Время от времени только возникает необходимость исправить выявленную ошибку или подправить что-то для обеспечения совместимости с последней стабильной версией NodeJS. Надо сказать, что модуль не является популярным ввиду направленности NodeJS сообщества на NoSQL решения. А Firebird сообщество, видимо, смотрит на NodeJS с осторожностью, да и не такое уж оно и большое. К тому же довольно часто Firebird используется в связке с Delphi на платформе Windows, так что заинтересовать кого-либо из работающих под Windows специфичным Linux решением тоже тяжело. Однако, недавнее значительное продвижение проекта NodeJS в сторону поддержки Windows дало надежду на привлечение внимания таких людей к проекту. Эта публикация будет посвящена тому, как можно работать с Firebird из NodeJS. Будут даны инструкции по установке для Linux и Windows, примеры типовых сценариев работы. Топик, однако, рассчитан на тех, кто хоть немного знаком с Firebird (необходима рабочая копия сервера БД для экспериментов). Для тех, кто не знаком с Firebird, в конце публикации будут даны ссылки на ресурсы для изучения.
+                    <br>
+                    <br>
+                     Заинтересовавшимся — добро пожаловать под кат.
+                    <br>
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/133633/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 23: ↑21 и ↓2
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 23: ↑21 и ↓2" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+19</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 43 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/133633/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 18 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div><!---->
+              <article id="113165" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/ncix/" title="ncix" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="//habrastorage.org/r/w48/getpro/habr/avatars/b26/959/961/b26959961b2be41f76f2ea4eab11b9fe.jpg" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/ncix/" class="tm-user-info__username"> ncix <!----></a> <span class="tm-article-datetime-published"><time datetime="2011-02-04T14:11:09.000Z" title="2011-02-04, 17:11">4 фев 2011 в 17:11</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/113165/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Машина Тьюринга на чистом SQL</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 3 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">7.8K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/crazydev/" class="tm-publication-hub__link"><span>Ненормальное программирование</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-publication-hub__link-container"><a href="/ru/hubs/firebird/" class="router-link-active tm-publication-hub__link"><span>Firebird/Interbase</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    Пару месяцев назад прочитал <a href="http://habrahabr.ru/blogs/crazydev/109611/">пост</a>, в котором уважаемая <a href="http://habrahabr.ru/users/ksusha/" class="user_link">ksusha</a> написала эмулятор машины Тьюринга используя MySQL и хранимые процедуры. Статья дала толчок к идее сделать машину Тьюринга на чистом SQL, без использования хранимых процедур. Для реализации был использован знакомый и любимый Firebird версии 2.1. 
+                    <br>
+                    <br>
+                     Существует две принципиальные проблемы при создании машины Тьюринга на голом SQL: 
+                    <br>
+                    <ul>
+                     <li>1) лента машины может быть и модифицирована и дописана, что требует операторов INSERT и UPDATE в одной конструкции;</li>
+                     <li>2) машина Тьюринга требует как минимум одной переменной для состояния. Обычные SQL(DML)-запросы не могут хранить промежуточных переменных, по крайней мере в Firebird.</li>
+                    </ul>
+                    <br>
+                     Тем не менее, мне удалось обойти эти ограничения
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/113165/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 54: ↑51 и ↓3
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 54: ↑51 и ↓3" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+48</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 37 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/113165/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 17 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <div class="tm-article-feed-blocks">
+                <div id="promo_block_7" data-navigatable="" tabindex="0">
+                 <div class="placeholder-wrapper">
+                  <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!---->
+                  <div class="tm-placeholder-promo">
+                   <div class="tm-placeholder-promo__header">
+                    <div class="tm-placeholder__line tm-placeholder__line_promo-title"></div>
+                   </div>
+                   <div class="tm-placeholder-promo__body">
+                    <div class="tm-placeholder-promo__posts">
+                     <div class="tm-placeholder-promo__post">
+                      <div class="tm-placeholder-promo__image"></div>
+                      <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                     </div>
+                     <div class="tm-placeholder-promo__post">
+                      <div class="tm-placeholder-promo__image"></div>
+                      <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                     </div>
+                     <div class="tm-placeholder-promo__post">
+                      <div class="tm-placeholder-promo__image"></div>
+                      <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                     </div>
+                    </div>
+                    <div class="tm-placeholder-promo__dots">
+                     <div class="tm-placeholder-promo__dot"></div>
+                     <div class="tm-placeholder-promo__dot"></div>
+                     <div class="tm-placeholder-promo__dot"></div>
+                    </div>
+                   </div>
+                  </div><!----> <!----> <!----> <!----> <!---->
+                 </div>
+                </div>
+               </div>
+              </div><!---->
+              <article id="105555" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/AlexeyKovyazin/" title="AlexeyKovyazin" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="https://assets.habr.com/habr-web/img/avatars/076.png" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/AlexeyKovyazin/" class="tm-user-info__username"> AlexeyKovyazin <!----></a> <span class="tm-article-datetime-published"><time datetime="2010-10-05T07:24:41.000Z" title="2010-10-05, 11:24">5 окт 2010 в 11:24</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/105555/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Релиз Firebird 2.5: Производительность и Аудит</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 2 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">13K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/open_source/" class="tm-publication-hub__link"><span>Open source</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-publication-hub__link-container"><a href="/ru/hubs/firebird/" class="router-link-active tm-publication-hub__link"><span>Firebird/Interbase</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    <img align="left" src="https://habrastorage.org/getpro/habr/post_images/e24/ce6/05e/e24ce605ef565994234e89c9dde7dedf.png">
+                    <br>
+                     4 октября выпущен Firebird 2.5, 5-й релиз реляционной СУБД с открытым кодом. Пресс-релиз (<a href="http://www.firebirdsql.org/pop/pop_pressRelease25.html">английский) здесь</a>, скачать дистрибутивы и исходные коды можно на <a href="http://www.firebirdsql.org/index.php?op=files&amp;id=engine_250">www.firebirdsql.org</a>. Доступны 32- и 64-битные версии для Windows и Linux, MacOSX, Solaris и HP-UX появятся позже.
+                    <br>
+                    <br><b>Новые возможности Firebird 2.5</b>
+                    <br>
+                    <br>
+                     • Новая архитектура SuperClassic. Firebird 2.5 представляет новую архитектуру под названием SuperClassic, которая позволяет получить большую отдачу от многопроцессорных и многоядерных серверов, и работать с еще большим количеством пользователей 
+                    <br>
+                     • Аудит. Новые функции Services API позволяют вести аудит запросов к серверу практически в реальном времени, и анализировать все запросы, выполняемые над базой данных.
+                    <br>
+                     • Запросы между базами данных. Firebird 2.5 позволяет из хранимых процедур, триггеров и блоков кода одной базы данных обращаться к другим базам данных Firebird.
+                    <br>
+                     • Расширенное управление пользователями. Управление пользователями теперь доступно через SQL-операторы
+                    <br>
+                     • Другие возможности включают в себя автономные транзакции в коде PSQL (хранимых процедурах, триггерах и блоках кода), регулярные выражения в SQL – SIMILAR TO, асинхронное отключение соединений, расширения возможностей мониторинга и многое другое.
+                    <br>
+                    <br>
+                     Более подробную информацию о всех нововведениях можно прочесть в документе <a href="http://www.firebirdsql.org/rlsnotesh/rlsnotes25.html">Release Notes Firebird 2.5</a>.
+                    <br>
+                    <br>
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/105555/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 21: ↑21 и ↓0
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 21: ↑21 и ↓0" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+21</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 16 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/105555/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 76 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div><!---->
+              <article id="88708" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/Monca/" title="Monca" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="https://assets.habr.com/habr-web/img/avatars/095.png" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/Monca/" class="tm-user-info__username"> Monca <!----></a> <span class="tm-article-datetime-published"><time datetime="2010-03-28T17:02:42.000Z" title="2010-03-28, 21:02">28 мар 2010 в 21:02</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/88708/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Firebird: 10 лет успешного развития</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 3 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">11K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/firebird/" class="router-link-active tm-publication-hub__link"><span>Firebird/Interbase</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    <img align="left" src="https://habrastorage.org/getpro/habr/post_images/c03/a05/5a4/c03a055a4611803657563685b84750ac.jpg" alt="image">
+                    <br>
+                     Firebird — универсальная СУБД с открытым кодом.
+                    <br>
+                     Этот обзор посвящен 10 летию огненной птицы (которое состоится в июле), а так же скорому выходу финальной версии Firebird 2.5 (скорее всего конец апреля — начало мая).
+                    <br>
+                     MindTheBird!
+                    <br><a href="http://www.MindTheBird.com">www.MindTheBird.com</a>
+                    <br>
+                    <br>
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/88708/" class="tm-article-snippet__readmore"><span>за мной, читатель</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 27: ↑20 и ↓7
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 27: ↑20 и ↓7" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+13</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 12 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/88708/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 24 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div>
+             </div><!---->
+             <div class="tm-pagination">
+              <a href="/ru/hubs/firebird/articles/page2/" id="pagination-prev-page" data-pagination-prev="" rel="prev" class="tm-pagination__navigation-link tm-pagination__navigation-link_active">
+               <svg height="16" width="16" class="tm-svg-img tm-pagination__arrow tm-pagination__arrow_prev">
+                <title>
+                 Назад
+                </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#arrow-back"></use>
+               </svg><span class="tm-pagination__navigation-link-title"> Сюда </span></a>
+              <div class="tm-pagination__pages">
+               <div class="tm-pagination__page-group">
+                <a href="/ru/hubs/firebird/articles/page1/" class="tm-pagination__page"> 1 </a><a href="/ru/hubs/firebird/articles/page2/" class="tm-pagination__page"> 2 </a> <!---->
+               </div><span class="tm-pagination__page tm-pagination__page_current"> 3 </span>
+              </div>
+              <div id="pagination-next-page" data-pagination-next="" event="" rel="next" class="tm-pagination__navigation-link">
+               <span class="tm-pagination__navigation-link-title"> Туда </span>
+               <svg height="16" width="16" class="tm-svg-img tm-pagination__arrow tm-pagination__arrow_next">
+                <title>
+                 Назад
+                </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#arrow-back"></use>
+               </svg>
+              </div>
+             </div>
+            </div>
+           </div><!---->
+          </div>
+         </div>
+         <div class="tm-page__sidebar">
+          <div data-async-called="true" class="tm-layout-sidebar">
+           <div class="tm-layout-sidebar__ads tm-layout-sidebar__ads_initial">
+            <div class="tm-adfox-banner__container tm-layout-sidebar__banner tm-layout-sidebar__banner_top">
+             <!---->
+             <div id="adfox_164725680533065327" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-half-page"></div>
+            </div>
+           </div>
+           <div class="tm-sexy-sidebar tm-sexy-sidebar_initial" style="margin-top:0px;">
+            <!---->
+            <section class="tm-block tm-block tm-block_spacing-bottom">
+             <header class="tm-block__header tm-block__header">
+              <div class="tm-block__header-container">
+               <h2 class="tm-block__title tm-block__title">Вклад авторов</h2>
+              </div><!---->
+             </header>
+             <div class="tm-block__body tm-block__body">
+              <ul class="tm-contribution-list">
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/AlexeyKovyazin/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="https://assets.habr.com/habr-web/img/avatars/076.png" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/AlexeyKovyazin/" class="tm-authors-block__author-name">AlexeyKovyazin</a>
+                  <div class="tm-contribution-list__contribution">
+                   193.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:100%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/sim_84/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="https://assets.habr.com/habr-web/img/avatars/133.png" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/sim_84/" class="tm-authors-block__author-name">sim_84</a>
+                  <div class="tm-contribution-list__contribution">
+                   101.4
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:52.538860103626945%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/SergVasiliev/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/961/686/480/9616864807c4e838bc2c8af17d0ccf22.png" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/SergVasiliev/" class="tm-authors-block__author-name">SergVasiliev</a>
+                  <div class="tm-contribution-list__contribution">
+                   49.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:25.38860103626943%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/ncix/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/b26/959/961/b26959961b2be41f76f2ea4eab11b9fe.jpg" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/ncix/" class="tm-authors-block__author-name">ncix</a>
+                  <div class="tm-contribution-list__contribution">
+                   48.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:24.870466321243523%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/DenisioDelBoro/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/713/089/b6e/713089b6e9f77118841083e430a7aa57.jpg" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/DenisioDelBoro/" class="tm-authors-block__author-name">DenisioDelBoro</a>
+                  <div class="tm-contribution-list__contribution">
+                   41.2
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:21.34715025906736%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/Andrey2008/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/71b/4ac/f13/71b4acf131d3d675b999b4a47f573b0a.jpg" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/Andrey2008/" class="tm-authors-block__author-name">Andrey2008</a>
+                  <div class="tm-contribution-list__contribution">
+                   34.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:17.616580310880828%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/SergeyPyankov/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="https://assets.habr.com/habr-web/img/avatars/168.png" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/SergeyPyankov/" class="tm-authors-block__author-name">SergeyPyankov</a>
+                  <div class="tm-contribution-list__contribution">
+                   33.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:17.098445595854923%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/FireMonkey/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="https://assets.habr.com/habr-web/img/avatars/018.png" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/FireMonkey/" class="tm-authors-block__author-name">FireMonkey</a>
+                  <div class="tm-contribution-list__contribution">
+                   29.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:15.025906735751295%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/RED_SOFT/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/e50/128/edd/e50128edd5f183cf5b15a1d98aa5bc83.jpg" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/RED_SOFT/" class="tm-authors-block__author-name">RED_SOFT</a>
+                  <div class="tm-contribution-list__contribution">
+                   22.2
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:11.50259067357513%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/ToLive/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="https://assets.habr.com/habr-web/img/avatars/196.png" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/ToLive/" class="tm-authors-block__author-name">ToLive</a>
+                  <div class="tm-contribution-list__contribution">
+                   22.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:11.398963730569948%;"></div>
+                 </div>
+                </div></li>
+              </ul>
+             </div>
+             <footer class="tm-block__footer">
+              <a href="/ru/hubs/firebird/authors/" class="tm-block-extralink"> 100 лучших авторов </a>
+             </footer>
+            </section><!----> <!---->
+            <div class="tm-adfox-banner__container tm-layout-sidebar__banner tm-layout-sidebar__banner_bottom">
+             <!---->
+             <div id="adfox_164725691003361602" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-medium-rectangle"></div>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </main><!---->
+    </div>
+    <div class="tm-footer-menu">
+     <div class="tm-page-width">
+      <div class="tm-footer-menu__container">
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title">Ваш аккаунт</p>
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr/?back=/ru/hubs/firebird/articles/page3/&amp;hl=ru" rel="nofollow" target="_self"> Войти </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr-register/?back=/ru/hubs/firebird/articles/page3/&amp;hl=ru" rel="nofollow" target="_self"> Регистрация </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title">Разделы</p>
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/" class="footer-menu__item-link router-link-active"> Статьи </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/news/" class="footer-menu__item-link"> Новости </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/hubs/" class="footer-menu__item-link router-link-active"> Хабы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/companies/" class="footer-menu__item-link"> Компании </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/users/" class="footer-menu__item-link"> Авторы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/sandbox/" class="footer-menu__item-link"> Песочница </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title">Информация</p>
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/help/" class="footer-menu__item-link"> Устройство сайта </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/authors/codex/" class="footer-menu__item-link"> Для авторов </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/companies/corpblogs/" class="footer-menu__item-link"> Для компаний </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/docs/transparency/" class="footer-menu__item-link"> Документы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/agreement/?hl=ru_RU" target="_blank"> Соглашение </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/confidential/?hl=ru_RU" target="_blank"> Конфиденциальность </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title">Услуги</p>
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/corporate-blogs/" target="_blank"> Корпоративный блог </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/advertising/" target="_blank"> Медийная реклама </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/native-special/" target="_blank"> Нативные проекты </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/education-programs/" target="_blank"> Образовательные программы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/hello-startup/" target="_blank"> Стартапам </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/specials/" class="footer-menu__item-link"> Спецпроекты </a></li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="tm-footer">
+     <div class="tm-page-width">
+      <div class="tm-footer__container">
+       <!---->
+       <div class="tm-footer__social">
+        <a href="https://www.facebook.com/habrahabr.ru" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Facebook
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-facebook"></use>
+         </svg></a><a href="https://twitter.com/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Twitter
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-twitter"></use>
+         </svg></a><a href="https://vk.com/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           VK
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-vk"></use>
+         </svg></a><a href="https://telegram.me/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Telegram
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-telegram"></use>
+         </svg></a><a href="https://www.youtube.com/channel/UCd_sTwKqVrweTt4oAKY5y4w" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Youtube
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-youtube"></use>
+         </svg></a><a href="https://dzen.ru/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Яндекс Дзен
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-dzen"></use>
+         </svg></a>
+       </div>
+       <div class="v-portal" style="display:none;"></div><button class="tm-footer__link"><!----> Настройка языка </button> <a href="/ru/feedback/" class="tm-footer__link"> Техническая поддержка </a>
+       <div class="tm-footer-copyright">
+        <span class="tm-copyright"><span class="tm-copyright__years">© 2006–2023, </span> <span class="tm-copyright__name"><a href="https://company.habr.com/" rel="noopener" target="_blank" class="tm-copyright__link">Habr</a></span></span>
+       </div>
+      </div>
+     </div>
+    </div><!----> <!---->
+   </div>
+   <div class="vue-portal-target"></div>
+  </div>
+  <script>window.__INITIAL_STATE__={"adblock":{"hasAcceptableAdsFilter":false,"hasAdblock":false},"articlesList":{"articlesList":{"88708":{"id":"88708","timePublished":"2010-03-28T17:02:42+00:00","isCorporative":false,"lang":"ru","titleHtml":"Firebird: 10 лет успешного развития","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"55302","alias":"Monca","fullname":null,"avatarUrl":"","speciality":""},"statistics":{"commentsCount":24,"favoritesCount":12,"readingCount":11257,"score":13,"votesCount":27,"votesCountPlus":20,"votesCountMinus":7},"hubs":[{"id":"18574","alias":"firebird","type":"collective","title":"Firebird\u002FInterbase","titleHtml":"Firebird\u002FInterbase","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Cimg align=\"left\" src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fpost_images\u002Fc03\u002Fa05\u002F5a4\u002Fc03a055a4611803657563685b84750ac.jpg\" alt=\"image\"\u002F\u003E\u003Cbr\u002F\u003E\r\nFirebird — универсальная СУБД с открытым кодом.\u003Cbr\u002F\u003E\r\nЭтот обзор посвящен 10 летию огненной птицы (которое состоится в июле), а так же скорому выходу финальной версии Firebird 2.5 (скорее всего конец апреля — начало мая).\u003Cbr\u002F\u003E\r\nMindTheBird!\u003Cbr\u002F\u003E\r\n\u003Ca href=\"http:\u002F\u002Fwww.MindTheBird.com\"\u003Ewww.MindTheBird.com\u003C\u002Fa\u003E\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n","imageUrl":null,"buttonTextHtml":"за мной, читатель","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":3,"complexity":null,"tags":[{"titleHtml":"firebird"},{"titleHtml":"СУБД"},{"titleHtml":"промышленные СУБД"}]},"105555":{"id":"105555","timePublished":"2010-10-05T07:24:41+00:00","isCorporative":false,"lang":"ru","titleHtml":"Релиз Firebird 2.5: Производительность и Аудит","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"52202","alias":"AlexeyKovyazin","fullname":"Алексей Ковязин","avatarUrl":"","speciality":"FirebirdSQL в России"},"statistics":{"commentsCount":76,"favoritesCount":16,"readingCount":12678,"score":21,"votesCount":21,"votesCountPlus":21,"votesCountMinus":0},"hubs":[{"id":"144","alias":"open_source","type":"collective","title":"Open source","titleHtml":"Open source","isProfiled":true,"relatedData":null},{"id":"18574","alias":"firebird","type":"collective","title":"Firebird\u002FInterbase","titleHtml":"Firebird\u002FInterbase","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Cimg align=\"left\" src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fpost_images\u002Fe24\u002Fce6\u002F05e\u002Fe24ce605ef565994234e89c9dde7dedf.png\"\u002F\u003E \u003Cbr\u002F\u003E\r\n4 октября выпущен Firebird 2.5, 5-й релиз реляционной СУБД с открытым кодом. Пресс-релиз (\u003Ca href=\"http:\u002F\u002Fwww.firebirdsql.org\u002Fpop\u002Fpop_pressRelease25.html\"\u003Eанглийский) здесь\u003C\u002Fa\u003E, скачать дистрибутивы и исходные коды можно на \u003Ca href=\"http:\u002F\u002Fwww.firebirdsql.org\u002Findex.php?op=files&amp;id=engine_250\"\u003Ewww.firebirdsql.org\u003C\u002Fa\u003E. Доступны 32- и 64-битные версии для Windows и Linux, MacOSX, Solaris и HP-UX появятся позже.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Cb\u003EНовые возможности Firebird 2.5\u003C\u002Fb\u003E\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n• Новая архитектура SuperClassic. Firebird 2.5 представляет новую архитектуру под названием SuperClassic, которая позволяет получить большую отдачу от многопроцессорных и многоядерных серверов, и работать с еще большим количеством пользователей \u003Cbr\u002F\u003E\r\n• Аудит. Новые функции Services API позволяют вести аудит запросов к серверу практически в реальном времени, и анализировать все запросы, выполняемые над базой данных.\u003Cbr\u002F\u003E\r\n• Запросы между базами данных. Firebird 2.5 позволяет из хранимых процедур, триггеров и блоков кода одной базы данных обращаться к другим базам данных Firebird.\u003Cbr\u002F\u003E\r\n• Расширенное управление пользователями. Управление пользователями теперь доступно через SQL-операторы\u003Cbr\u002F\u003E\r\n• Другие возможности включают в себя автономные транзакции в коде PSQL (хранимых процедурах, триггерах и блоках кода), регулярные выражения в SQL – SIMILAR TO, асинхронное отключение соединений, расширения возможностей мониторинга и многое другое.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nБолее подробную информацию о всех нововведениях можно прочесть в документе \u003Ca href=\"http:\u002F\u002Fwww.firebirdsql.org\u002Frlsnotesh\u002Frlsnotes25.html\"\u003ERelease Notes Firebird 2.5\u003C\u002Fa\u003E.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":2,"complexity":null,"tags":[{"titleHtml":"firebird"},{"titleHtml":"SQL"},{"titleHtml":"database"}]},"113165":{"id":"113165","timePublished":"2011-02-04T14:11:09+00:00","isCorporative":false,"lang":"ru","titleHtml":"Машина Тьюринга на чистом SQL","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"60966","alias":"ncix","fullname":null,"avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fb26\u002F959\u002F961\u002Fb26959961b2be41f76f2ea4eab11b9fe.jpg","speciality":"Управление проектами, разработка ПО и железа"},"statistics":{"commentsCount":17,"favoritesCount":37,"readingCount":7829,"score":48,"votesCount":54,"votesCountPlus":51,"votesCountMinus":3},"hubs":[{"id":"84","alias":"crazydev","type":"collective","title":"Ненормальное программирование","titleHtml":"Ненормальное программирование","isProfiled":true,"relatedData":null},{"id":"18574","alias":"firebird","type":"collective","title":"Firebird\u002FInterbase","titleHtml":"Firebird\u002FInterbase","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"Пару месяцев назад прочитал \u003Ca href=\"http:\u002F\u002Fhabrahabr.ru\u002Fblogs\u002Fcrazydev\u002F109611\u002F\"\u003Eпост\u003C\u002Fa\u003E, в котором уважаемая \u003Ca href=\"http:\u002F\u002Fhabrahabr.ru\u002Fusers\u002Fksusha\u002F\" class=\"user_link\"\u003Eksusha\u003C\u002Fa\u003E написала эмулятор машины Тьюринга используя MySQL и хранимые процедуры. Статья дала толчок к идее сделать машину Тьюринга на чистом SQL, без использования хранимых процедур. Для реализации был использован знакомый и любимый Firebird версии 2.1. \u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nСуществует две принципиальные проблемы при создании машины Тьюринга на голом SQL: \u003Cbr\u002F\u003E\r\n\u003Cul\u003E\r\n\u003Cli\u003E1) лента машины может быть и модифицирована и дописана, что требует операторов INSERT и UPDATE в одной конструкции;\u003C\u002Fli\u003E\r\n\u003Cli\u003E2) машина Тьюринга требует как минимум одной переменной для состояния. Обычные SQL(DML)-запросы не могут хранить промежуточных переменных, по крайней мере в Firebird.\u003C\u002Fli\u003E\r\n\u003C\u002Ful\u003E\u003Cbr\u002F\u003E\r\nТем не менее, мне удалось обойти эти ограничения ","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":3,"complexity":null,"tags":[{"titleHtml":"SQL"},{"titleHtml":"firebird"},{"titleHtml":"машина Тьюринга"},{"titleHtml":"Тьюринг"},{"titleHtml":"CTE"}]},"133633":{"id":"133633","timePublished":"2011-11-30T07:11:10+00:00","isCorporative":false,"lang":"ru","titleHtml":"и Firebird SQL Server","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"59855","alias":"xdenser","fullname":null,"avatarUrl":"","speciality":""},"statistics":{"commentsCount":18,"favoritesCount":43,"readingCount":13034,"score":19,"votesCount":23,"votesCountPlus":21,"votesCountMinus":2},"hubs":[{"id":"17110","alias":"nodejs","type":"collective","title":"Node.JS","titleHtml":"Node.JS","isProfiled":true,"relatedData":null},{"id":"18574","alias":"firebird","type":"collective","title":"Firebird\u002FInterbase","titleHtml":"Firebird\u002FInterbase","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Cimg align=\"left\" src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fpost_images\u002F1ea\u002F090\u002F457\u002F1ea0904574260dd681edcefa842a5d08.png\"\u002F\u003E\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch4\u003E&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;О чем это\u003C\u002Fh4\u003E\u003Cbr\u002F\u003E\r\nЯвляясь автором модуля подключения к Firebird для NodeJS, я долго откладывал публикацию о нем, считая, что модуль еще достаточно сырой. Кроме того, развитие модуля несколько застопорилось, поскольку весь необходимый мне функционал в нем уже присутствует (однако он еще далек от универсальности). \u003Cbr\u002F\u003E\r\nВремя от времени только возникает необходимость исправить выявленную ошибку или подправить что-то для обеспечения совместимости с последней стабильной версией NodeJS. Надо сказать, что модуль не является популярным ввиду направленности NodeJS сообщества на NoSQL решения. А Firebird сообщество, видимо, смотрит на NodeJS с осторожностью, да и не такое уж оно и большое. К тому же довольно часто Firebird используется в связке с Delphi на платформе Windows, так что заинтересовать кого-либо из работающих под Windows специфичным Linux решением тоже тяжело. Однако, недавнее значительное продвижение проекта NodeJS в сторону поддержки Windows дало надежду на привлечение внимания таких людей к проекту. Эта публикация будет посвящена тому, как можно работать с Firebird из NodeJS. Будут даны инструкции по установке для Linux и Windows, примеры типовых сценариев работы. Топик, однако, рассчитан на тех, кто хоть немного знаком с Firebird (необходима рабочая копия сервера БД для экспериментов). Для тех, кто не знаком с Firebird, в конце публикации будут даны ссылки на ресурсы для изучения.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nЗаинтересовавшимся — добро пожаловать под кат.\u003Cbr\u002F\u003E\r\n","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":6,"complexity":null,"tags":[{"titleHtml":"nodejs"},{"titleHtml":"firebirdsql"},{"titleHtml":"javascript"}]},"133763":{"id":"133763","timePublished":"2011-12-01T09:26:36+00:00","isCorporative":false,"lang":"ru","titleHtml":"Логгирование приложения на C# в базу данных FireBird Embedded с помощью NLog 2.0","editorVersion":"1.0","postType":"article","postLabels":[{"type":"sandbox","typeOf":"system","title":"Из песочницы","data":{"url":null}}],"author":{"id":"124057","alias":"ToLive","fullname":"Сергей Грабак","avatarUrl":"","speciality":""},"statistics":{"commentsCount":4,"favoritesCount":32,"readingCount":8518,"score":22,"votesCount":26,"votesCountPlus":24,"votesCountMinus":2},"hubs":[{"id":"546","alias":"net","type":"collective","title":".NET","titleHtml":".NET","isProfiled":true,"relatedData":null},{"id":"18574","alias":"firebird","type":"collective","title":"Firebird\u002FInterbase","titleHtml":"Firebird\u002FInterbase","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"Приступая к своему первому десктопному приложению на С#, я задался вопросом ведения логов. Изучив предложения по данной теме, за хорошие отзывы и отсутствие платы за использование, мой выбор пал на NLog 2.0. После чтения документации на сайте, а также местных статьей, я легко настроил вывод отладочной информации в текстовый файл. Но пытливый ум на месте не стоит, и так как в моем приложении используется база данных FireBird Embedded, то я решил настроить логгирование в нее. Вот тут я и получил пазл длиной в 5 часов. ","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":4,"complexity":null,"tags":[{"titleHtml":".NET"},{"titleHtml":"C"},{"titleHtml":"FireBird Embedded"},{"titleHtml":"NLog"}]},"137664":{"id":"137664","timePublished":"2012-02-06T05:42:59+00:00","isCorporative":false,"lang":"ru","titleHtml":"Почему стоит пользоваться PDO для работы с базой данных","editorVersion":"1.0","postType":"article","postLabels":[{"type":"translation","typeOf":"system","title":"Перевод","data":{"originalAuthorName":"Erik Wurzer","originalUrl":"http:\u002F\u002Fnet.tutsplus.com\u002Ftutorials\u002Fphp\u002Fwhy-you-should-be-using-phps-pdo-for-database-access\u002F"}}],"author":{"id":"54922","alias":"DenisioDelBoro","fullname":"-","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F713\u002F089\u002Fb6e\u002F713089b6e9f77118841083e430a7aa57.jpg","speciality":"Пользователь"},"statistics":{"commentsCount":165,"favoritesCount":1045,"readingCount":319160,"score":103,"votesCount":127,"votesCountPlus":115,"votesCountMinus":12},"hubs":[{"id":"260","alias":"php","type":"collective","title":"PHP","titleHtml":"PHP","isProfiled":true,"relatedData":null},{"id":"18574","alias":"firebird","type":"collective","title":"Firebird\u002FInterbase","titleHtml":"Firebird\u002FInterbase","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fpost_images\u002F2d0\u002F154\u002Fa4b\u002F2d0154a4bc396ea264af74833f19c112.png\" align=\"left\"\u002F\u003E\u003Cbr\u002F\u003E\r\n\u003Ci\u003EПеревод статьи \u003Ca href=\"http:\u002F\u002Fnet.tutsplus.com\u002Ftutorials\u002Fphp\u002Fwhy-you-should-be-using-phps-pdo-for-database-access\u002F\"\u003EWhy you Should be using PHP’s PDO for Database Access.\u003C\u002Fa\u003E\u003C\u002Fi\u003E\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nМножество PHP-разработчиков привыкли использовать для работы с базами данных расширения mysql и mysqli. Но с версии 5.1 в PHP существует более удобный способ — \u003Ca href=\"http:\u002F\u002Fwww.php.net\u002Fmanual\u002Fen\u002Fintro.pdo.php\"\u003EPHP Data Objects\u003C\u002Fa\u003E. Этот класс, сокращенно именуемый PDO, предоставляет методы для работы с объектами и \u003Ca href=\"http:\u002F\u002Fen.wikipedia.org\u002Fwiki\u002FPrepared_statement\"\u003Eprepared statements\u003C\u002Fa\u003E, которые заметно повысят вашу продуктивность!\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch1\u003EВведение в PDO\u003C\u002Fh1\u003E\u003Cbr\u002F\u003E\r\n\u003Cblockquote\u003E«PDO – PHP Data Objects – это прослойка, которая предлагает универсальный способ работы с несколькими базами данных.»\u003C\u002Fblockquote\u003E\u003Cbr\u002F\u003E\r\nЗаботу об особенностях синтаксиса различных СУБД она оставляет разработчику, но делает процесс переключения между платформами гораздо менее болезненным. Нередко для этого требуется лишь изменить строку подключения к базе данных.\u003Cbr\u002F\u003E\r\n\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fpost_images\u002Fd82\u002F078\u002F923\u002Fd82078923b96f594fa24ab614aac02cd.png\"\u002F\u003E\u003Cbr\u002F\u003E\r\nЭта статья написана для людей, которые пользуются mysql и mysqli, чтобы помочь им в переходе на более мощный и гибкий PDO.\u003Cbr\u002F\u003E\r\n","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":9,"complexity":null,"tags":[{"titleHtml":"php"},{"titleHtml":"pdo"},{"titleHtml":"php data objects"},{"titleHtml":"sql"}]},"158575":{"id":"158575","timePublished":"2012-11-14T05:41:44+00:00","isCorporative":false,"lang":"ru","titleHtml":"Комплексная автоматизация резервного копирования баз данных Firebird\u002FInterBase на Windows-серверах","editorVersion":"1.0","postType":"article","postLabels":[{"type":"sandbox","typeOf":"system","title":"Из песочницы","data":{"url":null}}],"author":{"id":"70942","alias":"arni","fullname":null,"avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fb1d\u002F3e5\u002F48f\u002Fb1d3e548fe10df573804c558420ead10.jpg","speciality":""},"statistics":{"commentsCount":8,"favoritesCount":104,"readingCount":30245,"score":10,"votesCount":12,"votesCountPlus":11,"votesCountMinus":1},"hubs":[{"id":"18574","alias":"firebird","type":"collective","title":"Firebird\u002FInterbase","titleHtml":"Firebird\u002FInterbase","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fpost_images\u002F493\u002F01e\u002F546\u002F49301e546e3b00631a04e4f61ad1796e.png\" alt=\"image\"\u002F\u003E\u003Cbr\u002F\u003E\r\nПриведенный ниже материал может быть полезен начинающим администраторам баз данных, которые осознали важность создания системы резервного копирования, но пока не разжились собственными скриптами или утилитами. Ниже я приведу скрипт в виде командного bat-файла, используемого в нашей организации для автоматизации снятия бекапов с баз данных Firebird, разберу его ключевые фрагменты и приведу примеры использования. Он также подойдет для баз данных Interbase или Yaffil, но полагаю, что с минимальной переделкой вызова утилиты-бекапера, его можно адаптировать практически для любой СУБД.\u003Cbr\u002F\u003E\r\n","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":"tutorial","readingTime":35,"complexity":null,"tags":[{"titleHtml":"firebird"},{"titleHtml":"interbase"},{"titleHtml":"gbak"},{"titleHtml":"бекап"}]},"200490":{"id":"200490","timePublished":"2013-11-01T11:16:30+00:00","isCorporative":true,"lang":"ru","titleHtml":"Разработка кроссплатформенных мобильных приложений в Delphi #2","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"222550","alias":"FireMonkey","fullname":null,"avatarUrl":"","speciality":""},"statistics":{"commentsCount":65,"favoritesCount":146,"readingCount":59152,"score":29,"votesCount":57,"votesCountPlus":43,"votesCountMinus":14},"hubs":[{"id":"17817","alias":"delphi","type":"corporative","title":"Блог компании «Embarcadero (Borland)»","titleHtml":"Блог компании «Embarcadero (Borland)»","isProfiled":false,"relatedData":null},{"id":"604","alias":"delphi","type":"collective","title":"Delphi","titleHtml":"Delphi","isProfiled":true,"relatedData":null},{"id":"18574","alias":"firebird","type":"collective","title":"Firebird\u002FInterbase","titleHtml":"Firebird\u002FInterbase","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fpost_images\u002F3b9\u002F0d7\u002F2d5\u002F3b90d72d591dbfc5e36d73294fe3478f.png\" alt=\"Delphi for Android\" align=\"left\"\u002F\u003E\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ca href=\"http:\u002F\u002Fhabrahabr.ru\u002Fcompany\u002Fdelphi\u002Fblog\u002F199026\u002F\"\u003EЧасть #1\u003C\u002Fa\u003E\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nВ предыдущей части цикла мы сделали обзор основных возможностей новой \u003Cb\u003ERAD Studio XE5. \u003C\u002Fb\u003EСегодня же перейдем к практике. Прежде всего, давайте определимся с задачей.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch5\u003EПостановка задачи\u003C\u002Fh5\u003E\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nНе смотря на некоторую академичность задачи, в качестве примера мы выбрали кулинарную книгу. А для придания оригинальности разрабатываемому приложению, попытаемся расширить обычный для подобных программ функционал несколькими дополнительными функциями:\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Cblockquote\u003E\u003Ch6\u003EПересчет количества требуемых продуктов. \u003C\u002Fh6\u003E\u003Cbr\u002F\u003E\r\nОбычно в рецептах указывается точное количество используемых продуктов. Но если требуется изменить количество порций, то соответственно, необходимо пересчитывать и количество продуктов. В процессе приготовления блюда это не всегда удобно.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch6\u003EТаймер. \u003C\u002Fh6\u003E\u003Cbr\u002F\u003E\r\nЕсли вы новичок в кулинарии, то, вам следует использовать рецепты, в которых четко указано время той или иной операции. И таймер на планшете, телефоне или нетбуке вполне может стать удобной заменой кухонному таймеру.\u003Cbr\u002F\u003E\r\nЧасто бывает, что несколько операций выполняются параллельно. Каждая операция может иметь свой «таймер». \u003Cbr\u002F\u003E\r\nПри этом нас интересует, как «настольная», так и мобильная реализация приложения. Мобильное приложение будет использоваться в качестве пособия для визуализации рецепта и сопровождения процесса подготовки. Настольная версия может быть использована в более расширенном функционале для, например, формирования новых рецептов. \u003C\u002Fblockquote\u003E\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nЗдесь следует оговориться, что в принципе, поваренные книги, как и книги по программированию, могут быть рассчитаны на разный уровень подготовленности читателей. В нашем случае речь идет о «рецептах для чайников», т. е. тех, в которых указывается точное количество продуктов и точное время того или иного действия. \u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nДанное приложение мы реализуем для \u003Cb\u003EWindows \u003C\u002Fb\u003Eи для \u003Cb\u003EAndroid\u003C\u002Fb\u003E. Затем на основе единой базы исходных кодов мы сможем выполнить портирование приложения на \u003Cb\u003EMacOS \u003C\u002Fb\u003Eи \u003Cb\u003EiOS\u003C\u002Fb\u003E. ","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":8,"complexity":null,"tags":[{"titleHtml":"Delphi"},{"titleHtml":"FireMonkey"},{"titleHtml":"учебник"},{"titleHtml":"пример"}]},"201586":{"id":"201586","timePublished":"2013-11-10T20:17:17+00:00","isCorporative":false,"lang":"ru","titleHtml":"Установка актуальной версии Firebird на Ubuntu","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"70942","alias":"arni","fullname":null,"avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fb1d\u002F3e5\u002F48f\u002Fb1d3e548fe10df573804c558420ead10.jpg","speciality":""},"statistics":{"commentsCount":3,"favoritesCount":8,"readingCount":33409,"score":-2,"votesCount":10,"votesCountPlus":4,"votesCountMinus":6},"hubs":[{"id":"18574","alias":"firebird","type":"collective","title":"Firebird\u002FInterbase","titleHtml":"Firebird\u002FInterbase","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fpost_images\u002F5f5\u002Ffe5\u002F649\u002F5f5fe5649ff975e079f7a052d533a796.gif\"\u002F\u003E\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nВ официальных репозиториях Ubuntu можно найти пакеты Firebird не самой первой свежести. Например для моего текущего LTS-релиза 10.04.4 Lucid Lynx (да-да, я ретроград, надух не переваривающий Unity и Gnome3) это будет Firebird 2.5.0.26074. В то время как последний официальный релиз — \u003Ca href=\"http:\u002F\u002Fwww.firebirdsql.org\u002Fen\u002Ffirebird-2-5-2-upd1\u002F\"\u003E2.5.2.26540 Security Update 1\u003C\u002Fa\u003E. Если нужен последний релиз, нужно либо собирать птицу из исходников, либо подключить сторонний репозиторий. Далее рассматривается второй вариант.\u003Cbr\u002F\u003E\r\n","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":"tutorial","readingTime":4,"complexity":null,"tags":[{"titleHtml":"Firebird"},{"titleHtml":"Linux"},{"titleHtml":"Ubuntu"},{"titleHtml":"FlameRobin"},{"titleHtml":"IBExpert"}]}},"articlesIds":{"ARTICLES_LIST_BY_HUB_ALL_PAGES_FIREBIRD_3":["201586","200490","158575","137664","133763","133633","113165","105555","88708"]},"isLoading":false,"pagesCount":{"ARTICLES_LIST_BY_HUB_ALL_PAGES_FIREBIRD_3":3},"route":{"name":"ARTICLES_LIST_BY_HUB_ALL_PAGES","params":{"hl":"ru","hubName":"firebird","pageNum":"3"},"query":{}},"reasonsList":null,"postReasonsList":null,"view":"cards","lastVisitedRoute":{},"ssrCommentsArticleIds":[],"viewedPosts":[],"karma":{"userReasonsList":null}},"authorContribution":{"authors":{"hub_firebird":[{"id":"52202","alias":"AlexeyKovyazin","fullname":"Алексей Ковязин","avatarUrl":null,"speciality":"FirebirdSQL в России","scoreStats":{"score":136,"votesCount":190},"rating":0,"invest":193,"relatedData":null,"lastPost":null},{"id":"402590","alias":"sim_84","fullname":"Simonov Denis","avatarUrl":null,"speciality":null,"scoreStats":{"score":28,"votesCount":28},"rating":0,"invest":101.4,"relatedData":null,"lastPost":null},{"id":"617599","alias":"SergVasiliev","fullname":"Сергей Васильев","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F961\u002F686\u002F480\u002F9616864807c4e838bc2c8af17d0ccf22.png","speciality":"Независимый эксперт","scoreStats":{"score":121,"votesCount":173},"rating":0,"invest":49,"relatedData":null,"lastPost":null},{"id":"60966","alias":"ncix","fullname":null,"avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fb26\u002F959\u002F961\u002Fb26959961b2be41f76f2ea4eab11b9fe.jpg","speciality":"Управление проектами, разработка ПО и железа","scoreStats":{"score":27,"votesCount":431},"rating":0.1,"invest":48,"relatedData":null,"lastPost":null},{"id":"54922","alias":"DenisioDelBoro","fullname":"-","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F713\u002F089\u002Fb6e\u002F713089b6e9f77118841083e430a7aa57.jpg","speciality":"Пользователь","scoreStats":{"score":49,"votesCount":127},"rating":0,"invest":41.2,"relatedData":null,"lastPost":null},{"id":"39063","alias":"Andrey2008","fullname":"Андрей Карпов","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F71b\u002F4ac\u002Ff13\u002F71b4acf131d3d675b999b4a47f573b0a.jpg","speciality":"Директор по маркетингу","scoreStats":{"score":574,"votesCount":1414},"rating":10,"invest":34,"relatedData":null,"lastPost":null},{"id":"738559","alias":"SergeyPyankov","fullname":"Пьянков Сергей Михайлович","avatarUrl":null,"speciality":"Delphi- и SQL-разработчик","scoreStats":{"score":19,"votesCount":25},"rating":0,"invest":33,"relatedData":null,"lastPost":null},{"id":"222550","alias":"FireMonkey","fullname":null,"avatarUrl":null,"speciality":null,"scoreStats":{"score":9,"votesCount":85},"rating":0,"invest":29,"relatedData":null,"lastPost":null},{"id":"3156387","alias":"RED_SOFT","fullname":null,"avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fe50\u002F128\u002Fedd\u002Fe50128edd5f183cf5b15a1d98aa5bc83.jpg","speciality":null,"scoreStats":{"score":8,"votesCount":30},"rating":-0.6,"invest":22.2,"relatedData":null,"lastPost":null},{"id":"124057","alias":"ToLive","fullname":"Сергей Грабак","avatarUrl":null,"speciality":null,"scoreStats":{"score":3,"votesCount":9},"rating":0,"invest":22,"relatedData":null,"lastPost":null}]}},"betaTest":{"currentAnnouncement":null,"announcements":{},"announcementCards":null,"announcementComments":{},"announcementCommentThreads":{},"announcementCommentingStatuses":{},"archivedList":[]},"authorStatistics":{"articleRefs":{},"articleIds":{},"pagesCount":{},"route":{},"viewsCount":[],"maxStatsCount":{}},"career":{"seoLandings":[],"hubs":"firebird"},"comments":{"articleComments":{},"articlePinnedComments":{},"searchCommentsResults":null,"pagesCount":null,"commentAccess":{},"scrollParents":{},"pageArticleComments":{"lastViewedComment":0,"postId":null,"lastCommentTimestamp":"","moderated":[],"moderatedIds":[],"commentRoute":""}},"companies":{"companyRefs":{},"companyIds":{},"companyTopIds":{},"pagesCount":{},"companyProfiles":{},"companiesCategories":[],"companiesCategoriesTotalCount":0,"companiesWidgets":{},"companiesWorkers":{},"companiesFans":{},"multiwidgets":{},"route":{},"isLoading":false,"companyWorkersLoading":false,"companyFansLoading":false,"multiwidgetLoading":false,"vacancies":{},"companiesGalleries":{},"companiesBanners":{},"companiesLandingVacancies":{},"companiesTechnologies":{},"workplaceInfo":null},"companyAdmin":{"companyInfo":null,"companyInfoLoading":false,"faqArticles":null,"brandingPreviewImageUrl":null,"jivoStatus":0,"adminNotifications":null},"companiesContribution":{"hubs":{},"flows":{},"companyRefs":{}},"companyHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"conversation":{"messages":[],"respondent":null,"isLoadMore":false},"conversations":{"conversations":[],"unreadCount":0,"pagesCount":0},"docs":{"menu":{},"articles":{},"mainMenu":[],"loading":{"main":false,"dropdown":false,"article":false}},"feature":{"isProbablyVisible":true},"flows":{"updates":{"countNewPostsBySubscription":null,"countNewThreadsBySubscription":null,"countNewNewsBySubscription":null,"countNewPostsAll":34,"countNewNewsAll":12,"countNewThreadsAll":4},"flows":[{"alias":"develop","id":"1","route":{"name":"FLOW_PAGE","params":{"flowName":"develop"}}},{"alias":"admin","id":"6","route":{"name":"FLOW_PAGE","params":{"flowName":"admin"}}},{"alias":"design","id":"2","route":{"name":"FLOW_PAGE","params":{"flowName":"design"}}},{"alias":"management","id":"3","route":{"name":"FLOW_PAGE","params":{"flowName":"management"}}},{"alias":"marketing","id":"4","route":{"name":"FLOW_PAGE","params":{"flowName":"marketing"}}},{"alias":"popsci","id":"7","route":{"name":"FLOW_PAGE","params":{"flowName":"popsci"}}}]},"global":{"isPwa":false,"device":"desktop","isHabrCom":true},"hubs":{"hubRefs":{"firebird":{"id":"18574","alias":"firebird","titleHtml":"Firebird\u002FInterbase","descriptionHtml":"Система управления базами данных","fullDescriptionHtml":"Firebird (FirebirdSQL) — кроссплатформенная система управления базами данных (СУБД), работающая на Mac OS X, Linux, Microsoft Windows и разнообразных Unix платформах.","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F567\u002Fb4a\u002F77a\u002F567b4a77aae9db45aa5dad5a5c8dd11a.png","relatedData":null,"statistics":{"subscribersCount":33789,"rating":0,"authorsCount":23,"postsCount":52},"sponsorship":null,"keywords":["firebird","sql","firebirdsql","базы данных","субд","php","open source","c++","c","бекап","firemonkey","pvs-studio","статический анализ кода","laravel","импортозамещение","nodejs",".net","delphi","backup","firedac","interbase"],"flow":{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"},"isProfiled":true}},"hubIds":{},"pagesCount":{},"isLoading":false,"route":{}},"hubsBlock":{"hubRefs":{"infosecurity":{"id":"50","alias":"infosecurity","titleHtml":"Information Security","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F135\u002F2db\u002F187\u002F1352db18765addaa6e0b2ac013d386d8.png","descriptionHtml":"Data protection","relatedData":null,"statistics":{"subscribersCount":575291,"rating":728.41,"authorsCount":4765,"postsCount":18569},"commonTags":["cybersecurity","elliptic curve cryptography","digital signature","drp","elliptics","signature"],"isProfiled":true,"isOfftop":false},"programming":{"id":"359","alias":"programming","titleHtml":"Programming","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fdb2\u002Fc8f\u002F4a1\u002Fdb2c8f4a1974bf334d01595732f339c1.png","descriptionHtml":"The art of creating computer programs","relatedData":null,"statistics":{"subscribersCount":352023,"rating":707.89,"authorsCount":6673,"postsCount":17828},"commonTags":["java","программирование","dsl","programming languages","python","c","chatgpt","spring data jpa","kotlin"],"isProfiled":true,"isOfftop":false},"popular_science":{"id":"21910","alias":"popular_science","titleHtml":"Popular science","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002F02f\u002F206\u002F0b9\u002F02f2060b99e6f4d9403eee0420d7d5b8.png","descriptionHtml":"Popular science as is","relatedData":null,"statistics":{"subscribersCount":174828,"rating":575.63,"authorsCount":2108,"postsCount":15162},"commonTags":["gravity","special relativity"],"isProfiled":false,"isOfftop":false},"career":{"id":"20740","alias":"career","titleHtml":"IT career","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fcab\u002Ff82\u002F067\u002Fcabf82067c7be08c90a5903f860c9abf.png","descriptionHtml":"Work, work and work (in IT)","relatedData":null,"statistics":{"subscribersCount":79261,"rating":452.75,"authorsCount":3117,"postsCount":8141},"commonTags":["career","presale","russian","america online","international business","relocation"],"isProfiled":false,"isOfftop":false},"games":{"id":"21980","alias":"games","titleHtml":"Games and game consoles","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002F250\u002Fe19\u002F5fa\u002F250e195faa1708e4df5cb8664394a54f.png","descriptionHtml":"Rock Paper Scissors","relatedData":null,"statistics":{"subscribersCount":107942,"rating":448.48,"authorsCount":1101,"postsCount":5587},"commonTags":[],"isProfiled":false,"isOfftop":false},"DIY":{"id":"21976","alias":"DIY","titleHtml":"DIY","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002F0ac\u002F9b4\u002F828\u002F0ac9b48281cd7ba7401b4a4f5d9cd8d8.png","descriptionHtml":"For those who is not all thumbs","relatedData":null,"statistics":{"subscribersCount":426019,"rating":418.89,"authorsCount":2564,"postsCount":6200},"commonTags":["circuit calculator","electronics design","circuit design","diy","arduino","robotics","active filter","dso138 upgrade","servo","bldc"],"isProfiled":false,"isOfftop":false},"antikvariat":{"id":"21930","alias":"antikvariat","titleHtml":"Old hardware","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002F064\u002Fe29\u002F0f4\u002F064e290f484ad3bf745ebe9163b9276a.png","descriptionHtml":"How it was when we were young","relatedData":null,"statistics":{"subscribersCount":161811,"rating":382.21,"authorsCount":606,"postsCount":2195},"commonTags":["музыка","chiptune","demoscene","z80","nes","assembler","6502"],"isProfiled":false,"isOfftop":false},"machine_learning":{"id":"19439","alias":"machine_learning","titleHtml":"Machine learning","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F882\u002F37a\u002Fb33\u002F88237ab33b6f8acc090d443651c4f2f9.png","descriptionHtml":"The basis of artificial intelligence","relatedData":null,"statistics":{"subscribersCount":80519,"rating":383.98,"authorsCount":2402,"postsCount":6575},"commonTags":["neural networks","image processing","ml","ai","artificial intelligence","machine learning","transformers","graphic design","neural paintings","stablediffusion"],"isProfiled":true,"isOfftop":false},"artificial_intelligence":{"id":"21922","alias":"artificial_intelligence","titleHtml":"Artificial Intelligence","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002F445\u002F6b9\u002F287\u002F4456b92870815e30ca14f4f66b6cb443.png","descriptionHtml":"AI, ANN and other forms of an artificial Intelligence\n","relatedData":null,"statistics":{"subscribersCount":113944,"rating":386.52,"authorsCount":2087,"postsCount":6291},"commonTags":["chatgpt","ai","artificial intelligence"],"isProfiled":false,"isOfftop":false},"network_technologies":{"id":"17123","alias":"network_technologies","titleHtml":"Network technologies","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fb2e\u002F13f\u002F8fc\u002Fb2e13f8fcaf2711677c87418b98e85fe.png","descriptionHtml":"From Ethernet to IPv6","relatedData":null,"statistics":{"subscribersCount":159555,"rating":353.17,"authorsCount":1467,"postsCount":4130},"commonTags":["bgp","qrator labs","ddos attack","python","bgp incidents","network","network security","ddos attacks","ipv6","cisco"],"isProfiled":true,"isOfftop":false}},"hubIds":{"all":["infosecurity","programming","popular_science","career","games","DIY","antikvariat","machine_learning","artificial_intelligence","network_technologies"]}},"i18n":{"fl":"ru","hl":"ru"},"info":{"welcomePage":{},"isLoading":true},"location":{"urlStruct":{"protocol":null,"slashes":null,"auth":null,"host":null,"port":null,"hostname":null,"hash":null,"query":{},"pathname":"\u002F","path":"\u002F","href":"\u002F"}},"me":{"user":null,"uuid":null,"ppgDemanded":false,"karmaResetInfo":{"canReincarnate":null,"wasReincarnated":null,"currentScore":null},"notes":null},"modal":{"modals":[]},"mostReadingList":{"mostReadingListIds":[],"mostReadingListRefs":null,"promoPost":null},"ppa":{"articles":{},"card":null,"transactions":null,"totalTransactions":null,"isAccessible":null},"projectsBlocks":{"activeBlocks":{}},"promoData":{"isLoading":false,"hasLoaded":false,"featurer":null,"megaposts":null,"promoLinks":null,"promoPosts":null},"pullRefresh":{"shouldRefresh":false},"sandbox":{"articleIds":[],"articleRefs":{},"pagesCount":null,"route":{},"lastVisitedRoute":{},"isLoading":false},"search":{"searchQueryError":null},"settingsOther":{"inputs":{"uiLang":{"errors":[],"ref":null,"value":""},"articlesLangEnglish":{"errors":[],"ref":null,"value":false},"articlesLangRussian":{"errors":[],"ref":null,"value":false},"agreement":{"errors":[],"ref":null,"value":false},"email":{"errors":[],"ref":null,"value":true},"digest":{"errors":[],"ref":null,"value":true}}},"similarList":{"similarListIds":[],"similarListRefs":null},"ssr":{"error":null,"isDataLoaded":false,"isDataLoading":false,"isHydrationFailed":false,"isServer":false},"stories":{"stories":[{"id":"story-634","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe80\u002F14f\u002F9b0\u002Fe8014f9b0b323e26f89fb65c07367da7.png","title":"Т1","link":"https:\u002F\u002Fu.habr.com\u002FT1"},"title":"Идём на «Импульс Т1» по дороге из жёлтого кирпича","lang":"ru","startTime":"2023-11-21T12:00:00+03:00","finishTime":"2023-12-01T23:59:00+03:00","slides":[{"id":"story-634_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fb83\u002F6f2\u002F4a3\u002Fb836f24a39bedec1aca21003cea65537.jpg","button":null},{"id":"story-634_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F267\u002F0f1\u002F28c\u002F2670f128c419da5750280fe02731a19c.jpg","button":{"title":"«Импульс Т1»","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F98d\u002Fdf8\u002F18e\u002F98ddf818ef47cbe33d8a3de0dac94864.jpg","button":{"title":"Список лекций","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F240\u002Fbc2\u002F4a1\u002F240bc24a10b8f3aa544f03bcdcddbb92.jpg","button":{"title":"Посмотреть питчинг","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F88b\u002Fa1e\u002F34f\u002F88ba1e34f63db6c2fd335c4cbed97ceb.jpg","button":{"title":"Прокачать софт-скилы","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F9a7\u002Fda6\u002F18a\u002F9a7da618aec78c4e7faa2bc7ee3cd8ec.jpg","button":{"title":"Ого! Это нам надо","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa62\u002Fd3b\u002Faaa\u002Fa62d3baaa3434123e969450ae2e99bda.jpg","button":{"title":"Записаться","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}}]},{"id":"story-632","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2d7\u002F718\u002F3c9\u002F2d77183c9e0bca19c45ba4d026645c38.png","title":"Росатом","link":"https:\u002F\u002Fu.habr.com\u002Frstm1"},"title":"Как стать супергероем","lang":"ru","startTime":"2023-11-21T09:47:00+03:00","finishTime":"2023-12-06T09:47:00+03:00","slides":[{"id":"story-632_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F659\u002F578\u002Ff3f\u002F659578f3f9579fbf36a89b2503a6aa23.jpg","button":{"title":"К реальным задачам","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}},{"id":"story-632_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8d0\u002F28d\u002F731\u002F8d028d7310db4fd62d8830795b23b6c6.jpg","button":null},{"id":"story-632_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe51\u002F332\u002F994\u002Fe51332994d7680d1568660a70ba2b9fa.png","button":{"title":"Повторить путь героя","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}},{"id":"story-632_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F374\u002F6ae\u002F4f4\u002F3746ae4f4a94208739455e21c8af57ed.jpg","button":{"title":"Повторить путь героя","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}},{"id":"story-632_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F808\u002Fcd7\u002Faa6\u002F808cd7aa68b649f6c8a460bcaf3f820f.jpg","button":{"title":"Повторить путь героя","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}},{"id":"story-632_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F021\u002F9e8\u002F162\u002F0219e81629dac451e3a44be1723eb0c5.jpg","button":null},{"id":"story-632_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8b2\u002F5b1\u002F21e\u002F8b25b121e5479943bd82d28818a5bf36.jpg","button":null},{"id":"story-632_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F73a\u002F80d\u002F744\u002F73a80d744242c9b7097f7d9c90d54046.jpg","button":null},{"id":"story-632_9","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Faec\u002Fbdd\u002Fe53\u002Faecbdde530d7eefbd0a7830502f78c39.jpg","button":{"title":"Стать супергероем","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}}]},{"id":"story-630","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd63\u002F68e\u002F29d\u002Fd6368e29d27f127a71853042a809b2ab.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002F9xZDQ"},"title":"Рейтинг IT-брендов работодателей 2023","lang":"ru","startTime":"2023-11-17T11:46:00+03:00","finishTime":"2023-12-03T23:59:00+03:00","slides":[{"id":"story-630_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F51e\u002F5eb\u002Fa38\u002F51e5eba3845ee8a1ff6f58932e40cf2c.jpg","button":{"title":"Результаты","link":"https:\u002F\u002Fu.habr.com\u002F9xZDQ","colorType":"light"}},{"id":"story-630_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbe5\u002Feac\u002Fbdc\u002Fbe5eacbdc2348ca76508d2afcef8eaeb.jpg","button":{"title":"Весь рейтинг","link":"https:\u002F\u002Fu.habr.com\u002F9xZDQ","colorType":"light"}},{"id":"story-630_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5be\u002F87f\u002F381\u002F5be87f3810e8ffc6f65bddbe6ae284e4.jpg","button":null},{"id":"story-630_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5e5\u002F2f0\u002F98b\u002F5e52f098b64e5cfbd03d537b47e72376.jpg","button":null},{"id":"story-630_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffcd\u002F665\u002F465\u002Ffcd6654656b8589a78347ede27b4935e.jpg","button":{"title":"Больше статистики","link":"https:\u002F\u002Fu.habr.com\u002F9xZDQ","colorType":"light"}}]},{"id":"story-628","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F360\u002F396\u002Fbc9\u002F360396bc9df8ca528d6ffcc23514c822.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002FxlEaI"},"title":"Активность найма в 3 квартале 2023","lang":"ru","startTime":"2023-11-16T16:16:00+03:00","finishTime":"2023-11-26T23:59:00+03:00","slides":[{"id":"story-628_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2e4\u002F053\u002Fe8d\u002F2e4053e8dedaa5220b1bbf756f8e6a64.png","button":null},{"id":"story-628_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbdd\u002F642\u002Ffe9\u002Fbdd642fe98e7ba4531b0175e4cef6d0c.png","button":null},{"id":"story-628_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff37\u002F4b7\u002Fc5f\u002Ff374b7c5feeb95e49b44d33ee1f97d24.png","button":null},{"id":"story-628_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F762\u002Ff3f\u002F2dd\u002F762f3f2dda3e5244291b3f178b014def.png","button":{"title":"Читать","link":"https:\u002F\u002Fu.habr.com\u002FxlEaI","colorType":"dark"}}]},{"id":"story-552","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F310\u002Fb6d\u002F097\u002F310b6d09710575fad755fc8ed317c7ec.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002Fcalendar_story_2"},"title":"Перевернуть календарь и добавить событие","lang":"ru","startTime":"2023-10-09T10:39:00+03:00","finishTime":"2023-11-26T23:59:00+03:00","slides":[{"id":"story-552_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffd3\u002F1a4\u002F6ab\u002Ffd31a46abecfbc6f654e64a66cb66260.jpg","button":{"title":"Прямо сюда","link":"https:\u002F\u002Fu.habr.com\u002F0RBBA","colorType":"dark"}},{"id":"story-552_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffef\u002F3e3\u002Fb5d\u002Ffef3e3b5d8379c976167169334348272.jpg","button":{"title":"Разместить событие","link":"https:\u002F\u002Fu.habr.com\u002F0RBBA","colorType":"light"}},{"id":"story-552_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8b9\u002Fea9\u002F638\u002F8b9ea9638d36013b31e365ec79b96d2d.jpg","button":{"title":"Тык","link":"https:\u002F\u002Fu.habr.com\u002F0RBBA","colorType":"dark"}}]}]},"technotext":{"years":[],"technotextDocForNominees":null,"technotextDocForWinners":null,"technotextInfo":{},"technotextInfoLoading":false,"technotextWinners":{},"technotextWinnersLoading":false},"userHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"userInvites":{"availableInvites":0,"usedInvitesIds":[],"usedInvitesRefs":{},"usedInvitesPagesCount":0,"unusedInvitesIds":[],"unusedInvitesRefs":{},"unusedInvitesPagesCount":0},"userVotes":{"karmaVotesList":[],"karmaVotesPagesCount":null,"karmaVotesListLoading":false,"commentsVotesList":[],"commentsVotesPagesCount":null,"commentsVotesListLoading":false,"postsVotesList":[],"postsVotesPagesCount":null,"postsVotesListLoading":false,"userVotesList":[],"userVotesPagesCount":null,"userVotesListLoading":false},"users":{"authorRefs":{},"authorIds":{},"pagesCount":{},"authorProfiles":{},"userHubs":{},"userInvitations":{},"authorFollowers":{},"authorFollowed":{},"userSpecialization":{},"karmaStats":[],"statistics":null,"isLoading":false,"authorFollowersLoading":false,"authorFollowedLoading":false,"userHubsLoading":false,"userInvitationsLoading":false,"route":{}},"viewport":{"prevScrollY":{},"scrollY":0,"width":0},"tracker":{"notificationsLoading":false,"notificationsList":[],"notificationsPageCount":0,"pendingMarkNotificationsRead":[],"publicationsLoading":true,"publicationsList":[],"publicationsPageCount":0,"pendingDeletePublications":false,"pendingMarkPublicationsRead":false},"events":{"events":null}};(function(){var s;(s=document.currentScript||document.scripts[document.scripts.length-1]).parentNode.removeChild(s);}());</script>
+  <script src="https://assets.habr.com/habr-web/js/chunk-vendors.a9207891.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/page-hub.1572dac4.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/7298.c8f1d73c.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/8684.f283f98f.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/app.5b8f7247.js" defer></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S28W1WC23F"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    </script>
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(24049213, "init", {
+      defer:true,
+      trackLinks:true,
+      accurateTrackBounce:true,
+      webvisor:false,
+    });
+  </script>
+  <noscript>
+   <div>
+    <img src="https://mc.yandex.ru/watch/24049213" style="position:absolute; left:-9999px;" alt="">
+   </div>
+  </noscript>
+  <script type="text/javascript">
+      window.addEventListener('load', function () {
+        setTimeout(() => {
+          const img = new Image();
+          img.src = 'https://vk.com/rtrg?p=VK-RTRG-421343-57vKE';
+        }, 0);
+      });
+    </script>
+  <script src="/js/ads.js" onload="window['zhY4i4nJ9K'] = true"></script>
+ </body>
+</html>

@@ -1,0 +1,400 @@
+информационная_безопасность,infosecurity,Защита данных,https://habr.com/ru/hubs/infosecurity/articles/
+программирование,programming,Искусство создания компьютерных программ,https://habr.com/ru/hubs/programming/articles/
+научно-популярное,popular_science,IT в науке и наука в IT,https://habr.com/ru/hubs/popular_science/articles/
+карьера_в_it-индустрии,career,Работать, работать и работать (в IT),https://habr.com/ru/hubs/career/articles/
+игры_и_игровые_консоли,games,Камень, ножницы, бумага,https://habr.com/ru/hubs/games/articles/
+diy_или_сделай_сам,diy,Для тех, у кого руки растут из нужного места,https://habr.com/ru/hubs/DIY/articles/
+старое_железо,antikvariat,Как это было, когда мы были молоды,https://habr.com/ru/hubs/antikvariat/articles/
+машинное_обучение,machine_learning,Основа искусственного интеллекта,https://habr.com/ru/hubs/machine_learning/articles/
+искусственный_интеллект,artificial_intelligence,AI, ANN и иные формы искусственного разума,https://habr.com/ru/hubs/artificial_intelligence/articles/
+сетевые_технологии,network_technologies,От Ethernet до IPv6,https://habr.com/ru/hubs/network_technologies/articles/
+разработка_игр,gamedev,Разработка игр,https://habr.com/ru/hubs/gamedev/articles/
+математика,maths,Царица всех наук,https://habr.com/ru/hubs/maths/articles/
+производство_и_разработка_электроники,electronics,Как наладить процесс,https://habr.com/ru/hubs/electronics/articles/
+it-компании,itcompanies,Компании из индустрии №1,https://habr.com/ru/hubs/itcompanies/articles/
+реверс-инжиниринг,reverse-engineering,Расковырять и понять как работает,https://habr.com/ru/hubs/reverse-engineering/articles/
+python,python,Высокоуровневый язык программирования,https://habr.com/ru/hubs/python/articles/
+компьютерное_железо,hardware,Мать, видюха, память, звук и вот это всё,https://habr.com/ru/hubs/hardware/articles/
+читальный_зал,read,Полезное чтиво по IT-темам,https://habr.com/ru/hubs/read/articles/
+электроника_для_начинающих,easyelectronics,Arduino, DYI и как собрать Электроника,https://habr.com/ru/hubs/easyelectronics/articles/
+исследования_и_прогнозы_в_it,research,Исследования, тренды и прогнозы в IT-сфере,https://habr.com/ru/hubs/research/articles/
+управление_проектами,pm,Как заставить всё работать,https://habr.com/ru/hubs/pm/articles/
+open_source,open_source,Открытое программное обеспечение,https://habr.com/ru/hubs/open_source/articles/
+анализ_и_проектирование_систем,analysis_design,Анализируй и проектируй,https://habr.com/ru/hubs/analysis_design/articles/
+алгоритмы,algorithms,Все об алгоритмах,https://habr.com/ru/hubs/algorithms/articles/
+настройка_linux,linux,Вечный кайф,https://habr.com/ru/hubs/linux/articles/
+it-инфраструктура,it-infrastructure,Инфоцентры + базы данных + системы связи,https://habr.com/ru/hubs/it-infrastructure/articles/
+системное_администрирование,sys_admin,Лишь бы юзер был доволен,https://habr.com/ru/hubs/sys_admin/articles/
+веб-разработка,webdev,Делаем веб лучше,https://habr.com/ru/hubs/webdev/articles/
+история_it,history,Занимательные истории из прошлого,https://habr.com/ru/hubs/history/articles/
+будущее_здесь,futurenow,Оно буквально в дверь стучится,https://habr.com/ru/hubs/futurenow/articles/
+программирование_микроконтроллеров,controllers,Учимся программировать микроконтроллеры,https://habr.com/ru/hubs/controllers/articles/
+физика,physics,Наука об окружающем нас мире,https://habr.com/ru/hubs/physics/articles/
+devops,devops,Методология разработки программного обеспечения,https://habr.com/ru/hubs/devops/articles/
+софт,soft,Программное обеспечение,https://habr.com/ru/hubs/soft/articles/
+управление_персоналом,hr_management,Как правильно нанимать, управлять и расставаться,https://habr.com/ru/hubs/hr_management/articles/
+хранение_данных,dwh,Что имеем, то храним,https://habr.com/ru/hubs/dwh/articles/
+схемотехника,circuit-design,Проектирование электронных схем,https://habr.com/ru/hubs/circuit-design/articles/
+учебный_процесс_в_it,study,Обсуждаем обучение, курсы, тесты и стажировки,https://habr.com/ru/hubs/study/articles/
+разработка_мобильных_приложений,mobile_dev,Android, iOS, Windows Phone и прочие,https://habr.com/ru/hubs/mobile_dev/articles/
+c++,cpp,Типизированный язык программирования,https://habr.com/ru/hubs/cpp/articles/
+gadgets,gadgets,Smartphones, tablets, laptops and so on,https://habr.com/ru/hubs/gadgets/articles/
+image_processing,image_processing,Working with photos and videos,https://habr.com/ru/hubs/image_processing/articles/
+development_for_android,android_dev,Developing for most popular mobile OS,https://habr.com/ru/hubs/android_dev/articles/
+finance_in_it,finance,About complex financial matters,https://habr.com/ru/hubs/finance/articles/
+search_engines,search_technologies,From Bing to Google,https://habr.com/ru/hubs/search_technologies/articles/
+high_performance,hi,Methods for obtaining systems high performance,https://habr.com/ru/hubs/hi/articles/
+legislation_in_it,business-laws,We follow how IT industry is being regulated,https://habr.com/ru/hubs/business-laws/articles/
+development_management,dev_management,Planning, tracking and monitoring,https://habr.com/ru/hubs/dev_management/articles/
+javascript,javascript,High-level, interpreted programming language. It is a language which is also characterized as dynamic, weakly typed, prototype-based and multi-paradigm,https://habr.com/ru/hubs/javascript/articles/
+search_engine_optimization,seo,Heading to the top position in search engines,https://habr.com/ru/hubs/seo/articles/
+transport,transport,Rides or flies?,https://habr.com/ru/hubs/transport/articles/
+c,c,General-purpose, imperative computer programming language, supporting structured programming, lexical variable scope and recursion, while a static type system prevents many unintended operations,https://habr.com/ru/hubs/c/articles/
+astronomy,astronomy,The natural science of the universe,https://habr.com/ru/hubs/astronomy/articles/
+go,go,Compiled, multithreaded programming language,https://habr.com/ru/hubs/go/articles/
+interfaces,ui,What helps to navigate,https://habr.com/ru/hubs/ui/articles/
+it_systems_testing,it_testing,Testing everything,https://habr.com/ru/hubs/it_testing/articles/
+cloud_services,cloud_services,SaaS, clouds and how the data live in them,https://habr.com/ru/hubs/cloud_services/articles/
+product_management,productpm,Learning how to manage a product,https://habr.com/ru/hubs/productpm/articles/
+professional_literature,lib,Useful reading,https://habr.com/ru/hubs/lib/articles/
+habr,habr,Awesome or not?,https://habr.com/ru/hubs/habr/articles/
+java,java,General-purpose computer-programming language that is concurrent, class-based, object-oriented, and specifically designed to have as few implementation dependencies as possible,https://habr.com/ru/hubs/java/articles/
+geoinformation_services,geo,Maps and geotagging on the web,https://habr.com/ru/hubs/geo/articles/
+graphic_design,graph_design,The process of visual communication and problem-solving through the use of typography, photography and illustration,https://habr.com/ru/hubs/graph_design/articles/
+server_administration,s_admin,Installation, configuration, maintenance,https://habr.com/ru/hubs/s_admin/articles/
+abnormal_programming,crazydev,Perversions with code,https://habr.com/ru/hubs/crazydev/articles/
+assembler,assembler,Low-level programming language in which there is a very strong correspondence between the program's statements and the architecture's machine code instructions,https://habr.com/ru/hubs/assembler/articles/
+operating_systems,os,Software that manages computer hardware resources,https://habr.com/ru/hubs/os/articles/
+design,design,Design will save the world,https://habr.com/ru/hubs/design/articles/
+start-up_development,startuprise,The main thing is not the size of the start-up, but the ability to develop it,https://habr.com/ru/hubs/startuprise/articles/
+smartphones,smartphones,Smartphones, phablets, mobile phones,https://habr.com/ru/hubs/smartphones/articles/
+postgresql,postgresql,Object-relational database management system (ORDBMS) with an emphasis on extensibility and standards compliance,https://habr.com/ru/hubs/postgresql/articles/
+social_networks_and_communities,social_networks,Virtual life,https://habr.com/ru/hubs/social_networks/articles/
+industrial_programming,industrial_control_system,Everything about process automation systems,https://habr.com/ru/hubs/industrial_control_system/articles/
+*nix,nix,A hub abot UNIX like OSs,https://habr.com/ru/hubs/nix/articles/
+systems_engineering,engineering_systems,Infrastructure and engineering systems,https://habr.com/ru/hubs/engineering_systems/articles/
+freelance,freelance,Everything you wanted to know about remote job,https://habr.com/ru/hubs/freelance/articles/
+cpu,cpu,Learning the brains of computing devices,https://habr.com/ru/hubs/cpu/articles/
+decentralized_networks,p2p,Overlay computer network,https://habr.com/ru/hubs/p2p/articles/
+it_terminology,terminator,A hub about IT-terminology: we explain the origin and meaning of certain terms and concepts related to information technology.,https://habr.com/ru/hubs/terminator/articles/
+database_administration,db_admins,Everything about database administration,https://habr.com/ru/hubs/db_admins/articles/
+network_hardware,network_hardware,For a computer network to work,https://habr.com/ru/hubs/network_hardware/articles/
+content-marketing,contentmarketing,Getting new users with content,https://habr.com/ru/hubs/contentmarketing/articles/
+biology,biology,Everything about living systems,https://habr.com/ru/hubs/biology/articles/
+smart_house,home_automation,House management 2.0,https://habr.com/ru/hubs/home_automation/articles/
+development_of_communication_systems,netdev,A hub about all that concerns the development of communication systems,https://habr.com/ru/hubs/netdev/articles/
+mobile_applications_testing,mobile_testing,Methods, tips, experience,https://habr.com/ru/hubs/mobile_testing/articles/
+web_design,web_design,Design will save the world,https://habr.com/ru/hubs/web_design/articles/
+lifehacks_for_geeks,lifehacks,The tricks of life to the note,https://habr.com/ru/hubs/lifehacks/articles/
+data_visualization,data_visualization,We enclose the data in a beautiful shell,https://habr.com/ru/hubs/data_visualization/articles/
+energy_and_batteries,energy,To light a light bulb,https://habr.com/ru/hubs/energy/articles/
+web_services_testing,web_testing,Seven tasks for test, one for deploy,https://habr.com/ru/hubs/web_testing/articles/
+chemistry,chemistry,Science-pop hub about chemistry,https://habr.com/ru/hubs/Chemistry/articles/
+business_models,business_models,Entrepreneurial activity in IT,https://habr.com/ru/hubs/business_models/articles/
+data_storages,data_warehouse,Posts about data storages,https://habr.com/ru/hubs/data_warehouse/articles/
+natural_language_processing,natural_language_processing,Computer analysis and synthesis of natural languages,https://habr.com/ru/hubs/natural_language_processing/articles/
+html,html5,Standart language of webpages markup,https://habr.com/ru/hubs/html5/articles/
+perfect_code,complete_code,How McConnell bequeathed,https://habr.com/ru/hubs/complete_code/articles/
+entertaining_tasks,zadachki,Warm up your brain,https://habr.com/ru/hubs/zadachki/articles/
+media_management,media_management,Mass communication means,https://habr.com/ru/hubs/media_management/articles/
+iot,internet_of_things,Internet of Things,https://habr.com/ru/hubs/internet_of_things/articles/
+astronautics,space,Everything about the space and its capturing,https://habr.com/ru/hubs/space/articles/
+technical_writing,technical_writing,Everything about technical writers,https://habr.com/ru/hubs/technical_writing/articles/
+development_for_linux,linux_dev,Developing for *nix,https://habr.com/ru/hubs/linux_dev/articles/
+payment_systems,pay_system,Sending money via the Web,https://habr.com/ru/hubs/pay_system/articles/
+browsers,browsers,Web browsers,https://habr.com/ru/hubs/browsers/articles/
+urbanism,urban,How cities are organized,https://habr.com/ru/hubs/urban/articles/
+designing_and_refactoring,refactoring,Reorganizing the code,https://habr.com/ru/hubs/refactoring/articles/
+working_with_3d-graphics,3d_graphics,It's time to render!,https://habr.com/ru/hubs/3d_graphics/articles/
+working_with_video,video,All about creating and processing videos,https://habr.com/ru/hubs/video/articles/
+big_data,bigdata,Everything about big data,https://habr.com/ru/hubs/bigdata/articles/
+kotlin,kotlin,Kotlin is a statically typed programming language,https://habr.com/ru/hubs/kotlin/articles/
+health,health,"It's okay" or how to live longer,https://habr.com/ru/hubs/health/articles/
+fpga,fpga,Programmable logic integrated circuits,https://habr.com/ru/hubs/fpga/articles/
+hosting,hosting,Virtual, Dedicated, Colocation,https://habr.com/ru/hubs/hosting/articles/
+git,git,File version control system,https://habr.com/ru/hubs/git/articles/
+development_for_ios,ios_dev,Developing for popular mobile OS,https://habr.com/ru/hubs/ios_dev/articles/
+css,css,Cascading Style Sheets,https://habr.com/ru/hubs/css/articles/
+kubernetes,kubernetes,Framework for working with containerized applications,https://habr.com/ru/hubs/kubernetes/articles/
+instant_messaging,instant_messaging,Everything about messaging systems,https://habr.com/ru/hubs/instant_messaging/articles/
+photographic_equipment,photo,Fixing Moments,https://habr.com/ru/hubs/photo/articles/
+sound,sound,This "bzzz" is not for nothing,https://habr.com/ru/hubs/sound/articles/
+compilers,compilers,From source code to machine code,https://habr.com/ru/hubs/compilers/articles/
+development_for_iot,iot_dev,Learn how to develop for IOT,https://habr.com/ru/hubs/iot_dev/articles/
+development_for_windows,win_dev,Developing for Microsoft OSs,https://habr.com/ru/hubs/win_dev/articles/
+network_standards,network_standarts,3G, 4G, LTE, Wi-Fi, Bluetooth and so on,https://habr.com/ru/hubs/network_standarts/articles/
+conferences,tech_events,Exchange of experience of participants in the IT industry,https://habr.com/ru/hubs/tech_events/articles/
+community_management,community_management,Community creation, support and development,https://habr.com/ru/hubs/community_management/articles/
+periphery,peripheral,All that is inserted into different ports of the PC,https://habr.com/ru/hubs/Peripheral/articles/
+game_design,game_design,Visual game construction,https://habr.com/ru/hubs/game_design/articles/
+php,php,Server-side scripting language designed for Web development, but also used as a general-purpose programming language,https://habr.com/ru/hubs/php/articles/
+flutter,flutter,Cross-platform development framework,https://habr.com/ru/hubs/flutter/articles/
+c#,csharp,Multi-paradigm programming language encompassing strong typing, imperative, declarative, functional, generic, object-oriented (class-based), and component-oriented programming disciplines,https://habr.com/ru/hubs/csharp/articles/
+interview,interviews,Interviews with representatives of the IT industry,https://habr.com/ru/hubs/interviews/articles/
+data_engineering,data_engineering,discuss data collection and preparation,https://habr.com/ru/hubs/data_engineering/articles/
+usability,usability,Ease of use,https://habr.com/ru/hubs/usability/articles/
+desktop_pc's,desktops,PC's,https://habr.com/ru/hubs/desktops/articles/
+cloud_computing,cloud_computing,The concept of sharing resources,https://habr.com/ru/hubs/cloud_computing/articles/
+google_chrome,google_chrome,Browser developed by Gooogle,https://habr.com/ru/hubs/google_chrome/articles/
+unity3d,unity,2D/3D games development tool,https://habr.com/ru/hubs/unity/articles/
+typescript,typescript,A strict syntactical superset of JavaScript,https://habr.com/ru/hubs/typescript/articles/
+laptops,notebooks,Everything about laptops,https://habr.com/ru/hubs/notebooks/articles/
+github,github,Web-service for hosting and development of IT projects,https://habr.com/ru/hubs/github/articles/
+microservices,microservices,Microservice architecture and everything connected with it,https://habr.com/ru/hubs/microservices/articles/
+copyright,copyright,Copyright in the internet,https://habr.com/ru/hubs/copyright/articles/
+data_compression,data_compression,Compressing and decompressing your data,https://habr.com/ru/hubs/data_compression/articles/
+concurrent_computing,parallel_programming,Paralleling calculations,https://habr.com/ru/hubs/parallel_programming/articles/
+cryptocurrencies,cryptocurrency,Money 2.0,https://habr.com/ru/hubs/cryptocurrency/articles/
+biography_of_geeks,it_bigraphy,Stories of life of remarkable people,https://habr.com/ru/hubs/it_bigraphy/articles/
+patenting,patents,All about patents and the process of patenting,https://habr.com/ru/hubs/patents/articles/
+ctf,ctf,Information security team competitions of CTF format,https://habr.com/ru/hubs/ctf/articles/
+.net,net,A hub about .NET,https://habr.com/ru/hubs/net/articles/
+computer_animation,animation,Animating with computer,https://habr.com/ru/hubs/animation/articles/
+distributed_systems,distributed_systems,Nuances of designing distributed systems,https://habr.com/ru/hubs/distributed_systems/articles/
+cellular_communication,cellular,Everything about cellular networks,https://habr.com/ru/hubs/cellular/articles/
+cryptography,crypto,Encryption and cryptanalysis,https://habr.com/ru/hubs/crypto/articles/
+remote_work,remote,Remote work and the life of distributed teams,https://habr.com/ru/hubs/remote/articles/
+ecology,ecology,Taking care of nature,https://habr.com/ru/hubs/Ecology/articles/
+debugging,debug,Debugging is the process of finding and resolving defects or problems within a computer program,https://habr.com/ru/hubs/debug/articles/
+api,api,Application programming interface,https://habr.com/ru/hubs/api/articles/
+brain,brain,How does he work,https://habr.com/ru/hubs/brain/articles/
+ipv6,ipv6,Internet Protocol version 6 (IPv6) is the most recent version of the Internet Protocol,https://habr.com/ru/hubs/ipv6/articles/
+3d_printers,3d-printers,Everything about 3D printers and 3D printing technology,https://habr.com/ru/hubs/3d-printers/articles/
+openstreetmap,openstreetmap,OpenStreetMap is a collaborative project to create a free editable map of the world.,https://habr.com/ru/hubs/openstreetmap/articles/
+accessibility,accessibility,We help people with increased needs,https://habr.com/ru/hubs/accessibility/articles/
+dart,dart,Programming language created by Google,https://habr.com/ru/hubs/dart/articles/
+robotics,robot,Robots, robots, robots,https://habr.com/ru/hubs/robot/articles/
+science_fiction,sci-fi,Geek's favourite genre,https://habr.com/ru/hubs/sci-fi/articles/
+hackathon,hackathons,Programming marathons,https://habr.com/ru/hubs/hackathons/articles/
+wireless_technologies,wireless,WiFi, Bluetooth and so on,https://habr.com/ru/hubs/wireless/articles/
+system_programming,system_programming,Low-level programming,https://habr.com/ru/hubs/system_programming/articles/
+swift,swift,General-purpose, multi-paradigm, compiled programming language,https://habr.com/ru/hubs/swift/articles/
+presentations,presentation,Everything about effective presentations. How to build a structure? How to prepare information on the slide best way? How to choose a design and bring it to life?,https://habr.com/ru/hubs/presentation/articles/
+video_equipment,video_tech,Video equipment, video processing, video technology,https://habr.com/ru/hubs/video_tech/articles/
+robotics_development,robo_dev,Programming and development of robotics,https://habr.com/ru/hubs/robo_dev/articles/
+functional_programming,funcprog,From Lisp to Haskell,https://habr.com/ru/hubs/funcprog/articles/
+data_mining,data_mining,Deep data analysis,https://habr.com/ru/hubs/data_mining/articles/
+lazers,lasers,Optical quantum generators,https://habr.com/ru/hubs/lasers/articles/
+nanotechnologies,nano,Object manipulation technology,https://habr.com/ru/hubs/nano/articles/
+voice_user_interfaces,voice_interfaces,using voice input to control computers and devices,https://habr.com/ru/hubs/voice_interfaces/articles/
+developing_for_arduino,arduino,Platform for automatics creation,https://habr.com/ru/hubs/arduino/articles/
+text_editors_and_ides,txt_ide,Handy tools for code development,https://habr.com/ru/hubs/txt_ide/articles/
+quantum_technologies,quantum,A hub about quantum calculations,https://habr.com/ru/hubs/quantum/articles/
+django,django,Web applications framework on Python,https://habr.com/ru/hubs/django/articles/
+statistics_in_it,statistics,Statistics, research, tendencies.,https://habr.com/ru/hubs/statistics/articles/
+games_promotion,game_promotion,Tips for beginners and experienced gamedevs,https://habr.com/ru/hubs/game_promotion/articles/
+vector_graphics,vector_graphics,SVG and so on,https://habr.com/ru/hubs/vector_graphics/articles/
+agile,agile,Flexible development methodology,https://habr.com/ru/hubs/agile/articles/
+data_recovery,data_recovery,Data backup and recovery,https://habr.com/ru/hubs/data_recovery/articles/
+visual_basic_for_applications,vba,Visual Basic for automation in applications,https://habr.com/ru/hubs/vba/articles/
+matlab,matlab,MATLAB is a multi-paradigm numerical computing environment and proprietary programming language,https://habr.com/ru/hubs/matlab/articles/
+gtd,gtd,Method for increasing personal effectiveness,https://habr.com/ru/hubs/gtd/articles/
+nosql,nosql,Not only SQL,https://habr.com/ru/hubs/nosql/articles/
+learning_languages,learning_languages,We speak not only in our native language,https://habr.com/ru/hubs/learning_languages/articles/
+development_for_raspberry_pi,raspberrypi,Compact single board computer,https://habr.com/ru/hubs/raspberrypi/articles/
+video_conferencing,video_conferencing,MCUs, codecs, sofware solutions and AV-integration,https://habr.com/ru/hubs/video_conferencing/articles/
+web_analytics,weban,Measurement, collection, analysis and presentation of information,https://habr.com/ru/hubs/weban/articles/
+node.js,nodejs,Open-source, cross-platform JavaScript run-time environment that executes JavaScript code outside the browser,https://habr.com/ru/hubs/nodejs/articles/
+qt,qt_software,Cross-platform application framework,https://habr.com/ru/hubs/qt_software/articles/
+scala,scala,General-purpose programming language providing support for functional programming and a strong static type system,https://habr.com/ru/hubs/scala/articles/
+video_cards,videocards,Graphic adapters,https://habr.com/ru/hubs/videocards/articles/
+microsoft_sql_server,mssql,Relational database management system developed by Microsoft,https://habr.com/ru/hubs/mssql/articles/
+logic_games,logic_games,Developing logic,https://habr.com/ru/hubs/logic_games/articles/
+bug_hunters,bughunters,Hub for security researchers,https://habr.com/ru/hubs/bughunters/articles/
+virtualization,virtualization,We virtualize machines, resources, applications,https://habr.com/ru/hubs/virtualization/articles/
+game_testing,game_testing,Not so funny as it seems,https://habr.com/ru/hubs/game_testing/articles/
+wearable_electronics,wearable_electronics,All my burden on me,https://habr.com/ru/hubs/wearable_electronics/articles/
+web_services_monetization,web_monetization,Everything about web services monetization,https://habr.com/ru/hubs/web_monetization/articles/
+games_monetization,game_monetization,Learn how to monetize games,https://habr.com/ru/hubs/game_monetization/articles/
+apache,apache,Free and open-source cross-platform web server,https://habr.com/ru/hubs/apache/articles/
+haskell,haskell,Haskell is a standardized, general-purpose compiled purely functional programming language.,https://habr.com/ru/hubs/haskell/articles/
+language_localisation,localization,Translation and adaptation,https://habr.com/ru/hubs/localization/articles/
+sql,sql,Domain-specific languageused in programming and designed for managing data held in a relational database management system, or for stream processing in a relational data stream management system,https://habr.com/ru/hubs/sql/articles/
+delirium_coding,code_wtf,Code you would be ashamed of,https://habr.com/ru/hubs/code_wtf/articles/
+reactjs,reactjs,JavaScript library for interfaces creation,https://habr.com/ru/hubs/reactjs/articles/
+angular,angular,JavaScript framework,https://habr.com/ru/hubs/angular/articles/
+laravel,laravel,Free, open-source PHP web framework,https://habr.com/ru/hubs/laravel/articles/
+visual_programming,visual_programming,All about trying to visualize programming,https://habr.com/ru/hubs/visual_programming/articles/
+server_optimization,server_side_optimization,Give your server a breather,https://habr.com/ru/hubs/server_side_optimization/articles/
+latex,latex,A set of macros for TeX,https://habr.com/ru/hubs/latex/articles/
+1c,1c,1C programming,https://habr.com/ru/hubs/1C/articles/
+car_gadgets,autogadgets,Devices and gadgets for cars,https://habr.com/ru/hubs/autogadgets/articles/
+cisco,cisconetworks,Cisco users united!,https://habr.com/ru/hubs/cisconetworks/articles/
+cad/cam,cad_cam,CAD/CAM systems,https://habr.com/ru/hubs/cad_cam/articles/
+vuejs,vuejs,Progressive JavaScript framework,https://habr.com/ru/hubs/vuejs/articles/
+development_for_e-commerce,ecommerce_development,E-commerce systems development,https://habr.com/ru/hubs/ecommerce_development/articles/
+sales_management,sales,Sales-manager is the one who makes money,https://habr.com/ru/hubs/sales/articles/
+lisp,lisp,Oldest high-level programming language,https://habr.com/ru/hubs/lisp/articles/
+biotechnologies,biotech,The use of living organisms to solve tasks,https://habr.com/ru/hubs/biotech/articles/
+build_automation,build_automation,Build automation systems,https://habr.com/ru/hubs/build_automation/articles/
+it_standards,itstandarts,Standards in Information Technology,https://habr.com/ru/hubs/itstandarts/articles/
+f#,fsharp,Strongly typed, multi-paradigm programming language,https://habr.com/ru/hubs/fsharp/articles/
+webassembly,webassembly,Low-level bytecode for execution in the browser,https://habr.com/ru/hubs/webassembly/articles/
+unreal_engine,unreal_engine,Popular game engine,https://habr.com/ru/hubs/unreal_engine/articles/
+mesh_networks,mesh_networking,A local network topology,https://habr.com/ru/hubs/mesh_networking/articles/
+labview,labview,LabVIEW is a system-design platform and development environment for a visual programming language.,https://habr.com/ru/hubs/labview/articles/
+serverless,serverless,Serverless computing technologies,https://habr.com/ru/hubs/serverless/articles/
+crm_systems,crm,A hub about CRM systems,https://habr.com/ru/hubs/crm/articles/
+rust,rust,Multi-Paradigm Compiled Language,https://habr.com/ru/hubs/rust/articles/
+atlassian,atlassian,Jira, Confluence and so on,https://habr.com/ru/hubs/Atlassian/articles/
+display_advertising,display_adv,Everything about banners,https://habr.com/ru/hubs/display_adv/articles/
+ar_and_vr,arvr,Augmented reality and virtual reality,https://habr.com/ru/hubs/arvr/articles/
+data_storaging,storages,Record, save and keep for descendants,https://habr.com/ru/hubs/storages/articles/
+tablets,tablets,Big gadgets for any matters,https://habr.com/ru/hubs/tablets/articles/
+development_for_office_365,office365dev,Developing for Office 365 by Microsoft,https://habr.com/ru/hubs/office365dev/articles/
+development_for_macos,osx_dev,Developing for Apple desktop OS,https://habr.com/ru/hubs/osx_dev/articles/
+mobile_app_analytics,mobileanalytics,Analysis of user behavior,https://habr.com/ru/hubs/mobileanalytics/articles/
+domain_names_administrating,domains,Everuthing about domain names administrating,https://habr.com/ru/hubs/domains/articles/
+browser_extensions,browser_extensions,Extensions and plugins,https://habr.com/ru/hubs/browser_extensions/articles/
+it-emigration,it_immigration,IT emigration,https://habr.com/ru/hubs/it_immigration/articles/
+tarantool,tarantool,In-memory computing open source platform,https://habr.com/ru/hubs/tarantool/articles/
+mongodb,mongodb,MongoDB is a free and open-source cross-platform document-oriented database program.,https://habr.com/ru/hubs/mongodb/articles/
+symfony,symfony,A PHP web application framework and a set of reusable PHP components/libraries,https://habr.com/ru/hubs/symfony/articles/
+ооp,oop,Object-oriented programming (OOP) is a programming paradigm based on the concept of "objects",https://habr.com/ru/hubs/oop/articles/
+development_for_ar_and_vr,arvrdev,Can you see the gopher? No? but he'b been developed...,https://habr.com/ru/hubs/arvrdev/articles/
+1с-bitrix,bitrix,A CMS developed by 1C,https://habr.com/ru/hubs/bitrix/articles/
+cybersport,cybersport,Sports in virtual reality,https://habr.com/ru/hubs/cybersport/articles/
+jetpack_compose,jetpack-compose,Android UI App Development Toolkit,https://habr.com/ru/hubs/jetpack-compose/articles/
+semantics,sw,Web 3.0,https://habr.com/ru/hubs/sw/articles/
+service_desk,service_desk,Everything about technical support,https://habr.com/ru/hubs/service_desk/articles/
+nginx,nginx,Web server and mail proxy server,https://habr.com/ru/hubs/nginx/articles/
+wordpress,wordpress,Free, open-source CMS,https://habr.com/ru/hubs/wordpress/articles/
+mobile_applications_design,apps_design,Applications for iOS, Android, Windows Phone,https://habr.com/ru/hubs/apps_design/articles/
+erp-systems,erp,Integrated management of core business processes,https://habr.com/ru/hubs/erp/articles/
+lua,lua,Lightweight, multi-paradigm programming language,https://habr.com/ru/hubs/lua/articles/
+antivirus_protection,virus,Protecting computer systems from malware,https://habr.com/ru/hubs/virus/articles/
+e-commerce_management,ecommerce,Everything about e-commerce,https://habr.com/ru/hubs/ecommerce/articles/
+asp,asp,The technology of creating web applications and web services,https://habr.com/ru/hubs/asp/articles/
+prolog,prolog,Prolog is a general-purpose logic programming language.,https://habr.com/ru/hubs/prolog/articles/
+perl,perl,Perl is a high-level, interpreted, dynamic programming language.,https://habr.com/ru/hubs/perl/articles/
+saas_/_s+s,saas,Business model of selling and using software,https://habr.com/ru/hubs/saas/articles/
+uml_design,uml,General-purpose, developmental, modeling language in the field of software engineering,https://habr.com/ru/hubs/uml/articles/
+global_positioning_systems,geo_systems,GPS, GLONASS and other systems,https://habr.com/ru/hubs/geo_systems/articles/
+monitors_and_tv,displays,Digital life in front of you,https://habr.com/ru/hubs/displays/articles/
+sport_programming,sport_programming,Intellectual competitions,https://habr.com/ru/hubs/sport_programming/articles/
+oracle,oracle,Database management system,https://habr.com/ru/hubs/oracle/articles/
+cobol,cobol,COmmon Business-Oriented Language,https://habr.com/ru/hubs/cobol/articles/
+tdd,tdd,Test driven development,https://habr.com/ru/hubs/tdd/articles/
+cgi,cgi,Images generated by a computer,https://habr.com/ru/hubs/cgi/articles/
+increasing_conversion_rate,conversion,A hub about how to increase the conversion rate,https://habr.com/ru/hubs/conversion/articles/
+groovy_&_grails,groovy_grails,Groovy programming language and Grails framework,https://habr.com/ru/hubs/groovy_grails/articles/
+backup,backup,Save your data,https://habr.com/ru/hubs/backup/articles/
+open_data,opendata,The data will be free!,https://habr.com/ru/hubs/opendata/articles/
+sphinx,sphinx,Sphinx is a fulltext free open source search engine,https://habr.com/ru/hubs/sphinx/articles/
+multicopters,multicopters,A rotorcraft with more than two rotors,https://habr.com/ru/hubs/multicopters/articles/
+ecm,ecm,Enterprise content management,https://habr.com/ru/hubs/ecm/articles/
+venture_investment,venturecap,Do not know where to invest? Here we come!,https://habr.com/ru/hubs/venturecap/articles/
+branding,branding,Brand yourself,https://habr.com/ru/hubs/branding/articles/
+billing_systems,billing,Automated calculation systems,https://habr.com/ru/hubs/billing/articles/
+version_control_systems,cvs,GIT, SVN and so on,https://habr.com/ru/hubs/cvs/articles/
+flask,flask,Micro web framework written in Python,https://habr.com/ru/hubs/flask/articles/
+solidity,solidity,Solidity is a contract-oriented programming language for writing smart contracts on blockchain platforms such as Ethereum,https://habr.com/ru/hubs/solidity/articles/
+education_abroad,edu,Histories about education abroad,https://habr.com/ru/hubs/edu/articles/
+spamming_and_anti-spamming,spam,Fighting with spam,https://habr.com/ru/hubs/spam/articles/
+cms,cms,Content management systems,https://habr.com/ru/hubs/cms/articles/
+medical_gadgets,medgadgets,A hub about medical gadgets,https://habr.com/ru/hubs/medgadgets/articles/
+growth_hacking,growthhacking,Process of rapid experimentation across marketing funnel, product development, sales segments, and other areas of the business to identify the most efficient ways to grow a business,https://habr.com/ru/hubs/growthhacking/articles/
+xml,xml,Extensible Markup Language,https://habr.com/ru/hubs/xml/articles/
+firefox,firefox,Free and open-source web browser developed by Mozilla Foundation,https://habr.com/ru/hubs/firefox/articles/
+scada,scada,A control system for high-level process supervisory management,https://habr.com/ru/hubs/scada/articles/
+offices_of_it_companies,office,How the office space of IT companies is organized,https://habr.com/ru/hubs/office/articles/
+clojure,clojure,A hub about Clojure and Clojure REPL,https://habr.com/ru/hubs/clojure/articles/
+prototyping,prototyping,Important stage in product development,https://habr.com/ru/hubs/prototyping/articles/
+mobile_applications_monetization,mobile_monetization,Learn how to monetize mobile applications,https://habr.com/ru/hubs/mobile_monetization/articles/
+fortran,fortran,First high-level programming language,https://habr.com/ru/hubs/fortran/articles/
+iptv,iptv,The delivery of television content over Internet Protocol (IP) networks.,https://habr.com/ru/hubs/iptv/articles/
+gtk+,gtk,Сross-platform widget toolkit for creating graphical user interfaces,https://habr.com/ru/hubs/gtk/articles/
+supercomputers,supercomputers,Everything about supercomputers,https://habr.com/ru/hubs/supercomputers/articles/
+hadoop,hadoop,The framework for distributed applications,https://habr.com/ru/hubs/Hadoop/articles/
+google_cloud_platform,googlecloud,Cloud platform developed by Google,https://habr.com/ru/hubs/googlecloud/articles/
+cyberpunk,cyberpunk,Genre of science fiction,https://habr.com/ru/hubs/cyberpunk/articles/
+gradle,gradle,Gradle is an open-source build automation system for Java projects,https://habr.com/ru/hubs/gradle/articles/
+$mol,smol,Small, but reactive,https://habr.com/ru/hubs/smol/articles/
+ipfs,ipfs,InterPlanetary File System,https://habr.com/ru/hubs/IPFS/articles/
+email_layout,devmail,Everything that is more complicated than plain text,https://habr.com/ru/hubs/devmail/articles/
+yandex_api,yandex_api,Developing for Yandex services,https://habr.com/ru/hubs/yandex_api/articles/
+typography,typography,Playing with fonts,https://habr.com/ru/hubs/typography/articles/
+development_for_windows_phone,wp_dev,Developing for Windows Mobile OS,https://habr.com/ru/hubs/wp_dev/articles/
+demoscene,demoscene,Cyberculture,https://habr.com/ru/hubs/demoscene/articles/
+self_promo,i_am_advertising,Everyone has a right for 5 minutes of fame,https://habr.com/ru/hubs/i_am_advertising/articles/
+microsoft_azure,azure,Microsoft cloud platform,https://habr.com/ru/hubs/azure/articles/
+client_optimization,client_side_optimization,Making websites more convenient,https://habr.com/ru/hubs/client_side_optimization/articles/
+zig,zig,viable alternative to C language,https://habr.com/ru/hubs/zig/articles/
+nestjs,nestjs,framework for building efficient, scalable Node.js web applications,https://habr.com/ru/hubs/nestjs/articles/
+godot,godot,Free cross-platform open-source 2D/3D-game engine,https://habr.com/ru/hubs/godot/articles/
+ember.js,emberjs,JavaScript web framework for web applications,https://habr.com/ru/hubs/emberjs/articles/
+tensorflow,tensorflow,open source platform for machine learning,https://habr.com/ru/hubs/tensorflow/articles/
+sveltejs,sveltejs,framework for creating fast web-applications,https://habr.com/ru/hubs/sveltejs/articles/
+email-marketing,emailmarketing,Email-marketing tactics and strategy,https://habr.com/ru/hubs/emailmarketing/articles/
+typo3,typo3,free enterprise-class CMS based on PHP,https://habr.com/ru/hubs/typo3/articles/
+haxe,haxe,Oopen source toolkit based on a high level language,https://habr.com/ru/hubs/haxe/articles/
+openshift,openshift,Open source container application platform,https://habr.com/ru/hubs/openshift/articles/
+processing,processing_lang,Programming sublanguage, based on Java,https://habr.com/ru/hubs/processing_lang/articles/
+uefi,uefi,Unified Extensible Firmware Interface,https://habr.com/ru/hubs/UEFI/articles/
+crowdsourcing,crowdsourcing,Using resources of a crowd,https://habr.com/ru/hubs/crowdsourcing/articles/
+google_cloud_vision_api,google_cloud_vision_api,Google API for computer sight,https://habr.com/ru/hubs/google_cloud_vision_api/articles/
+xamarin,xamarin,Tools for cross-platform development,https://habr.com/ru/hubs/Xamarin/articles/
+puppet,puppet,An open-source software configuration management tool,https://habr.com/ru/hubs/puppet/articles/
+coffeescript,coffeescript,Programming language that transcompiles to JavaScript,https://habr.com/ru/hubs/coffeescript/articles/
+elm,elm,Domain-specific programming language for declaratively creating web browser-based graphical user interfaces,https://habr.com/ru/hubs/elm/articles/
+phalcon,phalcon,High-performance PHP framework,https://habr.com/ru/hubs/phalcon/articles/
+development_for_sailfish_os,sailfish_dev,A hub about development for Sailfish OS,https://habr.com/ru/hubs/Sailfish_dev/articles/
+magento,magento,Web-stores magagement system,https://habr.com/ru/hubs/magento/articles/
+elixir/phoenix,elixirphoenix,A hub about Elixir language and Phoenix Framework,https://habr.com/ru/hubs/elixirphoenix/articles/
+microsoft_edge,edge,Browser developed by Microsoft,https://habr.com/ru/hubs/edge/articles/
+lumber_room,closet,A hub for different things, old and forgotten mostly.,https://habr.com/ru/hubs/closet/articles/
+forth,forth,Imperative stack-based computer programming language,https://habr.com/ru/hubs/forth/articles/
+san,san,Storage area network,https://habr.com/ru/hubs/san/articles/
+smalltalk,smalltalk,Object-oriented, dynamically typed, reflective programming language,https://habr.com/ru/hubs/smalltalk/articles/
+julia,julia,High-level dynamic programming language,https://habr.com/ru/hubs/julia/articles/
+webgl,webgl,JavaScript library,https://habr.com/ru/hubs/webgl/articles/
+meteor.js,meteorjs,Free and open-source isomorphic JavaScript web framework,https://habr.com/ru/hubs/meteorjs/articles/
+firebird/interbase,firebird,Firebird is an open source SQL relational database management system,https://habr.com/ru/hubs/firebird/articles/
+sqlite,sqlite,SQLite is a relational database management system,https://habr.com/ru/hubs/sqlite/articles/
+d,d,D is an object-oriented, imperative, multi-paradigm system programming language,https://habr.com/ru/hubs/d/articles/
+i2p,i2p,The Invisible Internet Project (I2P) is an anonymous network layer that allows for censorship-resistant, peer to peer communication.,https://habr.com/ru/hubs/i2p/articles/
+derby.js,derbyjs,Full-stack framework,https://habr.com/ru/hubs/derbyjs/articles/
+development_for_tizen,tizen_dev,Developing for Tizen open-source OS,https://habr.com/ru/hubs/tizen_dev/articles/
+r,r,R is a programming language and free software environment for statistical computing and graphics,https://habr.com/ru/hubs/r/articles/
+emacs,emacs,Emacs is a family of text editors that are characterized by their extensibility.,https://habr.com/ru/hubs/emacs/articles/
+development_for_bada,bada_dev,Mobile platform created by Samsung,https://habr.com/ru/hubs/bada_dev/articles/
+mercurial,mercurial,Mercurial is a distributed revision-control tool for software developers,https://habr.com/ru/hubs/mercurial/articles/
+objective_c,objectivec,General-purpose, object-oriented programming language,https://habr.com/ru/hubs/objectivec/articles/
+cocoa,cocoa,Cocoa is Apple's native object-oriented application programming interface (API) for their operating system - macOS.,https://habr.com/ru/hubs/cocoa/articles/
+dns,dns,Domain Name System,https://habr.com/ru/hubs/dns/articles/
+apache_flex,flex,Apache Flex, formerly Adobe Flex, is a SDK for the development and deployment of cross-platform rich Internet applications.,https://habr.com/ru/hubs/flex/articles/
+action_script,action_script,A hub about an Action Script,https://habr.com/ru/hubs/action_script/articles/
+help_desk_software,helpdesk,Software used by support and customer service,https://habr.com/ru/hubs/helpdesk/articles/
+iis,iis,Internet Information Services is an extensible web server created by Microsoft.,https://habr.com/ru/hubs/iis/articles/
+twitter_api,twitter_api,Twitter API — a set of classes, procedures, functions, structures and constants provided by the Twitter service for use in external software products.,https://habr.com/ru/hubs/twitter_api/articles/
+vk_api,vk_api,VK API — a set of classes, procedures, functions, structures and constants provided by the vk.com for use in external software products.,https://habr.com/ru/hubs/vk_api/articles/
+google_api,google_api,Google API — a set of classes, procedures, functions, structures and constants provided by the Google for use in external software products.,https://habr.com/ru/hubs/google_api/articles/
+facebook_api,facebook_api,Facebook API — a set of classes, procedures, functions, structures and constants provided by the Facebook service for use in external software products.,https://habr.com/ru/hubs/facebook_api/articles/
+microsoft_access,ms_access,Relational database management system.,https://habr.com/ru/hubs/ms_access/articles/
+maps_api,map_api,Cartographic services API,https://habr.com/ru/hubs/map_api/articles/
+cubrid,cubrid,CUBRID is an open source SQL-based relational database management system (RDBMS).,https://habr.com/ru/hubs/cubrid/articles/
+canvas,canvas,The canvas element is part of HTML5,https://habr.com/ru/hubs/canvas/articles/
+creative_commons,creative_commons,Сopyright-licenses that allow creators to communicate which rights they reserve, and which rights they waive for the benefit of recipients or other creators.,https://habr.com/ru/hubs/creative_commons/articles/
+mono_&_moonlight,mono,Mono is a free and open-source .NET Framework-compatible set of tools.,https://habr.com/ru/hubs/mono/articles/
+doctrine_orm,doctrine,A set of PHP libraries primarily focused on providing persistence services and related functionality.,https://habr.com/ru/hubs/doctrine/articles/
+google_app_engine,gae,A web framework and cloud computing platform for developing and hosting web applications,https://habr.com/ru/hubs/gae/articles/
+yii,yii,Open source, object-oriented, component-based MVC PHP web application framework,https://habr.com/ru/hubs/yii/articles/
+regular_expressions,regex,Formal search language,https://habr.com/ru/hubs/regex/articles/
+fidonet,fido,Worldwide amateur computer network,https://habr.com/ru/hubs/fido/articles/
+gpgpu,gpgpu,Nvidia technology for implementing algorithms,https://habr.com/ru/hubs/gpgpu/articles/
+twisted,twisted,Event-driven network programming framework,https://habr.com/ru/hubs/twisted/articles/
+ruby_on_rails,ror,Server-side web application framework written in Ruby under the MIT License,https://habr.com/ru/hubs/ror/articles/
+erlang/otp,erlang,General-purpose, concurrent, functional programming language,https://habr.com/ru/hubs/erlang/articles/
+xslt,xslt,A language for transforming XML documents,https://habr.com/ru/hubs/xslt/articles/
+small_basic,smallbasic,Very simple programming language,https://habr.com/ru/hubs/smallbasic/articles/
+kohana,kohanaphp,PHP5 open-source framework,https://habr.com/ru/hubs/kohanaphp/articles/
+developmend_for_java_me,javame_dev,Everything about J2ME-technologies,https://habr.com/ru/hubs/javame_dev/articles/
+livestreet,livestreet,An open source CMS,https://habr.com/ru/hubs/livestreet/articles/
+mootools,mootools,Free JavaScript-framework,https://habr.com/ru/hubs/mootools/articles/
+adobe_flash,flash_platform,Deprecated multimedia software platform developed by Adobe Systems,https://habr.com/ru/hubs/flash_platform/articles/
+powershell,powershell,Task automation and configuration management framework,https://habr.com/ru/hubs/powershell/articles/
+greasemonkey,greasemonkey,Mozilla Firefox extension,https://habr.com/ru/hubs/greasemonkey/articles/
+infolust,infolust,Mobile tags,https://habr.com/ru/hubs/infolust/articles/
+desktop_environments,desktop_environment,KDE and stuff,https://habr.com/ru/hubs/desktop_environment/articles/
+delphi,delphi,Imperative, structured, object-oriented programming language with strict static typing of variables,https://habr.com/ru/hubs/delphi/articles/
+zend_framework,zend_framework,Free web development framework,https://habr.com/ru/hubs/zend_framework/articles/

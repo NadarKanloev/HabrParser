@@ -1,0 +1,1308 @@
+<!doctype html>
+<html lang="ru" data-vue-meta="%7B%22lang%22:%7B%22ssr%22:%22ru%22%7D%7D">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,maximum-scale=1,user-scalable=0">
+  <meta name="referrer" content="unsafe-url">
+  <title>Lisp — Старейший высокоуровневый язык программирования / Хабр</title>
+  <style>
+    /* cyrillic-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSxf6TF0.woff2) format('woff2');
+      unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveQhf6TF0.woff2) format('woff2');
+      unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* latin-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSBf6TF0.woff2) format('woff2');
+      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveRhf6.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* non-breaking hyphen */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/l/font?kit=KFOlCnqEu92Fr1MmEU9vBh0_IsHAlmrO6g&skey=ee881451c540fdec&v=v29) format('woff2');
+      unicode-range: U+02011;
+    }
+  </style>
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/chunk-vendors.0da14ebf.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/chunk-vendors.a9207891.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/app.b42efa13.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/app.5b8f7247.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/page-hub.a4eacd3e.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/page-hub.1572dac4.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/7298.c8f1d73c.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/8684.f283f98f.js" as="script">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/chunk-vendors.0da14ebf.css">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/app.b42efa13.css">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/page-hub.a4eacd3e.css">
+  <script>window.i18nFetch = new Promise((res, rej) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', '/js/i18n/ru-compiled.d229fa61213aa884a102911fd18b62b0.json');
+          xhr.responseType = 'json';
+          xhr.onload = function(e) {
+            if (this.status === 200) {
+              res({ru: xhr.response});
+            } else {
+              rej(e);
+            }
+          };
+          xhr.send();
+        });</script>
+  <style>.grecaptcha-badge{visibility: hidden;}</style>
+  <meta name="habr-version" content="2.155.1">
+  <meta data-vue-meta="ssr" itemprop="image" content="/img/habr_ru.png" data-vmid="image:itemprop">
+  <meta data-vue-meta="ssr" property="og:image" content="/img/habr_ru.png" data-vmid="og:image">
+  <meta data-vue-meta="ssr" property="og:image:width" content="1200" data-vmid="og:image:width">
+  <meta data-vue-meta="ssr" property="og:image:height" content="630" data-vmid="og:image:height">
+  <meta data-vue-meta="ssr" property="aiturec:image" content="/img/habr_ru.png" data-vmid="aiturec:image">
+  <meta data-vue-meta="ssr" name="twitter:image" content="/img/habr_ru.png" data-vmid="twitter:image">
+  <meta data-vue-meta="ssr" property="vk:image" content="/img/habr_ru.png?format=vk" data-vmid="vk:image">
+  <meta data-vue-meta="ssr" property="fb:app_id" content="444736788986613">
+  <meta data-vue-meta="ssr" property="fb:pages" content="472597926099084">
+  <meta data-vue-meta="ssr" name="twitter:card" content="summary_large_image">
+  <meta data-vue-meta="ssr" name="twitter:site" content="@habr_com">
+  <meta data-vue-meta="ssr" property="og:locale" content="ru_RU" data-vmid="og:locale">
+  <meta data-vue-meta="ssr" property="og:type" content="website" data-vmid="og:type">
+  <meta data-vue-meta="ssr" property="og:site_name" content="Хабр" data-vmid="og:site_name">
+  <meta data-vue-meta="ssr" property="og:url" content="https://habr.com/ru/hubs/lisp/articles/page9/" data-vmid="og:url">
+  <meta data-vue-meta="ssr" property="og:title" content="Lisp — Старейший высокоуровневый язык программирования / Хабр" data-vmid="og:title">
+  <meta data-vue-meta="ssr" name="description" content="Lisp — второй старейший после Fortran'а высокоуровневый язык программирования.<br/>
+<br/>
+На сегодня Lisp представляет собой множество языков (Common Lisp, Scheme, Clojure, Emacs Lisp, newLISP, Arc). Lisp позволяет свободно манипулировать кодом программы, давая возможность для мета-программирования. Это является на данный момент его основным отличием от других языков.<br/>
+<br/>
+В основе Lisp'а лежит Лямбда-исчисление Алонзо Черча, представляющее альтернативу традиционному подходу к созданию языков программирования. Другой отличительной чертой является использование для записи всех операций s-нотации — полностью префиксной нотации с явным проставлением скобок. Кроме этого, у Lisp'а практически нет какого-либо иного синтаксиса, что делает язык максимально гибким.">
+  <meta data-vue-meta="ssr" property="og:description" content="Lisp — второй старейший после Fortran'а высокоуровневый язык программирования.<br/>
+<br/>
+На сегодня Lisp представляет собой множество языков (Common Lisp, Scheme, Clojure, Emacs Lisp, newLISP, Arc). Lisp позволяет свободно манипулировать кодом программы, давая возможность для мета-программирования. Это является на данный момент его основным отличием от других языков.<br/>
+<br/>
+В основе Lisp'а лежит Лямбда-исчисление Алонзо Черча, представляющее альтернативу традиционному подходу к созданию языков программирования. Другой отличительной чертой является использование для записи всех операций s-нотации — полностью префиксной нотации с явным проставлением скобок. Кроме этого, у Lisp'а практически нет какого-либо иного синтаксиса, что делает язык максимально гибким.">
+  <meta data-vue-meta="ssr" name="keywords" content="lisp,clojure,scheme,common lisp,функциональное программирование,программирование,лисп,пол грэм,разработка,emacs,dsl,web,java,racket,sbcl,игры,zillions of games 2,zrf,edisonsoftware,проектирование">
+  <link data-vue-meta="ssr" rel="image_src" href="/img/habr_ru.png" data-vmid="image:href">
+  <link data-vue-meta="ssr" href="https://habr.com/ru/hubs/lisp/" rel="canonical" data-vmid="canonical">
+  <link data-vue-meta="ssr" href="https://habr.com/ru/rss/hubs/lisp/articles/?fl=ru" type="application/rss+xml" title="" rel="alternate" name="rss">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#303b44">
+  <meta name="msapplication-TileColor" content="#629FBC">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="shortcut icon" type="image/png" sizes="16x16" href="https://assets.habr.com/habr-web/img/favicons/favicon-16.png">
+  <link rel="shortcut icon" type="image/png" sizes="32x32" href="https://assets.habr.com/habr-web/img/favicons/favicon-32.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-76.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-152.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-180.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="256x256" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-256.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1136x640.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2436x1125.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1792x828.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_828x1792.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1334x750.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2668.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2208x1242.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1125x2436.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2208.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2732x2048.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2688x1242.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2224x1668.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_750x1334.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x2732.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2388x1668.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2224.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_640x1136.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2388.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x1536.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1536x2048.png">
+  <link rel="mask-icon" color="#77a2b6" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.svg">
+  <link crossorigin="use-credentials" href="/manifest.webmanifest" rel="manifest">
+  <script async src="https://unpkg.com/pwacompat" crossorigin="anonymous"></script>
+  <script>window.yaContextCb = window.yaContextCb || []</script>
+  <script src="https://yandex.ru/ads/system/context.js" async></script>
+ </head>
+ <body>
+  <div id="app" data-server-rendered="true" data-async-called="true">
+   <div class="tm-layout__wrapper">
+    <!---->
+    <div></div><!---->
+    <header class="tm-header">
+     <div class="tm-page-width">
+      <div class="tm-header__container">
+       <!----> <span class="tm-header__logo-wrap"><a href="/ru/" class="tm-header__logo tm-header__logo_ru">
+         <svg height="16" width="16" class="tm-svg-img tm-header__icon">
+          <title>
+           Хабр
+          </title> <use xlink:href="/img/habr-logo-ru.svg#logo"></use>
+         </svg></a> <span class="tm-header__beta-sign" style="display:none;">β</span></span>
+       <div class="tm-dropdown tm-header__projects">
+        <div class="tm-dropdown__head">
+         <button class="tm-header__dropdown-toggle">
+          <svg height="16" width="16" class="tm-svg-img tm-header__icon tm-header__icon_dropdown">
+           <title>
+            Открыть список
+           </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#arrow-down"></use>
+          </svg></button>
+        </div><!---->
+       </div><a href="/ru/sandbox/start/" class="tm-header__become-author-btn"> Как стать автором </a>
+       <div class="tm-feature tm-header__feature tm-feature tm-feature_variant-inline">
+        <!---->
+       </div><!----> <!---->
+      </div>
+     </div>
+    </header>
+    <div class="tm-layout">
+     <div class="tm-page-progress-bar"></div>
+     <div data-menu-sticky="true" class="tm-base-layout__header tm-base-layout__header_is-sticky">
+      <div class="tm-page-width">
+       <div class="tm-base-layout__header-wrapper">
+        <div class="tm-main-menu">
+         <div class="tm-main-menu__section">
+          <nav class="tm-main-menu__section-content">
+           <!----> <a href="/ru/articles/" class="tm-main-menu__item"> Все потоки </a> <a href="/ru/flows/develop/" class="tm-main-menu__item"> Разработка </a><a href="/ru/flows/admin/" class="tm-main-menu__item"> Администрирование </a><a href="/ru/flows/design/" class="tm-main-menu__item"> Дизайн </a><a href="/ru/flows/management/" class="tm-main-menu__item"> Менеджмент </a><a href="/ru/flows/marketing/" class="tm-main-menu__item"> Маркетинг </a><a href="/ru/flows/popsci/" class="tm-main-menu__item"> Научпоп </a>
+          </nav>
+         </div>
+        </div>
+        <div class="tm-header-user-menu tm-base-layout__user-menu">
+         <a href="/ru/search/" class="tm-header-user-menu__item tm-header-user-menu__search">
+          <svg height="24" width="24" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_search tm-header-user-menu__icon_dark">
+           <title>
+            Поиск
+           </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#search"></use>
+          </svg></a> <!----> <!----> <!---->
+         <div class="tm-header-user-menu__item">
+          <button class="tm-header-user-menu__toggle">
+           <svg height="24" width="24" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_dark">
+            <title>
+             Настройки
+            </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#page-settings"></use>
+           </svg></button>
+         </div><a href="https://habr.com/kek/v1/auth/habrahabr/?back=/ru/hubs/lisp/articles/page9/&amp;hl=ru" rel="nofollow" class="tm-header-user-menu__item"><button type="button" class="tm-header-user-menu__login btn btn_solid btn_small"> Войти </button></a> <!---->
+         <div class="v-portal" style="display:none;"></div>
+        </div>
+       </div>
+      </div>
+     </div><!---->
+     <div class="tm-page-width"></div>
+     <main class="tm-layout__container">
+      <div data-async-called="true" class="tm-page">
+       <div class="tm-page-width">
+        <!---->
+        <div class="tm-page__wrapper">
+         <div class="tm-page__main tm-page__main_has-sidebar">
+          <div class="pull-down">
+           <!---->
+           <div class="pull-down__header" style="height:0px;">
+            <div class="pull-down__content" style="bottom:10px;">
+             <svg height="24" width="24" class="tm-svg-img pull-down__icon pull-down__arrow">
+              <title>
+               Обновить
+              </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#pull-arrow"></use>
+             </svg>
+            </div>
+           </div><!---->
+           <div class="tm-page__top">
+            <!---->
+            <div class="tm-hub-card tm-hub-card tm-hub-card_variant-base">
+             <div class="tm-hub-card__header tm-hub-card__header tm-hub-card__header_variant-base">
+              <div class="tm-hub-card__data">
+               <div class="tm-hub-card__avatar">
+                <div class="tm-entity-image">
+                 <img alt src="//habrastorage.org/getpro/habr/hub/43f/1a4/c45/43f1a4c4588b789c5c60b793469c8214.png" class="tm-entity-image__pic">
+                </div>
+               </div>
+               <div class="tm-counter-container">
+                <div class="tm-counter-container__header">
+                 <div class="tm-votes-lever tm-votes-lever tm-votes-lever_appearance-rating">
+                  <!---->
+                  <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-rating">
+                   <span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_rating"> 8.93 </span>
+                  </div><!---->
+                 </div>
+                </div>
+                <div class="tm-counter-container__footer">
+                 <span class="tm-rating__text tm-rating__text"> Рейтинг </span>
+                </div>
+               </div>
+              </div>
+              <div></div>
+             </div>
+             <h1 class="tm-hub-card__name tm-hub-card__name tm-hub-card__name_variant-base"><span>Lisp</span> <span title="Профильный хаб" class="tm-hub-card__profiled"> *</span></h1>
+             <p class="tm-hub-card__description tm-hub-card__description tm-hub-card__description_variant-base">Старейший высокоуровневый язык программирования</p>
+             <div></div><!----> <!---->
+            </div>
+            <div class="tm-tabs tm-tabs_page-header tm-tabs tm-tabs_variant-default">
+             <div class="tm-tabs__scroll-area">
+              <span class="tm-tabs__tab-item"><a href="/ru/hubs/lisp/" data-test-id="tab-link-active" class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_active"> Статьи <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/ru/hubs/lisp/posts/" class="tm-tabs__tab-link tm-tabs__tab-link"> Посты <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/ru/hubs/lisp/news/" class="tm-tabs__tab-link tm-tabs__tab-link"> Новости <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/ru/hubs/lisp/authors/" class="tm-tabs__tab-link tm-tabs__tab-link"> Авторы <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/ru/hubs/lisp/companies/" class="tm-tabs__tab-link tm-tabs__tab-link"> Компании <!----> <!----></a></span>
+             </div><!---->
+            </div>
+            <div class="tm-navigation-filter">
+             <div class="tm-navigation-filters-spoiler">
+              <div class="tm-navigation-filters-spoiler__wrapper">
+               <button type="button" class="tm-navigation-filters-spoiler__button"> Все подряд 
+                <svg height="16" width="16" class="tm-svg-img icon_dropdown-arrow">
+                 <title>
+                  Открыть список
+                 </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#arrow-down"></use>
+                </svg></button> <button class="tm-rss-button tm-hub__rss tm-rss-button_default"><span class="tm-svg-icon__wrapper tm-rss-button__icon">
+                 <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+                  <title>
+                   Скопировать ссылку на RSS
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#rss"></use>
+                 </svg></span></button>
+              </div>
+              <div class="tm-navigation-filters-spoiler__content">
+               <div class="tm-navigation-filters__options">
+                <div class="tm-navigation-filters__list-label">
+                 Сначала показывать
+                </div>
+                <div class="tm-navigation-filters__tabs">
+                 <ul class="tm-navigation-filters-tabs__list">
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button tm-navigation-filters-tabs__option-button_active"> Новые </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> Лучшие </button></li>
+                 </ul>
+                </div>
+                <div class="tm-navigation-filters__list-label">
+                 Порог рейтинга
+                </div>
+                <div class="tm-navigation-filters__tabs">
+                 <ul class="tm-navigation-filters-tabs__list">
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button tm-navigation-filters-tabs__option-button_active"> Все </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> ≥0 </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> ≥10 </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> ≥25 </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> ≥50 </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> ≥100 </button></li>
+                 </ul>
+                </div>
+                <div>
+                 <div class="tm-navigation-filters__list-label">
+                  Уровень сложности
+                 </div>
+                 <ul class="tm-navigation-filters__list">
+                  <li class="tm-navigation-filters__option"><button tabindex="-1" class="tm-navigation-filters__option-button tm-navigation-filters__option-button_active"> Все </button></li>
+                  <li class="tm-navigation-filters__option"><button tabindex="-1" class="tm-navigation-filters__option-button"> Простой </button></li>
+                  <li class="tm-navigation-filters__option"><button tabindex="-1" class="tm-navigation-filters__option-button"> Средний </button></li>
+                  <li class="tm-navigation-filters__option"><button tabindex="-1" class="tm-navigation-filters__option-button"> Сложный </button></li>
+                 </ul>
+                </div><button type="button" tabindex="-1" class="tm-navigation-filters__apply btn btn_solid btn_small"> Применить </button>
+               </div>
+              </div>
+             </div>
+            </div><!---->
+           </div>
+           <div data-async-called="true" class="tm-articles-subpage">
+            <div>
+             <div class="tm-articles-list">
+              <!---->
+              <article id="83587" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/DrToller/" title="DrToller" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="//habrastorage.org/r/w48/getpro/habr/avatars/5a5/550/cd5/5a5550cd599c6f15a467a32bc72f90ac.jpg" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/DrToller/" class="tm-user-info__username"> DrToller <!----></a> <span class="tm-article-datetime-published"><time datetime="2010-02-09T11:26:02.000Z" title="2010-02-09, 14:26">9 фев 2010 в 14:26</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/83587/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>HomeLisp</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 3 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">8.3K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/lisp/" class="router-link-active tm-publication-hub__link"><span>Lisp</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    <i>Недавно мой отец закончил разработку своей реализации языка LISP под Windows. Проект называется <b>HomeLisp</b>. Для того, чтобы проект был доступен любителям LISP-а был создан простейший <a href="http://homelisp.ru">сайт</a>, куда будут выкладываться обновления, документация и где отец будет отвечать на вопросы пользователей. Собственно передаю ему слово.</i>
+                    <br>
+                    <br>
+                    <h3>HomeLisp – простой, свободно распространяемый Лисп на платформе Windows!</h3>
+                    <br>
+                     Среди языков программирования, разработанных к настоящему времени, имеется один совершенно уникальный. Это язык Лисп.
+                    <br>
+                    <br>
+                     Идея, лежащая в основе Лиспа, чрезвычайно красива: все конструкции языка (программы и данные) представляются с помощью единой универсальной структуры – списка. Методология программирования на Лиспе в корне отличается от методологии программирования на традиционных языках (типа Си или Паскаля).
+                    <br>
+                    <br>
+                     Лисп-программист не разбивает алгоритм на отдельные элементарные шаги, не использует циклы, ветвления, присвоения значений переменным, а строит функцию, решающую поставленную задачу. При этом структура функции почти дословно соответствует математической формулировке решаемой задачи.
+                    <br>
+                     Подобная методология сейчас называется функциональным программированием. Лисп – первый функциональный язык программирования и, вероятно, первый язык, который явно приветствовал использование рекурсии.
+                    <br>
+                    <br>
+                     Языки, появившиеся после Лиспа, превзошли Лисп по изобразительным возможностям… но по соотношению «сила/простота» рекорд Лиспа не побит до сих пор!
+                    <br>
+                    <br>
+                     Лисп – абсолютно не попсовый, элитарный язык программирования. И не удивительно, что хотя с момента его изобретения Дж. МакКарти прошло уже более 50 лет, Лисп жив по сей день! Далеко не каждому языку суждена столь долгая жизнь, – где сейчас Алгол-60 (которому пророчили большое будущее)? А по Лиспу издаются книги (к сожалению, не на русском языке…); появляются новые и новые реализации Лиспа на разных аппаратных платформах.
+                    <br>
+                    <br>
+                    <h3>Одну из таких простых реализаций Лиспа и предлагает автор этих строк.</h3>
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/83587/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 63: ↑48 и ↓15
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 63: ↑48 и ↓15" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+33</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 14 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/83587/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 261 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div><!---->
+              <article id="76077" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/freetonik/" title="freetonik" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="//habrastorage.org/r/w48/getpro/habr/avatars/0a4/1df/bde/0a41dfbdea8e3b55e381271d12f59b0c.jpg" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/freetonik/" class="tm-user-info__username"> freetonik <!----></a> <span class="tm-article-datetime-published"><time datetime="2009-11-23T07:48:58.000Z" title="2009-11-23, 10:48">23 ноя 2009 в 10:48</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/76077/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Scheme и классы</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 1 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">1.7K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/lisp/" class="router-link-active tm-publication-hub__link"><span>Lisp</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    Представлю вам последнее видео, посвященное языку программирования Scheme. Дальше мы переходим на Пролог, а напоследок постараемся реализовать классы в функциональном языке.
+                    <br>
+                    <br><iframe src="https://player.vimeo.com/video/7763407" width="504" height="315" frameborder="0" title="Computer Science Student #15: Scheme и классы" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    <br><i>Если не доступен режим HD, то перейдите, пожалуйста, на <a href="http://vimeo.com/7763407">vimeo</a>.</i>
+                    <br>
+                    <br>
+                     Полное <a href="http://css.freetonik.com/wiki/sources:2009:programming_paradigms:assignment_3">решение третьего задание</a> по курсу Programming Paradigms, включающее набранный в видео код.
+                    <br>
+                    <br>
+                     Видео доступно:
+                    <br>
+                    <ul>
+                     <li><a href="http://vimeo.com/7763407">На Vimeo</a></li>
+                     <li>На YouTube (<a href="http://www.youtube.com/watch?v=2mLMjDTm4WA">часть 1</a>, <a href="http://www.youtube.com/watch?v=bxE9uOGkwbc">часть 2</a>)</li>
+                     <li><a href="http://css.rpod.ru/130921.html">На rpod.ru</a></li>
+                    </ul>
+                   </div>
+                  </div><!----> <!---->
+                 </div><!---->
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 21: ↑18 и ↓3
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 21: ↑18 и ↓3" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+15</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 20 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/76077/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 8 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div><!---->
+              <article id="73807" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/freetonik/" title="freetonik" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="//habrastorage.org/r/w48/getpro/habr/avatars/0a4/1df/bde/0a41dfbdea8e3b55e381271d12f59b0c.jpg" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/freetonik/" class="tm-user-info__username"> freetonik <!----></a> <span class="tm-article-datetime-published"><time datetime="2009-10-30T01:38:04.000Z" title="2009-10-30, 04:38">30 окт 2009 в 04:38</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/73807/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Что такое лямбда?</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 1 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">9.1K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/lisp/" class="router-link-active tm-publication-hub__link"><span>Lisp</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    <iframe src="https://player.vimeo.com/video/7339742" width="504" height="315" frameborder="0" title="Computer Science Student #14: Что такое лямбда" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    <br>
+                    <br>
+                     14й выпуск <a href="http://css.freetonik.com">computer science student</a> и второй, посвященный языку Scheme. В сегодняшнем коротком скринкасте я расскажу о том, что такое лямбда в функциональном языке программирования.
+                    <br>
+                    <br>
+                     Видео доступно на <a href="http://vimeo.com/7339742">vimeo</a>, <a href="http://www.youtube.com/watch?v=Je7YBzK7U_Q">youtube</a> и <a href="http://css.rpod.ru/127248.html">rpod</a>.
+                   </div>
+                  </div><!----> <!---->
+                 </div><!---->
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 40: ↑29 и ↓11
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 40: ↑29 и ↓11" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+18</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 35 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/73807/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 26 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div><!---->
+              <article id="72257" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/freetonik/" title="freetonik" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="//habrastorage.org/r/w48/getpro/habr/avatars/0a4/1df/bde/0a41dfbdea8e3b55e381271d12f59b0c.jpg" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/freetonik/" class="tm-user-info__username"> freetonik <!----></a> <span class="tm-article-datetime-published"><time datetime="2009-10-13T06:10:43.000Z" title="2009-10-13, 10:10">13 окт 2009 в 10:10</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/72257/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Язык Scheme</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 1 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">19K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/lisp/" class="router-link-active tm-publication-hub__link"><span>Lisp</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    <iframe src="https://player.vimeo.com/video/7038082" width="504" height="315" frameborder="0" title="CS Student #12: Язык Scheme, часть 1" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    <br>
+                     Если здесь HD-режим недоступен, значит нужно <a href="http://vimeo.com/7038082">перейти на vimeo</a>.
+                    <br>
+                    <br>
+                     Знакомство с языком программирования Scheme в рамках проекта <a href="http://css.freetonik.com">CS Student</a>. В видео мы познакомимся с некоторыми простыми типами данных, порядком обработки процедур и выполним парочку заданий из моего курса Programming Paradigms. Во второй части будет решение задачек немного посложнее и знакомство с другими возможностями языка. Ссылки:
+                    <br>
+                    <ul>
+                     <li><a href="http://en.wikipedia.org/wiki/Scheme_(programming_language)">Scheme на Wikipedia</a> (англ)</li>
+                     <li><a href="http://css.freetonik.com/wiki/scheme:start">Самоучитель Scheme на нашей Wiki</a></li>
+                     <li><a href="http://www.ccs.neu.edu/home/dorai/t-y-scheme/t-y-scheme.html">Оригинал самоучителя «Teach Yourself Scheme in Fixnum Days»</a></li>
+                     <li><a href="http://css.freetonik.com/2009/10/13/scheme-chast-1/">Полный текст задания</a></li>
+                    </ul>
+                    <br><b>Интерпретаторы</b>
+                    <br>
+                    <ul>
+                     <li><a href="http://www.plt-scheme.org/">PLT Scheme (Dr. Scheme)</a></li>
+                     <li><a href="http://www.gnu.org/software/mit-scheme/">MIT/GNU Scheme</a></li>
+                     <li><a href="http://www.gnu.org/software/kawa/Features.html">Kawa</a></li>
+                     <li><a href="http://www.schemers.com/3dscm1.html">3DScheme</a></li>
+                     <li><a href="http://www-sop.inria.fr/mimosa/fp/Bigloo/">Bigloo</a></li>
+                     <li><a href="http://sourceforge.net/apps/wordpress/schemeway/">Schemeway</a></li>
+                     <li><a href="http://www.davidpilo.com/pvts/">PVTS</a></li>
+                    </ul>
+                   </div>
+                  </div><!----> <!---->
+                 </div><!---->
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 53: ↑44 и ↓9
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 53: ↑44 и ↓9" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+35</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 56 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/72257/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 14 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <div class="tm-article-feed-blocks">
+                <section data-navigatable="" tabindex="0" id="stories_block_4" data-async-called="true" class="tm-block tm-stories-block tm-block tm-block_spacing-around">
+                 <header class="tm-block__header tm-block__header">
+                  <div class="tm-block__header-container">
+                   <h2 class="tm-block__title tm-block__title">Истории</h2>
+                  </div><!---->
+                 </header>
+                 <div class="tm-block__body tm-block__body tm-block__body_variant-equal">
+                  <div class="tm-stories-empty">
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                  </div><!---->
+                 </div><!---->
+                </section>
+               </div>
+              </div><!---->
+              <article id="60524" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/alizar/" title="alizar" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="//habrastorage.org/r/w48/getpro/habr/avatars/cc3/97d/54c/cc397d54c2161005908a3034c5fabbea.png" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/alizar/" class="tm-user-info__username"> alizar <!----></a> <span class="tm-article-datetime-published"><time datetime="2009-05-26T14:11:07.000Z" title="2009-05-26, 18:11">26 мая 2009 в 18:11</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/60524/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Самый быстрый мини веб-сервер</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 1 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">6.6K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/lisp/" class="router-link-active tm-publication-hub__link"><span>Lisp</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    <img src="https://habrastorage.org/getpro/habr/post_images/ddc/ecd/393/ddcecd393bfd520f8cf5078c25a1dd60.gif" align="right"><a href="http://john.freml.in/">Джон Фремлин</a> (John Fremlin) выпустил, по его мнению, самый быстрый мини веб-сервер для динамического контента. Сервер <a href="http://github.com/vii/teepeedee2/tree/master">teepeedee2</a> целиком написан на Common Lisp (CL), диалекте LISP, второго по древности языка программирования высокого уровня.
+                    <br>
+                    <br>
+                     О своей разработке Фремлин рассказывал ещё в прошлом году, задолго до релиза, на токийской встрече Linux Users Group, там же он показал и результаты замеров производительности (<a href="http://tlug.jp/meetings/2008/11/serving-dynamic-webpages-in-less-then-a-millisecond_john-fremlin_handout.pdf">PDF</a>), которые демонстрируют, что «функциональные языки могут превзойти C». 
+                    <br>
+                    <br>
+                     via <a href="http://tech.slashdot.org/article.pl?sid=09/05/25/1553220">slashdot</a>
+                   </div>
+                  </div><!----> <!---->
+                 </div><!---->
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 72: ↑62 и ↓10
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 72: ↑62 и ↓10" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+52</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 28 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/60524/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 93 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div><!---->
+              <article id="28167" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/semka/" title="semka" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="//habrastorage.org/r/w48/getpro/habr/avatars/07f/351/899/07f3518996c3dd3d195ab981f10b67c8.jpg" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/semka/" class="tm-user-info__username"> semka <!----></a> <span class="tm-article-datetime-published"><time datetime="2008-06-30T01:55:41.000Z" title="2008-06-30, 05:55">30 июн 2008 в 05:55</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/28167/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Io Language: Синтаксис</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 4 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">3.6K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/crazydev/" class="tm-publication-hub__link"><span>Ненормальное программирование</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-publication-hub__link-container"><a href="/ru/hubs/lisp/" class="router-link-active tm-publication-hub__link"><span>Lisp</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-publication-hub__link-container"><a href="/ru/hubs/smalltalk/" class="tm-publication-hub__link"><span>Smalltalk</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    <img src="https://habrastorage.org/getpro/habr/post_images/5a8/c10/1fd/5a8c101fd1be348cf57acace5e922ff2.jpg">
+                    <br>
+                     В <a href="http://habrahabr.ru/blog/crazydev/45332.html">продолжение серии статей</a> про Io, хотелось бы отдельно остановиться на синтаксисе языка. 
+                    <br>
+                     В двух словах синтаксис Io можно описать так: простой, но странный. Многих удивит такой подход, но, спешу заверить, как и в Lisp, синтаксис неудобен только при взгляде со стороны. С эстетической точки зрения можно отдельно выделить тот факт, что многие прогаммы на Io внешне кажутся излишне разреженными, на экране остается много «лишнего», незаполненного полезным кодом места, это ощущение меня не покидает довольно давно, я пока не придумал, как полностью избавиться от этого вывиха мозга, я просто придумал для себя некоторые правила оформления кода, при соблюдении которых эффект значительно сморщивается:
+                    <br>
+                    <ul>
+                     <li>Длина строки не должна превышать 80 символов (Привет, text mode!)</li>
+                     <li>Между клонированием объекта и описанием тела нового должна быть пустая строка</li>
+                     <li>Методы и свойства группируются</li>
+                     <li>Без лишней необходимости скобки на новую строку не переносятся</li>
+                    </ul>
+                    <br>
+                    <br>
+                     Ну что, поехали. Вынос мозга №2.
+                    <br>
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/28167/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 50: ↑45 и ↓5
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 50: ↑45 и ↓5" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+40</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 34 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/28167/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 17 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div>
+             </div><!---->
+             <div class="tm-pagination">
+              <a href="/ru/hubs/lisp/articles/page8/" id="pagination-prev-page" data-pagination-prev="" rel="prev" class="tm-pagination__navigation-link tm-pagination__navigation-link_active">
+               <svg height="16" width="16" class="tm-svg-img tm-pagination__arrow tm-pagination__arrow_prev">
+                <title>
+                 Назад
+                </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#arrow-back"></use>
+               </svg><span class="tm-pagination__navigation-link-title"> Сюда </span></a>
+              <div class="tm-pagination__pages">
+               <div class="tm-pagination__page-group">
+                <a href="/ru/hubs/lisp/articles/page1/" class="tm-pagination__page"> 1 </a><a href="/ru/hubs/lisp/articles/page2/" class="tm-pagination__page"> 2 </a> <span class="tm-pagination__page tm-pagination__page_skip"> ... </span>
+               </div>
+               <div class="tm-pagination__page-group">
+                <a href="/ru/hubs/lisp/articles/page7/" class="tm-pagination__page"> 7 </a><a href="/ru/hubs/lisp/articles/page8/" class="tm-pagination__page"> 8 </a> <!---->
+               </div><span class="tm-pagination__page tm-pagination__page_current"> 9 </span>
+              </div>
+              <div id="pagination-next-page" data-pagination-next="" event="" rel="next" class="tm-pagination__navigation-link">
+               <span class="tm-pagination__navigation-link-title"> Туда </span>
+               <svg height="16" width="16" class="tm-svg-img tm-pagination__arrow tm-pagination__arrow_next">
+                <title>
+                 Назад
+                </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#arrow-back"></use>
+               </svg>
+              </div>
+             </div>
+            </div>
+           </div><!---->
+          </div>
+         </div>
+         <div class="tm-page__sidebar">
+          <div data-async-called="true" class="tm-layout-sidebar">
+           <div class="tm-layout-sidebar__ads tm-layout-sidebar__ads_initial">
+            <div class="tm-adfox-banner__container tm-layout-sidebar__banner tm-layout-sidebar__banner_top">
+             <!---->
+             <div id="adfox_164725680533065327" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-half-page"></div>
+            </div>
+           </div>
+           <div class="tm-sexy-sidebar tm-sexy-sidebar_initial" style="margin-top:0px;">
+            <!---->
+            <section class="tm-block tm-block tm-block_spacing-bottom">
+             <header class="tm-block__header tm-block__header">
+              <div class="tm-block__header-container">
+               <h2 class="tm-block__title tm-block__title">Вклад авторов</h2>
+              </div><!---->
+             </header>
+             <div class="tm-block__body tm-block__body">
+              <ul class="tm-contribution-list">
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/anjensan/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/b12/b2c/3d8/b12b2c3d8a9b9244aac9ebd501b55014.gif" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/anjensan/" class="tm-authors-block__author-name">anjensan</a>
+                  <div class="tm-contribution-list__contribution">
+                   194.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:100%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/love5an/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/b7e/900/b10/b7e900b1015c5628052c3ebe36865f09.png" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/love5an/" class="tm-authors-block__author-name">love5an</a>
+                  <div class="tm-contribution-list__contribution">
+                   158.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:81.44329896907216%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/Nikelandjelo/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/3a5/301/079/3a5301079ec1978dc674e8716be7222a.png" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/Nikelandjelo/" class="tm-authors-block__author-name">Nikelandjelo</a>
+                  <div class="tm-contribution-list__contribution">
+                   106.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:54.63917525773196%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/catstail1954/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/e80/b33/9f7/e80b339f708209936e6db7337f102491.jpg" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/catstail1954/" class="tm-authors-block__author-name">catstail1954</a>
+                  <div class="tm-contribution-list__contribution">
+                   102.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:52.577319587628864%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/alizar/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/cc3/97d/54c/cc397d54c2161005908a3034c5fabbea.png" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/alizar/" class="tm-authors-block__author-name">alizar</a>
+                  <div class="tm-contribution-list__contribution">
+                   90.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:46.391752577319586%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/freetonik/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/0a4/1df/bde/0a41dfbdea8e3b55e381271d12f59b0c.jpg" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/freetonik/" class="tm-authors-block__author-name">freetonik</a>
+                  <div class="tm-contribution-list__contribution">
+                   80.8
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:41.649484536082475%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/IIvana/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="https://assets.habr.com/habr-web/img/avatars/169.png" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/IIvana/" class="tm-authors-block__author-name">IIvana</a>
+                  <div class="tm-contribution-list__contribution">
+                   77.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:39.69072164948454%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/karlkorp/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/65c/f59/f4e/65cf59f4e16de3db68b28d320d0cd7ea.jpg" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/karlkorp/" class="tm-authors-block__author-name">karlkorp</a>
+                  <div class="tm-contribution-list__contribution">
+                   76.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:39.175257731958766%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/mikhanoid/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/1c1/0f6/783/1c10f6783aac12da3c5112ee6588fddf.jpg" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/mikhanoid/" class="tm-authors-block__author-name">mikhanoid</a>
+                  <div class="tm-contribution-list__contribution">
+                   75.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:38.65979381443299%;"></div>
+                 </div>
+                </div></li>
+              </ul>
+             </div>
+             <footer class="tm-block__footer">
+              <a href="/ru/hubs/lisp/authors/" class="tm-block-extralink"> 100 лучших авторов </a>
+             </footer>
+            </section><!----> <!---->
+            <div class="tm-adfox-banner__container tm-layout-sidebar__banner tm-layout-sidebar__banner_bottom">
+             <!---->
+             <div id="adfox_164725691003361602" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-medium-rectangle"></div>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </main><!---->
+    </div>
+    <div class="tm-footer-menu">
+     <div class="tm-page-width">
+      <div class="tm-footer-menu__container">
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title">Ваш аккаунт</p>
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr/?back=/ru/hubs/lisp/articles/page9/&amp;hl=ru" rel="nofollow" target="_self"> Войти </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr-register/?back=/ru/hubs/lisp/articles/page9/&amp;hl=ru" rel="nofollow" target="_self"> Регистрация </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title">Разделы</p>
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/" class="footer-menu__item-link router-link-active"> Статьи </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/news/" class="footer-menu__item-link"> Новости </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/hubs/" class="footer-menu__item-link router-link-active"> Хабы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/companies/" class="footer-menu__item-link"> Компании </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/users/" class="footer-menu__item-link"> Авторы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/sandbox/" class="footer-menu__item-link"> Песочница </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title">Информация</p>
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/help/" class="footer-menu__item-link"> Устройство сайта </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/authors/codex/" class="footer-menu__item-link"> Для авторов </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/companies/corpblogs/" class="footer-menu__item-link"> Для компаний </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/docs/transparency/" class="footer-menu__item-link"> Документы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/agreement/?hl=ru_RU" target="_blank"> Соглашение </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/confidential/?hl=ru_RU" target="_blank"> Конфиденциальность </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title">Услуги</p>
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/corporate-blogs/" target="_blank"> Корпоративный блог </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/advertising/" target="_blank"> Медийная реклама </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/native-special/" target="_blank"> Нативные проекты </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/education-programs/" target="_blank"> Образовательные программы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/hello-startup/" target="_blank"> Стартапам </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/specials/" class="footer-menu__item-link"> Спецпроекты </a></li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="tm-footer">
+     <div class="tm-page-width">
+      <div class="tm-footer__container">
+       <!---->
+       <div class="tm-footer__social">
+        <a href="https://www.facebook.com/habrahabr.ru" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Facebook
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-facebook"></use>
+         </svg></a><a href="https://twitter.com/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Twitter
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-twitter"></use>
+         </svg></a><a href="https://vk.com/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           VK
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-vk"></use>
+         </svg></a><a href="https://telegram.me/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Telegram
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-telegram"></use>
+         </svg></a><a href="https://www.youtube.com/channel/UCd_sTwKqVrweTt4oAKY5y4w" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Youtube
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-youtube"></use>
+         </svg></a><a href="https://dzen.ru/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Яндекс Дзен
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-dzen"></use>
+         </svg></a>
+       </div>
+       <div class="v-portal" style="display:none;"></div><button class="tm-footer__link"><!----> Настройка языка </button> <a href="/ru/feedback/" class="tm-footer__link"> Техническая поддержка </a>
+       <div class="tm-footer-copyright">
+        <span class="tm-copyright"><span class="tm-copyright__years">© 2006–2023, </span> <span class="tm-copyright__name"><a href="https://company.habr.com/" rel="noopener" target="_blank" class="tm-copyright__link">Habr</a></span></span>
+       </div>
+      </div>
+     </div>
+    </div><!----> <!---->
+   </div>
+   <div class="vue-portal-target"></div>
+  </div>
+  <script>window.__INITIAL_STATE__={"adblock":{"hasAcceptableAdsFilter":false,"hasAdblock":false},"articlesList":{"articlesList":{"28167":{"id":"28167","timePublished":"2008-06-30T01:55:41+00:00","isCorporative":false,"lang":"ru","titleHtml":"Io Language: Синтаксис","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"10130","alias":"semka","fullname":"Семён Новиков","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F07f\u002F351\u002F899\u002F07f3518996c3dd3d195ab981f10b67c8.jpg","speciality":"Пользователь"},"statistics":{"commentsCount":17,"favoritesCount":34,"readingCount":3575,"score":40,"votesCount":50,"votesCountPlus":45,"votesCountMinus":5},"hubs":[{"id":"84","alias":"crazydev","type":"collective","title":"Ненормальное программирование","titleHtml":"Ненормальное программирование","isProfiled":true,"relatedData":null},{"id":"642","alias":"lisp","type":"collective","title":"Lisp","titleHtml":"Lisp","isProfiled":true,"relatedData":null},{"id":"18869","alias":"smalltalk","type":"collective","title":"Smalltalk","titleHtml":"Smalltalk","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fpost_images\u002F5a8\u002Fc10\u002F1fd\u002F5a8c101fd1be348cf57acace5e922ff2.jpg\"\u002F\u003E\u003Cbr\u002F\u003E\r\nВ \u003Ca href=\"http:\u002F\u002Fhabrahabr.ru\u002Fblog\u002Fcrazydev\u002F45332.html\"\u003Eпродолжение серии статей\u003C\u002Fa\u003E про Io, хотелось бы отдельно остановиться на синтаксисе языка. \u003Cbr\u002F\u003E\r\nВ двух словах синтаксис Io можно описать так: простой, но странный. Многих удивит такой подход, но, спешу заверить, как и в Lisp, синтаксис неудобен только при взгляде со стороны. С эстетической точки зрения можно отдельно выделить тот факт, что многие прогаммы на Io внешне кажутся излишне разреженными, на экране остается много «лишнего», незаполненного полезным кодом места, это ощущение меня не покидает довольно давно, я пока не придумал, как полностью избавиться от этого вывиха мозга, я просто придумал для себя некоторые правила оформления кода, при соблюдении которых эффект значительно сморщивается:\u003Cbr\u002F\u003E\r\n\u003Cul\u003E\r\n\u003Cli\u003EДлина строки не должна превышать 80 символов (Привет, text mode!)\u003C\u002Fli\u003E\r\n\u003Cli\u003EМежду клонированием объекта и описанием тела нового должна быть пустая строка\u003C\u002Fli\u003E\r\n\u003Cli\u003EМетоды и свойства группируются\u003C\u002Fli\u003E\r\n\u003Cli\u003EБез лишней необходимости скобки на новую строку не переносятся\u003C\u002Fli\u003E\r\n\u003C\u002Ful\u003E\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nНу что, поехали. Вынос мозга №2.\u003Cbr\u002F\u003E\r\n","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":4,"complexity":null,"tags":[{"titleHtml":"Io"},{"titleHtml":"Lisp"},{"titleHtml":"Smalltalk"},{"titleHtml":"Syntax"},{"titleHtml":"внеочередной вынос мозга"}]},"60524":{"id":"60524","timePublished":"2009-05-26T14:11:07+00:00","isCorporative":false,"lang":"ru","titleHtml":"Самый быстрый мини веб-сервер","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"5","alias":"alizar","fullname":"Анатолий Ализар","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fcc3\u002F97d\u002F54c\u002Fcc397d54c2161005908a3034c5fabbea.png","speciality":"автор, фрилансер"},"statistics":{"commentsCount":93,"favoritesCount":28,"readingCount":6641,"score":52,"votesCount":72,"votesCountPlus":62,"votesCountMinus":10},"hubs":[{"id":"642","alias":"lisp","type":"collective","title":"Lisp","titleHtml":"Lisp","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fpost_images\u002Fddc\u002Fecd\u002F393\u002Fddcecd393bfd520f8cf5078c25a1dd60.gif\" align=\"right\"\u002F\u003E\u003Ca href=\"http:\u002F\u002Fjohn.freml.in\u002F\"\u003EДжон Фремлин\u003C\u002Fa\u003E (John Fremlin) выпустил, по его мнению, самый быстрый мини веб-сервер для динамического контента. Сервер \u003Ca href=\"http:\u002F\u002Fgithub.com\u002Fvii\u002Fteepeedee2\u002Ftree\u002Fmaster\"\u003Eteepeedee2\u003C\u002Fa\u003E целиком написан на Common Lisp (CL), диалекте LISP, второго по древности языка программирования высокого уровня.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nО своей разработке Фремлин рассказывал ещё в прошлом году, задолго до релиза, на токийской встрече Linux Users Group, там же он показал и результаты замеров производительности (\u003Ca href=\"http:\u002F\u002Ftlug.jp\u002Fmeetings\u002F2008\u002F11\u002Fserving-dynamic-webpages-in-less-then-a-millisecond_john-fremlin_handout.pdf\"\u003EPDF\u003C\u002Fa\u003E), которые демонстрируют, что «функциональные языки могут превзойти C». \u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nvia \u003Ca href=\"http:\u002F\u002Ftech.slashdot.org\u002Farticle.pl?sid=09\u002F05\u002F25\u002F1553220\"\u003Eslashdot\u003C\u002Fa\u003E","imageUrl":null,"buttonTextHtml":null,"image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":1,"complexity":null,"tags":[{"titleHtml":"С"},{"titleHtml":"функциональный язык"},{"titleHtml":"язык программирования"},{"titleHtml":"LISP"},{"titleHtml":"Common Lisp"},{"titleHtml":"CL"}]},"72257":{"id":"72257","timePublished":"2009-10-13T06:10:43+00:00","isCorporative":false,"lang":"ru","titleHtml":"Язык Scheme","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"14191","alias":"freetonik","fullname":"Рахим Давлеткалиев","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F0a4\u002F1df\u002Fbde\u002F0a41dfbdea8e3b55e381271d12f59b0c.jpg","speciality":""},"statistics":{"commentsCount":14,"favoritesCount":56,"readingCount":18826,"score":35,"votesCount":53,"votesCountPlus":44,"votesCountMinus":9},"hubs":[{"id":"642","alias":"lisp","type":"collective","title":"Lisp","titleHtml":"Lisp","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Ciframe src=\"https:\u002F\u002Fplayer.vimeo.com\u002Fvideo\u002F7038082\" width=\"504\" height=\"315\" frameborder=\"0\" title=\"CS Student #12: Язык Scheme, часть 1\" webkitallowfullscreen mozallowfullscreen allowfullscreen\u003E\u003C\u002Fiframe\u003E\u003Cbr\u002F\u003E\r\nЕсли здесь HD-режим недоступен, значит нужно \u003Ca href=\"http:\u002F\u002Fvimeo.com\u002F7038082\"\u003Eперейти на vimeo\u003C\u002Fa\u003E.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nЗнакомство с языком программирования Scheme в рамках проекта \u003Ca href=\"http:\u002F\u002Fcss.freetonik.com\"\u003ECS Student\u003C\u002Fa\u003E. В видео мы познакомимся с некоторыми простыми типами данных, порядком обработки процедур и выполним парочку заданий из моего курса Programming Paradigms. Во второй части будет решение задачек немного посложнее и знакомство с другими возможностями языка. Ссылки:\u003Cbr\u002F\u003E\r\n\u003Cul\u003E\r\n\u003Cli\u003E\u003Ca href=\"http:\u002F\u002Fen.wikipedia.org\u002Fwiki\u002FScheme_(programming_language)\"\u003EScheme на Wikipedia\u003C\u002Fa\u003E (англ)\u003C\u002Fli\u003E\r\n\u003Cli\u003E\u003Ca href=\"http:\u002F\u002Fcss.freetonik.com\u002Fwiki\u002Fscheme:start\"\u003EСамоучитель Scheme на нашей Wiki\u003C\u002Fa\u003E\u003C\u002Fli\u003E\r\n\u003Cli\u003E\u003Ca href=\"http:\u002F\u002Fwww.ccs.neu.edu\u002Fhome\u002Fdorai\u002Ft-y-scheme\u002Ft-y-scheme.html\"\u003EОригинал самоучителя «Teach Yourself Scheme in Fixnum Days»\u003C\u002Fa\u003E\u003C\u002Fli\u003E\r\n\u003Cli\u003E\u003Ca href=\"http:\u002F\u002Fcss.freetonik.com\u002F2009\u002F10\u002F13\u002Fscheme-chast-1\u002F\"\u003EПолный текст задания\u003C\u002Fa\u003E\u003C\u002Fli\u003E\r\n\u003C\u002Ful\u003E\u003Cbr\u002F\u003E\r\n\u003Cb\u003EИнтерпретаторы\u003C\u002Fb\u003E\u003Cbr\u002F\u003E\r\n\u003Cul\u003E\r\n\u003Cli\u003E\u003Ca href=\"http:\u002F\u002Fwww.plt-scheme.org\u002F\"\u003EPLT Scheme (Dr. Scheme)\u003C\u002Fa\u003E\u003C\u002Fli\u003E\r\n\u003Cli\u003E\u003Ca href=\"http:\u002F\u002Fwww.gnu.org\u002Fsoftware\u002Fmit-scheme\u002F\"\u003EMIT\u002FGNU Scheme\u003C\u002Fa\u003E\u003C\u002Fli\u003E\r\n\u003Cli\u003E\u003Ca href=\"http:\u002F\u002Fwww.gnu.org\u002Fsoftware\u002Fkawa\u002FFeatures.html\"\u003EKawa\u003C\u002Fa\u003E\u003C\u002Fli\u003E\r\n\u003Cli\u003E\u003Ca href=\"http:\u002F\u002Fwww.schemers.com\u002F3dscm1.html\"\u003E3DScheme\u003C\u002Fa\u003E\u003C\u002Fli\u003E\r\n\u003Cli\u003E\u003Ca href=\"http:\u002F\u002Fwww-sop.inria.fr\u002Fmimosa\u002Ffp\u002FBigloo\u002F\"\u003EBigloo\u003C\u002Fa\u003E\u003C\u002Fli\u003E\r\n\u003Cli\u003E\u003Ca href=\"http:\u002F\u002Fsourceforge.net\u002Fapps\u002Fwordpress\u002Fschemeway\u002F\"\u003ESchemeway\u003C\u002Fa\u003E\u003C\u002Fli\u003E\r\n\u003Cli\u003E\u003Ca href=\"http:\u002F\u002Fwww.davidpilo.com\u002Fpvts\u002F\"\u003EPVTS\u003C\u002Fa\u003E\u003C\u002Fli\u003E\r\n\u003C\u002Ful\u003E","imageUrl":null,"buttonTextHtml":null,"image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":1,"complexity":null,"tags":[{"titleHtml":"scheme"},{"titleHtml":"lisp"},{"titleHtml":"скринкаст"},{"titleHtml":"computer science student"}]},"73807":{"id":"73807","timePublished":"2009-10-30T01:38:04+00:00","isCorporative":false,"lang":"ru","titleHtml":"Что такое лямбда?","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"14191","alias":"freetonik","fullname":"Рахим Давлеткалиев","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F0a4\u002F1df\u002Fbde\u002F0a41dfbdea8e3b55e381271d12f59b0c.jpg","speciality":""},"statistics":{"commentsCount":26,"favoritesCount":35,"readingCount":9110,"score":18,"votesCount":40,"votesCountPlus":29,"votesCountMinus":11},"hubs":[{"id":"642","alias":"lisp","type":"collective","title":"Lisp","titleHtml":"Lisp","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Ciframe src=\"https:\u002F\u002Fplayer.vimeo.com\u002Fvideo\u002F7339742\" width=\"504\" height=\"315\" frameborder=\"0\" title=\"Computer Science Student #14: Что такое лямбда\" webkitallowfullscreen mozallowfullscreen allowfullscreen\u003E\u003C\u002Fiframe\u003E\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n14й выпуск \u003Ca href=\"http:\u002F\u002Fcss.freetonik.com\"\u003Ecomputer science student\u003C\u002Fa\u003E и второй, посвященный языку Scheme. В сегодняшнем коротком скринкасте я расскажу о том, что такое лямбда в функциональном языке программирования.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nВидео доступно на \u003Ca href=\"http:\u002F\u002Fvimeo.com\u002F7339742\"\u003Evimeo\u003C\u002Fa\u003E, \u003Ca href=\"http:\u002F\u002Fwww.youtube.com\u002Fwatch?v=Je7YBzK7U_Q\"\u003Eyoutube\u003C\u002Fa\u003E и \u003Ca href=\"http:\u002F\u002Fcss.rpod.ru\u002F127248.html\"\u003Erpod\u003C\u002Fa\u003E.","imageUrl":null,"buttonTextHtml":null,"image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":1,"complexity":null,"tags":[{"titleHtml":"scheme"},{"titleHtml":"lambda"},{"titleHtml":"лямбда"},{"titleHtml":"computer science student"}]},"76077":{"id":"76077","timePublished":"2009-11-23T07:48:58+00:00","isCorporative":false,"lang":"ru","titleHtml":"Scheme и классы","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"14191","alias":"freetonik","fullname":"Рахим Давлеткалиев","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F0a4\u002F1df\u002Fbde\u002F0a41dfbdea8e3b55e381271d12f59b0c.jpg","speciality":""},"statistics":{"commentsCount":8,"favoritesCount":20,"readingCount":1672,"score":15,"votesCount":21,"votesCountPlus":18,"votesCountMinus":3},"hubs":[{"id":"642","alias":"lisp","type":"collective","title":"Lisp","titleHtml":"Lisp","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"Представлю вам последнее видео, посвященное языку программирования Scheme. Дальше мы переходим на Пролог, а напоследок постараемся реализовать классы в функциональном языке.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ciframe src=\"https:\u002F\u002Fplayer.vimeo.com\u002Fvideo\u002F7763407\" width=\"504\" height=\"315\" frameborder=\"0\" title=\"Computer Science Student #15: Scheme и классы\" webkitallowfullscreen mozallowfullscreen allowfullscreen\u003E\u003C\u002Fiframe\u003E\u003Cbr\u002F\u003E\r\n\u003Ci\u003EЕсли не доступен режим HD, то перейдите, пожалуйста, на \u003Ca href=\"http:\u002F\u002Fvimeo.com\u002F7763407\"\u003Evimeo\u003C\u002Fa\u003E.\u003C\u002Fi\u003E\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nПолное \u003Ca href=\"http:\u002F\u002Fcss.freetonik.com\u002Fwiki\u002Fsources:2009:programming_paradigms:assignment_3\"\u003Eрешение третьего задание\u003C\u002Fa\u003E по курсу Programming Paradigms, включающее набранный в видео код.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nВидео доступно:\u003Cbr\u002F\u003E\r\n\u003Cul\u003E\r\n\u003Cli\u003E\u003Ca href=\"http:\u002F\u002Fvimeo.com\u002F7763407\"\u003EНа Vimeo\u003C\u002Fa\u003E\u003C\u002Fli\u003E\r\n\u003Cli\u003EНа YouTube (\u003Ca href=\"http:\u002F\u002Fwww.youtube.com\u002Fwatch?v=2mLMjDTm4WA\"\u003Eчасть 1\u003C\u002Fa\u003E, \u003Ca href=\"http:\u002F\u002Fwww.youtube.com\u002Fwatch?v=bxE9uOGkwbc\"\u003Eчасть 2\u003C\u002Fa\u003E)\u003C\u002Fli\u003E\r\n\u003Cli\u003E\u003Ca href=\"http:\u002F\u002Fcss.rpod.ru\u002F130921.html\"\u003EНа rpod.ru\u003C\u002Fa\u003E\u003C\u002Fli\u003E\r\n\u003C\u002Ful\u003E","imageUrl":null,"buttonTextHtml":null,"image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":1,"complexity":null,"tags":[{"titleHtml":"computer science student"},{"titleHtml":"css"},{"titleHtml":"scheme"},{"titleHtml":"oop"},{"titleHtml":"скринкаст"}]},"83587":{"id":"83587","timePublished":"2010-02-09T11:26:02+00:00","isCorporative":false,"lang":"ru","titleHtml":"HomeLisp","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"31290","alias":"DrToller","fullname":"DrToller","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F5a5\u002F550\u002Fcd5\u002F5a5550cd599c6f15a467a32bc72f90ac.jpg","speciality":"Пользователь"},"statistics":{"commentsCount":261,"favoritesCount":14,"readingCount":8290,"score":33,"votesCount":63,"votesCountPlus":48,"votesCountMinus":15},"hubs":[{"id":"642","alias":"lisp","type":"collective","title":"Lisp","titleHtml":"Lisp","isProfiled":true,"relatedData":null}],"flows":[{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"}],"relatedData":null,"leadData":{"textHtml":"\u003Ci\u003EНедавно мой отец закончил разработку своей реализации языка LISP под Windows. Проект называется \u003Cb\u003EHomeLisp\u003C\u002Fb\u003E. Для того, чтобы проект был доступен любителям LISP-а был создан простейший \u003Ca href=\"http:\u002F\u002Fhomelisp.ru\"\u003Eсайт\u003C\u002Fa\u003E, куда будут выкладываться обновления, документация и где отец будет отвечать на вопросы пользователей. Собственно передаю ему слово.\u003C\u002Fi\u003E\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch3\u003EHomeLisp – простой, свободно распространяемый Лисп на платформе Windows!\u003C\u002Fh3\u003E\u003Cbr\u002F\u003E\r\nСреди языков программирования, разработанных к настоящему времени, имеется один совершенно уникальный. Это язык Лисп.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nИдея, лежащая в основе Лиспа, чрезвычайно красива: все конструкции языка (программы и данные) представляются с помощью единой универсальной структуры – списка. Методология программирования на Лиспе в корне отличается от методологии программирования на традиционных языках (типа Си или Паскаля).\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nЛисп-программист не разбивает алгоритм на отдельные элементарные шаги, не использует циклы, ветвления, присвоения значений переменным, а строит функцию, решающую поставленную задачу. При этом структура функции почти дословно соответствует математической формулировке решаемой задачи.\u003Cbr\u002F\u003E\r\nПодобная методология сейчас называется функциональным программированием. Лисп – первый функциональный язык программирования и, вероятно, первый язык, который явно приветствовал использование рекурсии.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nЯзыки, появившиеся после Лиспа, превзошли Лисп по изобразительным возможностям… но по соотношению «сила\u002Fпростота» рекорд Лиспа не побит до сих пор!\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nЛисп – абсолютно не попсовый, элитарный язык программирования. И не удивительно, что хотя с момента его изобретения Дж. МакКарти прошло уже более 50 лет, Лисп жив по сей день! Далеко не каждому языку суждена столь долгая жизнь, – где сейчас Алгол-60 (которому пророчили большое будущее)? А по Лиспу издаются книги (к сожалению, не на русском языке…); появляются новые и новые реализации Лиспа на разных аппаратных платформах.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n\u003Ch3\u003EОдну из таких простых реализаций Лиспа и предлагает автор этих строк.\u003C\u002Fh3\u003E","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":3,"complexity":null,"tags":[{"titleHtml":"lisp"}]}},"articlesIds":{"ARTICLES_LIST_BY_HUB_ALL_PAGES_LISP_9":["83587","76077","73807","72257","60524","28167"]},"isLoading":false,"pagesCount":{"ARTICLES_LIST_BY_HUB_ALL_PAGES_LISP_9":9},"route":{"name":"ARTICLES_LIST_BY_HUB_ALL_PAGES","params":{"hl":"ru","hubName":"lisp","pageNum":"9"},"query":{}},"reasonsList":null,"postReasonsList":null,"view":"cards","lastVisitedRoute":{},"ssrCommentsArticleIds":[],"viewedPosts":[],"karma":{"userReasonsList":null}},"authorContribution":{"authors":{"hub_lisp":[{"id":"99972","alias":"anjensan","fullname":"Andrei Zhlobich","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fb12\u002Fb2c\u002F3d8\u002Fb12b2c3d8a9b9244aac9ebd501b55014.gif","speciality":"Human","scoreStats":{"score":66,"votesCount":86},"rating":0,"invest":194,"relatedData":null,"lastPost":null},{"id":"65466","alias":"love5an","fullname":"Дмитрий Игнатьев","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fb7e\u002F900\u002Fb10\u002Fb7e900b1015c5628052c3ebe36865f09.png","speciality":null,"scoreStats":{"score":48,"votesCount":68},"rating":0,"invest":158,"relatedData":null,"lastPost":null},{"id":"54199","alias":"Nikelandjelo","fullname":"Никита Белоглазов","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F3a5\u002F301\u002F079\u002F3a5301079ec1978dc674e8716be7222a.png","speciality":null,"scoreStats":{"score":28,"votesCount":88},"rating":0,"invest":106,"relatedData":null,"lastPost":null},{"id":"54271","alias":"catstail1954","fullname":"Борис Файфель","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fe80\u002Fb33\u002F9f7\u002Fe80b339f708209936e6db7337f102491.jpg","speciality":"Пользователь","scoreStats":{"score":38,"votesCount":82},"rating":0,"invest":102,"relatedData":null,"lastPost":null},{"id":"5","alias":"alizar","fullname":"Анатолий Ализар","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fcc3\u002F97d\u002F54c\u002Fcc397d54c2161005908a3034c5fabbea.png","speciality":"автор, фрилансер","scoreStats":{"score":1040,"votesCount":4240},"rating":344,"invest":90,"relatedData":null,"lastPost":null},{"id":"14191","alias":"freetonik","fullname":"Рахим Давлеткалиев","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F0a4\u002F1df\u002Fbde\u002F0a41dfbdea8e3b55e381271d12f59b0c.jpg","speciality":null,"scoreStats":{"score":638,"votesCount":842},"rating":0,"invest":80.8,"relatedData":null,"lastPost":null},{"id":"1040324","alias":"IIvana","fullname":"Андрей","avatarUrl":null,"speciality":"Пользователь","scoreStats":{"score":9,"votesCount":91},"rating":0,"invest":77,"relatedData":null,"lastPost":null},{"id":"346215","alias":"karlkorp","fullname":null,"avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F65c\u002Ff59\u002Ff4e\u002F65cf59f4e16de3db68b28d320d0cd7ea.jpg","speciality":"Инженер-программист","scoreStats":{"score":13,"votesCount":29},"rating":0,"invest":76,"relatedData":null,"lastPost":null},{"id":"7252","alias":"mikhanoid","fullname":"Михаил Бахтерев","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F1c1\u002F0f6\u002F783\u002F1c10f6783aac12da3c5112ee6588fddf.jpg","speciality":"ИММ УрО РАН","scoreStats":{"score":195,"votesCount":597},"rating":0.1,"invest":75,"relatedData":null,"lastPost":null}]}},"betaTest":{"currentAnnouncement":null,"announcements":{},"announcementCards":null,"announcementComments":{},"announcementCommentThreads":{},"announcementCommentingStatuses":{},"archivedList":[]},"authorStatistics":{"articleRefs":{},"articleIds":{},"pagesCount":{},"route":{},"viewsCount":[],"maxStatsCount":{}},"career":{"seoLandings":[],"hubs":"lisp"},"comments":{"articleComments":{},"articlePinnedComments":{},"searchCommentsResults":null,"pagesCount":null,"commentAccess":{},"scrollParents":{},"pageArticleComments":{"lastViewedComment":0,"postId":null,"lastCommentTimestamp":"","moderated":[],"moderatedIds":[],"commentRoute":""}},"companies":{"companyRefs":{},"companyIds":{},"companyTopIds":{},"pagesCount":{},"companyProfiles":{},"companiesCategories":[],"companiesCategoriesTotalCount":0,"companiesWidgets":{},"companiesWorkers":{},"companiesFans":{},"multiwidgets":{},"route":{},"isLoading":false,"companyWorkersLoading":false,"companyFansLoading":false,"multiwidgetLoading":false,"vacancies":{},"companiesGalleries":{},"companiesBanners":{},"companiesLandingVacancies":{},"companiesTechnologies":{},"workplaceInfo":null},"companyAdmin":{"companyInfo":null,"companyInfoLoading":false,"faqArticles":null,"brandingPreviewImageUrl":null,"jivoStatus":0,"adminNotifications":null},"companiesContribution":{"hubs":{},"flows":{},"companyRefs":{}},"companyHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"conversation":{"messages":[],"respondent":null,"isLoadMore":false},"conversations":{"conversations":[],"unreadCount":0,"pagesCount":0},"docs":{"menu":{},"articles":{},"mainMenu":[],"loading":{"main":false,"dropdown":false,"article":false}},"feature":{"isProbablyVisible":true},"flows":{"updates":{"countNewPostsBySubscription":null,"countNewThreadsBySubscription":null,"countNewNewsBySubscription":null,"countNewPostsAll":34,"countNewNewsAll":12,"countNewThreadsAll":4},"flows":[{"alias":"develop","id":"1","route":{"name":"FLOW_PAGE","params":{"flowName":"develop"}}},{"alias":"admin","id":"6","route":{"name":"FLOW_PAGE","params":{"flowName":"admin"}}},{"alias":"design","id":"2","route":{"name":"FLOW_PAGE","params":{"flowName":"design"}}},{"alias":"management","id":"3","route":{"name":"FLOW_PAGE","params":{"flowName":"management"}}},{"alias":"marketing","id":"4","route":{"name":"FLOW_PAGE","params":{"flowName":"marketing"}}},{"alias":"popsci","id":"7","route":{"name":"FLOW_PAGE","params":{"flowName":"popsci"}}}]},"global":{"isPwa":false,"device":"desktop","isHabrCom":true},"hubs":{"hubRefs":{"lisp":{"id":"642","alias":"lisp","titleHtml":"Lisp","descriptionHtml":"Старейший высокоуровневый язык программирования","fullDescriptionHtml":"Lisp — второй старейший после Fortran'а высокоуровневый язык программирования.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nНа сегодня Lisp представляет собой множество языков (Common Lisp, Scheme, Clojure, Emacs Lisp, newLISP, Arc). Lisp позволяет свободно манипулировать кодом программы, давая возможность для мета-программирования. Это является на данный момент его основным отличием от других языков.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nВ основе Lisp'а лежит Лямбда-исчисление Алонзо Черча, представляющее альтернативу традиционному подходу к созданию языков программирования. Другой отличительной чертой является использование для записи всех операций s-нотации — полностью префиксной нотации с явным проставлением скобок. Кроме этого, у Lisp'а практически нет какого-либо иного синтаксиса, что делает язык максимально гибким.","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F43f\u002F1a4\u002Fc45\u002F43f1a4c4588b789c5c60b793469c8214.png","relatedData":null,"statistics":{"subscribersCount":80301,"rating":8.93,"authorsCount":95,"postsCount":165},"sponsorship":null,"keywords":["lisp","clojure","scheme","common lisp","функциональное программирование","программирование","лисп","пол грэм","разработка","emacs","dsl","web","java","racket","sbcl","игры","zillions of games 2","zrf","edisonsoftware","проектирование"],"flow":{"id":"1","alias":"develop","title":"Разработка","titleHtml":"Разработка"},"isProfiled":true}},"hubIds":{},"pagesCount":{},"isLoading":false,"route":{}},"hubsBlock":{"hubRefs":{"infosecurity":{"id":"50","alias":"infosecurity","titleHtml":"Информационная безопасность","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F135\u002F2db\u002F187\u002F1352db18765addaa6e0b2ac013d386d8.png","descriptionHtml":"Защита данных","relatedData":null,"statistics":{"subscribersCount":575291,"rating":728.41,"authorsCount":4765,"postsCount":18569},"commonTags":["информационная безопасность","кибербезопасность","безопасность","уязвимости","утечка","vpn","хакеры","ркн","взлом","персональные данные"],"isProfiled":true,"isOfftop":false},"programming":{"id":"359","alias":"programming","titleHtml":"Программирование","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fdb2\u002Fc8f\u002F4a1\u002Fdb2c8f4a1974bf334d01595732f339c1.png","descriptionHtml":"Искусство создания компьютерных программ","relatedData":null,"statistics":{"subscribersCount":352023,"rating":707.89,"authorsCount":6673,"postsCount":17828},"commonTags":["программирование","python","разработка","java","c++","javascript","go","c#","rust","искусственный интеллект"],"isProfiled":true,"isOfftop":false},"popular_science":{"id":"21910","alias":"popular_science","titleHtml":"Научно-популярное","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002F02f\u002F206\u002F0b9\u002F02f2060b99e6f4d9403eee0420d7d5b8.png","descriptionHtml":"IT в науке и наука в IT","relatedData":null,"statistics":{"subscribersCount":174828,"rating":575.63,"authorsCount":2108,"postsCount":15162},"commonTags":["научно-популярное","луна","космос","наса","астрономия","наука","роскосмос","физика","марс","ruvds_статьи"],"isProfiled":false,"isOfftop":false},"career":{"id":"20740","alias":"career","titleHtml":"Карьера в IT-индустрии","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fcab\u002Ff82\u002F067\u002Fcabf82067c7be08c90a5903f860c9abf.png","descriptionHtml":"Работать, работать и работать (в IT)","relatedData":null,"statistics":{"subscribersCount":79261,"rating":452.75,"authorsCount":3117,"postsCount":8141},"commonTags":["карьера","карьера в it-индустрии","карьера в it","работа","карьера ит-специалиста","карьера программиста","обучение","проблема","it-компании","собеседование"],"isProfiled":false,"isOfftop":false},"games":{"id":"21980","alias":"games","titleHtml":"Игры и игровые консоли","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002F250\u002Fe19\u002F5fa\u002F250e195faa1708e4df5cb8664394a54f.png","descriptionHtml":"Камень, ножницы, бумага","relatedData":null,"statistics":{"subscribersCount":107942,"rating":448.48,"authorsCount":1101,"postsCount":5587},"commonTags":["игры","steam","разработка игр","microsoft","xbox","sony","консоли","игровые консоли","valve","playstation"],"isProfiled":false,"isOfftop":false},"DIY":{"id":"21976","alias":"DIY","titleHtml":"DIY или Сделай сам","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002F0ac\u002F9b4\u002F828\u002F0ac9b48281cd7ba7401b4a4f5d9cd8d8.png","descriptionHtml":"Для тех, у кого руки растут из нужного места","relatedData":null,"statistics":{"subscribersCount":426019,"rating":418.89,"authorsCount":2564,"postsCount":6200},"commonTags":["diy","arduino","ruvds_статьи","микроконтроллеры","diy-проекты","сделай сам","iot","программирование","умный дом","esp32"],"isProfiled":false,"isOfftop":false},"antikvariat":{"id":"21930","alias":"antikvariat","titleHtml":"Старое железо","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002F064\u002Fe29\u002F0f4\u002F064e290f484ad3bf745ebe9163b9276a.png","descriptionHtml":"Как это было, когда мы были молоды","relatedData":null,"statistics":{"subscribersCount":161811,"rating":382.21,"authorsCount":606,"postsCount":2195},"commonTags":["старое железо","история it","звук","аудиомания","ruvds_статьи","история","игры","ретрокомпьютинг","гаджеты","история ит"],"isProfiled":false,"isOfftop":false},"machine_learning":{"id":"19439","alias":"machine_learning","titleHtml":"Машинное обучение","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F882\u002F37a\u002Fb33\u002F88237ab33b6f8acc090d443651c4f2f9.png","descriptionHtml":"Основа искусственного интеллекта","relatedData":null,"statistics":{"subscribersCount":80519,"rating":383.98,"authorsCount":2402,"postsCount":6575},"commonTags":["машинное обучение","искусственный интеллект","нейросети","chatgpt","ии","openai","ml","python","ai","machine learning"],"isProfiled":true,"isOfftop":false},"artificial_intelligence":{"id":"21922","alias":"artificial_intelligence","titleHtml":"Искусственный интеллект","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002F445\u002F6b9\u002F287\u002F4456b92870815e30ca14f4f66b6cb443.png","descriptionHtml":"AI, ANN и иные формы искусственного разума","relatedData":null,"statistics":{"subscribersCount":113944,"rating":386.52,"authorsCount":2087,"postsCount":6291},"commonTags":["искусственный интеллект","chatgpt","ии","нейросети","машинное обучение","openai","ai","чат-бот","gpt-4","microsoft"],"isProfiled":false,"isOfftop":false},"network_technologies":{"id":"17123","alias":"network_technologies","titleHtml":"Сетевые технологии","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fb2e\u002F13f\u002F8fc\u002Fb2e13f8fcaf2711677c87418b98e85fe.png","descriptionHtml":"От Ethernet до IPv6","relatedData":null,"statistics":{"subscribersCount":159554,"rating":353.17,"authorsCount":1467,"postsCount":4130},"commonTags":["vpn","сетевые технологии","интернет","блокировка","cisco","информационная безопасность","ркн","сетевое оборудование","проблема","mikrotik"],"isProfiled":true,"isOfftop":false}},"hubIds":{"all":["infosecurity","programming","popular_science","career","games","DIY","antikvariat","machine_learning","artificial_intelligence","network_technologies"]}},"i18n":{"fl":"ru","hl":"ru"},"info":{"welcomePage":{},"isLoading":true},"location":{"urlStruct":{"protocol":null,"slashes":null,"auth":null,"host":null,"port":null,"hostname":null,"hash":null,"query":{},"pathname":"\u002F","path":"\u002F","href":"\u002F"}},"me":{"user":null,"uuid":null,"ppgDemanded":false,"karmaResetInfo":{"canReincarnate":null,"wasReincarnated":null,"currentScore":null},"notes":null},"modal":{"modals":[]},"mostReadingList":{"mostReadingListIds":[],"mostReadingListRefs":null,"promoPost":null},"ppa":{"articles":{},"card":null,"transactions":null,"totalTransactions":null,"isAccessible":null},"projectsBlocks":{"activeBlocks":{}},"promoData":{"isLoading":false,"hasLoaded":false,"featurer":null,"megaposts":null,"promoLinks":null,"promoPosts":null},"pullRefresh":{"shouldRefresh":false},"sandbox":{"articleIds":[],"articleRefs":{},"pagesCount":null,"route":{},"lastVisitedRoute":{},"isLoading":false},"search":{"searchQueryError":null},"settingsOther":{"inputs":{"uiLang":{"errors":[],"ref":null,"value":""},"articlesLangEnglish":{"errors":[],"ref":null,"value":false},"articlesLangRussian":{"errors":[],"ref":null,"value":false},"agreement":{"errors":[],"ref":null,"value":false},"email":{"errors":[],"ref":null,"value":true},"digest":{"errors":[],"ref":null,"value":true}}},"similarList":{"similarListIds":[],"similarListRefs":null},"ssr":{"error":null,"isDataLoaded":false,"isDataLoading":false,"isHydrationFailed":false,"isServer":false},"stories":{"stories":[{"id":"story-634","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe80\u002F14f\u002F9b0\u002Fe8014f9b0b323e26f89fb65c07367da7.png","title":"Т1","link":"https:\u002F\u002Fu.habr.com\u002FT1"},"title":"Идём на «Импульс Т1» по дороге из жёлтого кирпича","lang":"ru","startTime":"2023-11-21T12:00:00+03:00","finishTime":"2023-12-01T23:59:00+03:00","slides":[{"id":"story-634_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fb83\u002F6f2\u002F4a3\u002Fb836f24a39bedec1aca21003cea65537.jpg","button":null},{"id":"story-634_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F267\u002F0f1\u002F28c\u002F2670f128c419da5750280fe02731a19c.jpg","button":{"title":"«Импульс Т1»","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F98d\u002Fdf8\u002F18e\u002F98ddf818ef47cbe33d8a3de0dac94864.jpg","button":{"title":"Список лекций","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F240\u002Fbc2\u002F4a1\u002F240bc24a10b8f3aa544f03bcdcddbb92.jpg","button":{"title":"Посмотреть питчинг","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F88b\u002Fa1e\u002F34f\u002F88ba1e34f63db6c2fd335c4cbed97ceb.jpg","button":{"title":"Прокачать софт-скилы","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F9a7\u002Fda6\u002F18a\u002F9a7da618aec78c4e7faa2bc7ee3cd8ec.jpg","button":{"title":"Ого! Это нам надо","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa62\u002Fd3b\u002Faaa\u002Fa62d3baaa3434123e969450ae2e99bda.jpg","button":{"title":"Записаться","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}}]},{"id":"story-632","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2d7\u002F718\u002F3c9\u002F2d77183c9e0bca19c45ba4d026645c38.png","title":"Росатом","link":"https:\u002F\u002Fu.habr.com\u002Frstm1"},"title":"Как стать супергероем","lang":"ru","startTime":"2023-11-21T09:47:00+03:00","finishTime":"2023-12-06T09:47:00+03:00","slides":[{"id":"story-632_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F659\u002F578\u002Ff3f\u002F659578f3f9579fbf36a89b2503a6aa23.jpg","button":{"title":"К реальным задачам","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}},{"id":"story-632_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8d0\u002F28d\u002F731\u002F8d028d7310db4fd62d8830795b23b6c6.jpg","button":null},{"id":"story-632_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe51\u002F332\u002F994\u002Fe51332994d7680d1568660a70ba2b9fa.png","button":{"title":"Повторить путь героя","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}},{"id":"story-632_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F374\u002F6ae\u002F4f4\u002F3746ae4f4a94208739455e21c8af57ed.jpg","button":{"title":"Повторить путь героя","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}},{"id":"story-632_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F808\u002Fcd7\u002Faa6\u002F808cd7aa68b649f6c8a460bcaf3f820f.jpg","button":{"title":"Повторить путь героя","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}},{"id":"story-632_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F021\u002F9e8\u002F162\u002F0219e81629dac451e3a44be1723eb0c5.jpg","button":null},{"id":"story-632_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8b2\u002F5b1\u002F21e\u002F8b25b121e5479943bd82d28818a5bf36.jpg","button":null},{"id":"story-632_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F73a\u002F80d\u002F744\u002F73a80d744242c9b7097f7d9c90d54046.jpg","button":null},{"id":"story-632_9","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Faec\u002Fbdd\u002Fe53\u002Faecbdde530d7eefbd0a7830502f78c39.jpg","button":{"title":"Стать супергероем","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}}]},{"id":"story-630","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd63\u002F68e\u002F29d\u002Fd6368e29d27f127a71853042a809b2ab.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002F9xZDQ"},"title":"Рейтинг IT-брендов работодателей 2023","lang":"ru","startTime":"2023-11-17T11:46:00+03:00","finishTime":"2023-12-03T23:59:00+03:00","slides":[{"id":"story-630_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F51e\u002F5eb\u002Fa38\u002F51e5eba3845ee8a1ff6f58932e40cf2c.jpg","button":{"title":"Результаты","link":"https:\u002F\u002Fu.habr.com\u002F9xZDQ","colorType":"light"}},{"id":"story-630_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbe5\u002Feac\u002Fbdc\u002Fbe5eacbdc2348ca76508d2afcef8eaeb.jpg","button":{"title":"Весь рейтинг","link":"https:\u002F\u002Fu.habr.com\u002F9xZDQ","colorType":"light"}},{"id":"story-630_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5be\u002F87f\u002F381\u002F5be87f3810e8ffc6f65bddbe6ae284e4.jpg","button":null},{"id":"story-630_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5e5\u002F2f0\u002F98b\u002F5e52f098b64e5cfbd03d537b47e72376.jpg","button":null},{"id":"story-630_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffcd\u002F665\u002F465\u002Ffcd6654656b8589a78347ede27b4935e.jpg","button":{"title":"Больше статистики","link":"https:\u002F\u002Fu.habr.com\u002F9xZDQ","colorType":"light"}}]},{"id":"story-628","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F360\u002F396\u002Fbc9\u002F360396bc9df8ca528d6ffcc23514c822.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002FxlEaI"},"title":"Активность найма в 3 квартале 2023","lang":"ru","startTime":"2023-11-16T16:16:00+03:00","finishTime":"2023-11-26T23:59:00+03:00","slides":[{"id":"story-628_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2e4\u002F053\u002Fe8d\u002F2e4053e8dedaa5220b1bbf756f8e6a64.png","button":null},{"id":"story-628_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbdd\u002F642\u002Ffe9\u002Fbdd642fe98e7ba4531b0175e4cef6d0c.png","button":null},{"id":"story-628_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff37\u002F4b7\u002Fc5f\u002Ff374b7c5feeb95e49b44d33ee1f97d24.png","button":null},{"id":"story-628_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F762\u002Ff3f\u002F2dd\u002F762f3f2dda3e5244291b3f178b014def.png","button":{"title":"Читать","link":"https:\u002F\u002Fu.habr.com\u002FxlEaI","colorType":"dark"}}]},{"id":"story-552","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F310\u002Fb6d\u002F097\u002F310b6d09710575fad755fc8ed317c7ec.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002Fcalendar_story_2"},"title":"Перевернуть календарь и добавить событие","lang":"ru","startTime":"2023-10-09T10:39:00+03:00","finishTime":"2023-11-26T23:59:00+03:00","slides":[{"id":"story-552_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffd3\u002F1a4\u002F6ab\u002Ffd31a46abecfbc6f654e64a66cb66260.jpg","button":{"title":"Прямо сюда","link":"https:\u002F\u002Fu.habr.com\u002F0RBBA","colorType":"dark"}},{"id":"story-552_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffef\u002F3e3\u002Fb5d\u002Ffef3e3b5d8379c976167169334348272.jpg","button":{"title":"Разместить событие","link":"https:\u002F\u002Fu.habr.com\u002F0RBBA","colorType":"light"}},{"id":"story-552_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8b9\u002Fea9\u002F638\u002F8b9ea9638d36013b31e365ec79b96d2d.jpg","button":{"title":"Тык","link":"https:\u002F\u002Fu.habr.com\u002F0RBBA","colorType":"dark"}}]}]},"technotext":{"years":[],"technotextDocForNominees":null,"technotextDocForWinners":null,"technotextInfo":{},"technotextInfoLoading":false,"technotextWinners":{},"technotextWinnersLoading":false},"userHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"userInvites":{"availableInvites":0,"usedInvitesIds":[],"usedInvitesRefs":{},"usedInvitesPagesCount":0,"unusedInvitesIds":[],"unusedInvitesRefs":{},"unusedInvitesPagesCount":0},"userVotes":{"karmaVotesList":[],"karmaVotesPagesCount":null,"karmaVotesListLoading":false,"commentsVotesList":[],"commentsVotesPagesCount":null,"commentsVotesListLoading":false,"postsVotesList":[],"postsVotesPagesCount":null,"postsVotesListLoading":false,"userVotesList":[],"userVotesPagesCount":null,"userVotesListLoading":false},"users":{"authorRefs":{},"authorIds":{},"pagesCount":{},"authorProfiles":{},"userHubs":{},"userInvitations":{},"authorFollowers":{},"authorFollowed":{},"userSpecialization":{},"karmaStats":[],"statistics":null,"isLoading":false,"authorFollowersLoading":false,"authorFollowedLoading":false,"userHubsLoading":false,"userInvitationsLoading":false,"route":{}},"viewport":{"prevScrollY":{},"scrollY":0,"width":0},"tracker":{"notificationsLoading":false,"notificationsList":[],"notificationsPageCount":0,"pendingMarkNotificationsRead":[],"publicationsLoading":true,"publicationsList":[],"publicationsPageCount":0,"pendingDeletePublications":false,"pendingMarkPublicationsRead":false},"events":{"events":[{"id":"events_46","titleHtml":"Битва пет-проектов","startDay":"2023-09-25","finishDay":"2023-11-30","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fq4\u002Fbl\u002Ftl\u002Fq4bltl5nykwetj_aaaauhdaow6u.png","eventUrl":"https:\u002F\u002Fpet-project.habr.com\u002F?utm_source=special&utm_medium=calendar&utm_campaign=pet_project","geo":[],"isOnline":true,"descriptionHtml":"\u003Cp\u003EСобрали две команды стажеров и&#160;джунов, которые будут работать над пет-проектами под кураторством опытных менторов. А&#160;определять победителей, которые получат стажировку в&#160;компании, будете&#160;вы.\u003C\u002Fp\u003E\u003Cp\u003EВнутри много движухи для зрителей: воркшопы по&#160;разработке, разборы резюме, публичные собеседования, Q&#38;A-сессии и&#160;даже чат, где можно найти себе команду и&#160;запилить какой-нибудь крутой пет-проект. \u003C\u002Fp\u003E\u003Cp xmlns=\"http:\u002F\u002Fwww.w3.org\u002F1999\u002Fxhtml\"\u003EЕсть отличный бонус для начинающих: будем собирать стажировки и&#160;джуновские вакансии с&#160;рынка для еженедельной рассылки в&#160;рамках битвы. \u003C\u002Fp\u003E\u003Cp xmlns=\"http:\u002F\u002Fwww.w3.org\u002F1999\u002Fxhtml\"\u003EРегистрируйтесь, чтобы ничего не&#160;пропустить!\u003C\u002Fp\u003E\u003Cbr \u002F\u003E"},{"id":"events_72","titleHtml":"Яндекс Backend Tour","startDay":"2023-11-13","finishDay":"2023-11-26","startTime":"18:00","finishTime":"23:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fye\u002F_b\u002Fyw\u002Fye_bywa1ytcnzpi5yjpdwdb0eky.png","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_ybt","geo":["Москва","Нижний Новгород","Екатеринбург","Новосибирск","Санкт-Петербург"],"isOnline":true,"descriptionHtml":"\u003Cp\u003EВ&nbsp;ноябре Яндекс организует Backend Tour по&nbsp;городам России, в&nbsp;рамках которого можно будет познакомиться офлайн с&nbsp;нанимающими командами и&nbsp;получить оффер за&nbsp;неделю.\u003C\u002Fp\u003E \u003Cp\u003EВстречи пройдут в&nbsp;Москве, Нижнем Новгороде, Екатеринбурге, Новосибирске и&nbsp;Санкт-Петербурге. Инженеры расскажут о&nbsp;своих сервисах и&nbsp;технологиях, а&nbsp;после знакомства вас ждет небольшая вечеринка с&nbsp;выступлением стендап-комика Севы Ловкачева.\u003C\u002Fp\u003E \u003Cp\u003EРасписание встреч:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003E13&nbsp;ноября Москва офлайн (будет онлайн-трансляция)\u003C\u002Fli\u003E \u003Cli\u003E14&nbsp;ноября Нижний Новгород\u003C\u002Fli\u003E \u003Cli\u003E15&nbsp;ноября Екатеринбург\u003C\u002Fli\u003E \u003Cli\u003E16&nbsp;ноября Новосибирск\u003C\u002Fli\u003E \u003Cli\u003E17&nbsp;ноября Санкт-Петербург\u003C\u002Fli\u003E\u003C\u002Ful\u003E \u003Cp\u003E20&ndash;26 ноября Week Offer Backend: все секции и&nbsp;оффер за&nbsp;неделю для соискателей с&nbsp;опытом разработки от&nbsp;трёх лет на&nbsp;С++, С#, Python, Java, Go&nbsp;и&nbsp;Scala.\u003C\u002Fp\u003E \u003Cp\u003EЗаявки на&nbsp;Week Offer принимаются до&nbsp;19&nbsp;ноября.\u003C\u002Fp\u003E"},{"id":"events_53","titleHtml":"HighLoad++ 2023","startDay":"2023-11-27","finishDay":"2023-11-28","startTime":"9:00","finishTime":"20:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fxo\u002F6u\u002Fw1\u002Fxo6uw1o3hf9y9tsxzq4pvya719y.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_hld","geo":["Москва"],"isOnline":true,"descriptionHtml":"\u003Cp\u003EHighLoad++ 2023&nbsp;&mdash; юбилейная, 20-я конференция HighLoad++. И&nbsp;это будет больше, чем конференция: 3000&nbsp;участников, 120+&nbsp;спикеров, 11&nbsp;залов, 5+&nbsp;мастер-классов.\u003C\u002Fp\u003E \u003Cp\u003EВ&nbsp;этом году в&nbsp;рамках HighLoad++ 2023 пройдет Golang Conf 2023&nbsp;&mdash; конференция для Go-разработчиков. Поговорим о&nbsp;лучших практиках, технологиях, архитектуре и&nbsp;фреймворках, добавим хардкора. И, конечно, 2&nbsp;дня живого общения с&nbsp;единомышленниками и&nbsp;коллегами, нетворкинг, интересные кейсы, последние новости индустрии и&nbsp;современные подходы в&nbsp;разработке высоконагруженных систем.\u003C\u002Fp\u003E \u003Cp\u003EЖдем вас 27&nbsp;и&nbsp;28&nbsp;ноября в&nbsp;Москве на&nbsp;HighLoad 2023&nbsp;&mdash; мероприятии с&nbsp;самой высокой концентрацией IT- профессионалов страны.\u003C\u002Fp\u003E"},{"id":"events_83","titleHtml":"Открытая трансляция Главного зала HighLoad++ 2023","startDay":"2023-11-27","finishDay":"2023-11-28","startTime":"10:00","finishTime":"20:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fnx\u002Fj7\u002F0c\u002Fnxj70czlrvofb_ilwzbxteekkao.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_hldtr","geo":[],"isOnline":true,"descriptionHtml":"\u003Cp\u003E27&nbsp;и&nbsp;28&nbsp;ноября будет открытая трансляция Главного зала HighLoad++ 2023. Это стало возможным благодаря поддержке нашего генерального партнёра, компании Яндекс.\u003C\u002Fp\u003E \u003Cp\u003EВ&nbsp;программе открытого трека&nbsp;&mdash; доклады лучших спикеров и&nbsp;трансляция церемонии награждения Премии HighLoad++ 2023.\u003C\u002Fp\u003E \u003Cp\u003EЗарегистрируйтесь, чтобы получить бесплатный доступ к&nbsp;открытому треку.\u003C\u002Fp\u003E"},{"id":"events_77","titleHtml":"Конференция «Новая эра ИТ: путь к вершинам технологий»","startDay":"2023-11-28","finishDay":"2023-11-28","startTime":"10:00","finishTime":"17:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fk_\u002F6k\u002F_l\u002Fk_6k_l-xttxdnpdk9ltuaikrvhq.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_k2","geo":["Москва"],"isOnline":true,"descriptionHtml":"\u003Cp\u003EМы&nbsp;живем в&nbsp;новой реальности российского технологического рынка. Для устойчивого развития крупным компаниям приходится перестраивать традиционные стратегии и&nbsp;искать нестандартные решения для привычных задач.\u003C\u002Fp\u003E \u003Cp\u003EПриглашаем вас обсудить актуальные сценарии развития ИТ-ландшафта с&nbsp;лидерами отрасли на&nbsp;конференции &laquo;Новая Эра&nbsp;ИТ: путь к&nbsp;вершинам технологий&raquo; 28&nbsp;ноября в&nbsp;Москве.\u003C\u002Fp\u003E \u003Cp\u003EУчастие будет полезно, если вам необходимо:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003EРазобраться в&nbsp;новой картине рынка\u003C\u002Fli\u003E\u003Cli\u003EПодобрать альтернативы для миграции с&nbsp;зарубежных ИТ-систем\u003C\u002Fli\u003E\u003Cli\u003EИнтегрировать российские и&nbsp;другие доступные решения в&nbsp;инфраструктуру\u003C\u002Fli\u003E\u003C\u002Ful\u003E"},{"id":"events_80","titleHtml":"Business Code Conference","startDay":"2023-11-30","finishDay":"2023-11-30","startTime":"17:30","finishTime":"00:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fwd\u002F7s\u002Fsr\u002Fwd7ssrwcqti7tfyvodmoho8rbcs.png","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_bcc","geo":["Москва"],"isOnline":false,"descriptionHtml":"\u003Cp\u003EКоманда платформы МТС Exolve готовит вечер-знакомство с&nbsp;передовыми фишками&nbsp;AI и&nbsp;наработками, о&nbsp;которых расскажут ведущие специалисты сервиса и&nbsp;эксперты этой сферы.\u003C\u002Fp\u003E \u003Cp\u003EГости вечера изучат процессы создания&nbsp;AI и&nbsp;практические кейсы с&nbsp;использованием AI-технологий. Каждый из&nbsp;них основан на&nbsp;реальном опыте и&nbsp;проблемах.\u003C\u002Fp\u003E \u003Cp\u003EУчастники смогут обсудить любую деталь и&nbsp;новые возможности для своих повседневных задач и&nbsp;будущих вызовов рынка, в&nbsp;том числе на&nbsp;основе опыта Китая. Спикеры конференции знают о&nbsp;внедрении&nbsp;AI в&nbsp;бизнес если не&nbsp;все, то&nbsp;больше всех и&nbsp;готовы рассказать о&nbsp;феномене его популярности и&nbsp;факторах роста технологий в&nbsp;Китае. Участники оценят темпы развития AI-компаний России и&nbsp;скачок технологических и&nbsp;AI-компаний в&nbsp;Китае, поймут все возможности и&nbsp;ограничения.\u003C\u002Fp\u003E \u003Cp\u003EМероприятие откроют первый вице-президент МТС Инесса Галактионова и&nbsp;директор MTC Exolve Рамиль Биккужин.\u003C\u002Fp\u003E"},{"id":"events_71","titleHtml":"Импульс Т1","startDay":"2023-12-01","finishDay":"2023-12-01","startTime":"12:30","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Faw\u002Fji\u002Fao\u002Fawjiaov7a6ix4aybmzwnvw0c6qq.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_t1msk","geo":["Москва"],"isOnline":true,"descriptionHtml":"\u003Cp\u003EФинальная конференция из&nbsp;цикла бесплатных IT-событий &laquo;Импульс&nbsp;Т1&raquo; в&nbsp;2023&nbsp;году. Ежегодно холдинг Т1&nbsp;проводит конференции &laquo;Импульс&nbsp;Т1&raquo; для формирования и&nbsp;укрепления российской инженерной школы в&nbsp;разных городах России.\u003C\u002Fp\u003E \u003Cp\u003EКонференции адресованы широкой аудитории IT-специалистов и&nbsp;предпринимателей в&nbsp;IT. В&nbsp;программе&nbsp;&mdash; лекции о&nbsp;разработке, тестировании, инженерном деле от&nbsp;разработчиков крупных компаний и&nbsp;научных популяризаторов.\u003C\u002Fp\u003E \u003Cp\u003EХолдинг Т1&nbsp;&mdash; одна из&nbsp;крупнейших IТ-компаний России. Цель организатора&nbsp;&mdash; привлечь молодежь в&nbsp;российские компании и&nbsp;помочь новаторам превратить идею в&nbsp;бизнес-проект.\u003C\u002Fp\u003E"},{"id":"events_81","titleHtml":"YaTalks 2023 — главная конференция Яндекса для IT сообщества","startDay":"2023-12-05","finishDay":"2023-12-06","startTime":"9:00","finishTime":"23:59","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fzu\u002Fre\u002Fcn\u002Fzurecne_sihfslk0efj2c_bcova.png","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fyatalks2023","geo":["Москва","Белград"],"isOnline":true,"descriptionHtml":"\u003Cp\u003EГлавная конференция Яндекса для IT-сообщества&nbsp;&mdash; YaTalks 2023.\u003C\u002Fp\u003E \u003Cp\u003EБолее 100 экспертов IT-индустрии и&nbsp;учёных. Технические доклады о&nbsp;разработке и&nbsp;ML. Научно-популярные лекции и&nbsp;выступления об&nbsp;управлении командами. Можно послушать вживую доклады учёных и&nbsp;экспертов индустрии, напрямую задать вопросы спикерам, познакомиться и&nbsp;пообщаться с&nbsp;коллегами из&nbsp;разных компаний и&nbsp;направлений в&nbsp;IT.\u003C\u002Fp\u003E \u003Cp\u003EГлавная тема YaTalks 2023&nbsp;&mdash; &laquo;Явления&raquo;.Обсудим макротренды и&nbsp;гейм-чейнджеры в&nbsp;технологиях и&nbsp;науке, большие процессы в&nbsp;IT, менеджерские практики и&nbsp;новые подходы.\u003C\u002Fp\u003E \u003Cp\u003E\u003Cstrong\u003EПервый день\u003C\u002Fstrong\u003E посвятим хардовым технологиям: фронтенду, мобильной разработке, бэкенду, DevOps, базам данных, GPT, NLP, а&nbsp;также трендам в&nbsp;этих направлениях.\u003C\u002Fp\u003E \u003Cp\u003E\u003Cstrong\u003EВо&nbsp;второй день\u003C\u002Fstrong\u003E узнаем об&nbsp;управленческих практиках в&nbsp;IT и&nbsp;научных фронтирах, которые вот-вот изменят индустрию.\u003C\u002Fp\u003E \u003Cp\u003EПереходите на&nbsp;сайт и&nbsp;узнайте больше о&nbsp;спикерах конференции.\u003C\u002Fp\u003E"},{"id":"events_50","titleHtml":"Курс «Разработка высокоскоростных устройств и систем передачи данных»","startDay":"2023-12-09","finishDay":"2023-12-11","startTime":"10:00","finishTime":"17:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fsc\u002Fie\u002Ffp\u002Fsciefp-fox1b1kyqn9bwa5ll2um.png","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_nish","geo":["Москва"],"isOnline":false,"descriptionHtml":"\u003Cp\u003EНовая Инженерная Школа проводит курс повышения квалификации, рассчитанный на&nbsp;инженеров-схемотехников, а&nbsp;также системных инженеров, занимающихся разработкой высокоскоростных устройств.\u003C\u002Fp\u003E\u003Cp\u003EИзучение курса позволит слушателям осознанно подходить к&nbsp;разработке, используя определенный маршрут проектирования, в&nbsp;частности:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003Eпонимать сущность высокоскоростных сигналов;\u003C\u002Fli\u003E\u003Cli\u003Eпонимать проблемы и&nbsp;риски, возникающие при разработке высокоскоростных устройств;\u003C\u002Fli\u003E\u003Cli\u003Eпрогнозировать и&nbsp;нивелировать проблемы на&nbsp;этапе эскизной разработки;\u003C\u002Fli\u003E\u003Cli\u003Eанализировать и&nbsp;устранять проблемы на&nbsp;этапе верификации разработанного устройства;\u003C\u002Fli\u003E\u003Cli\u003Eпроверять прототипы с&nbsp;использованием современной измерительной аппаратуры.\u003C\u002Fli\u003E\u003C\u002Ful\u003E\u003Cp\u003EТемы курса:\u003C\u002Fp\u003E\u003Col\u003E\u003Cli\u003EВведение. История развития проблем целостности сигналов и&nbsp;питания.\u003C\u002Fli\u003E\u003Cli\u003EОсновные положения.\u003C\u002Fli\u003E\u003Cli\u003EИдеальная линия передач.\u003C\u002Fli\u003E\u003Cli\u003EПерекрестные помехи.\u003C\u002Fli\u003E\u003Cli\u003EРеальные проводники.\u003C\u002Fli\u003E\u003Cli\u003EДиэлектрики.\u003C\u002Fli\u003E\u003Cli\u003EОсновы теории цепей.\u003C\u002Fli\u003E\u003Cli\u003EСхемотехника.\u003C\u002Fli\u003E\u003Cli\u003EЭквализация.\u003C\u002Fli\u003E\u003Cli\u003EБюджет.\u003C\u002Fli\u003E\u003Cli\u003EПримеры высокоскоростных интерфейсов.\u003C\u002Fli\u003E\u003Cli\u003EЦелостность питания.\u003C\u002Fli\u003E\u003Cli\u003EИзмерения и&nbsp;моделирование.\u003C\u002Fli\u003E\u003C\u002Fol\u003E"},{"id":"events_58","titleHtml":"Курс «Обеспечение электромагнитной совместимости изделий современной техники»","startDay":"2023-12-18","finishDay":"2023-12-20","startTime":"10:00","finishTime":"17:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fsl\u002Flv\u002Fe0\u002Fsllve0c9tpnoqnc20iidt7p9ue8.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_nsh","geo":["Москва"],"isOnline":false,"descriptionHtml":"\u003Cp\u003EНовая Инженерная Школа проводит курс повышения квалификации, направленный на&nbsp;формирование или совершенствование профессиональных компетенций в&nbsp;области внутрисистемной электромагнитной совместимости (ЭМС) изделий современной техники для конструкторов радиоэлектронных средств (РЭС).\u003C\u002Fp\u003E \u003Cp\u003EНастоящая программа рассчитана на&nbsp;инженерно-технических работников с&nbsp;высшим профессиональным образованием, занимающихся конструкторским и&nbsp;технологическим проектированием радиоэлектронной, электронно-вычислительной аппаратуры, систем автоматики и&nbsp;управления и&nbsp;т.п. различного назначения, а&nbsp;также на&nbsp;руководителей среднего звена проектных организаций.\u003C\u002Fp\u003E \u003Cp\u003EТемы курса:\u003C\u002Fp\u003E\u003Col\u003E\u003Cli\u003EВведение в&nbsp;проблему ЭМС.\u003C\u002Fli\u003E \u003Cli\u003EСертификационные требования ЭМС.\u003C\u002Fli\u003E \u003Cli\u003EСхемотехнические методы обеспечения ЭМС.\u003C\u002Fli\u003E \u003Cli\u003EПомехи в&nbsp;межсоединениях.\u003C\u002Fli\u003E \u003Cli\u003EЭкранирование аппаратуры.\u003C\u002Fli\u003E \u003Cli\u003EМощные электромагнитные воздействия на&nbsp;технические средства и&nbsp;методы защиты.\u003C\u002Fli\u003E \u003Cli\u003EОбеспечение радиационной стойкости современной РЭА.\u003C\u002Fli\u003E\u003C\u002Fol\u003E"},{"id":"events_78","titleHtml":"«Спокойно, договоримся!» — тренинг по переговорам и отношениям с клиентами в B2B","startDay":"2024-01-19","finishDay":"2024-01-20","startTime":"10:00","finishTime":"18:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fpb\u002F1w\u002Fob\u002Fpb1wobpfv_crqwdsb6eqiho4co0.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_hflb2","geo":["Москва"],"isOnline":false,"descriptionHtml":"\u003Cp\u003EПрокачаем навыки переговорщика и&nbsp;научим, как пересобрать отношения с&nbsp;клиентами в&nbsp;B2B. Мы&nbsp;не&nbsp;коучи, а&nbsp;топ-менеджеры с&nbsp;реальным опытом в&nbsp;большом бизнесе. За&nbsp;10+&nbsp;лет работы мы&nbsp;научились дружить с&nbsp;клиентами не&nbsp;только на&nbsp;начальном этапе, но&nbsp;и&nbsp;развивать зрелые проекты.\u003C\u002Fp\u003E\u003Cp\u003EТренинг будет полезен, если&nbsp;вы:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003Eотвечаете за&nbsp;отношения с&nbsp;клиентами, ведение проектов и&nbsp;управление людьми,\u003C\u002Fli\u003E \u003Cli\u003Eмного и&nbsp;тесно работаете с&nbsp;заказчиками&nbsp;&mdash; внешними и&nbsp;внутренними,\u003C\u002Fli\u003E \u003Cli\u003Eработаете в&nbsp;b2b-продажах в&nbsp;IT.\u003C\u002Fli\u003E\u003C\u002Ful\u003E \u003Cp\u003EКто проведет:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003EКонстантин Степанов, исполнительный директор HFLabs. За&nbsp;три года привлек 14&nbsp;крупных клиентов.\u003C\u002Fli\u003E \u003Cli\u003EНикита Назаров, технический директор HFLabs. Умеет делать так, чтобы клиент становился постоянным клиентом.\u003C\u002Fli\u003E\u003C\u002Ful\u003E \u003Cp\u003EСтань участником закрытого клуба по&nbsp;переговорам с&nbsp;разбором личных кейсов и&nbsp;поддержкой экспертов.\u003C\u002Fp\u003E"}]}};(function(){var s;(s=document.currentScript||document.scripts[document.scripts.length-1]).parentNode.removeChild(s);}());</script>
+  <script src="https://assets.habr.com/habr-web/js/chunk-vendors.a9207891.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/page-hub.1572dac4.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/7298.c8f1d73c.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/8684.f283f98f.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/app.5b8f7247.js" defer></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S28W1WC23F"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    </script>
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(24049213, "init", {
+      defer:true,
+      trackLinks:true,
+      accurateTrackBounce:true,
+      webvisor:false,
+    });
+  </script>
+  <noscript>
+   <div>
+    <img src="https://mc.yandex.ru/watch/24049213" style="position:absolute; left:-9999px;" alt="">
+   </div>
+  </noscript>
+  <script type="text/javascript">
+      window.addEventListener('load', function () {
+        setTimeout(() => {
+          const img = new Image();
+          img.src = 'https://vk.com/rtrg?p=VK-RTRG-421343-57vKE';
+        }, 0);
+      });
+    </script>
+  <script src="/js/ads.js" onload="window['zhY4i4nJ9K'] = true"></script>
+ </body>
+</html>

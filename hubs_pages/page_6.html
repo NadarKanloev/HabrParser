@@ -1,0 +1,1544 @@
+<!doctype html>
+<html lang="ru" data-vue-meta="%7B%22lang%22:%7B%22ssr%22:%22ru%22%7D%7D">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,maximum-scale=1,user-scalable=0">
+  <meta name="referrer" content="unsafe-url">
+  <title>Хабы / Хабр</title>
+  <style>
+    /* cyrillic-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSxf6TF0.woff2) format('woff2');
+      unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveQhf6TF0.woff2) format('woff2');
+      unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* latin-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSBf6TF0.woff2) format('woff2');
+      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveRhf6.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* non-breaking hyphen */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/l/font?kit=KFOlCnqEu92Fr1MmEU9vBh0_IsHAlmrO6g&skey=ee881451c540fdec&v=v29) format('woff2');
+      unicode-range: U+02011;
+    }
+  </style>
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/chunk-vendors.0da14ebf.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/chunk-vendors.a9207891.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/app.b42efa13.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/app.5b8f7247.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/page-flows.f499e587.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/page-flows.926972ed.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/3750.d2d6f1d2.js" as="script">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/chunk-vendors.0da14ebf.css">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/app.b42efa13.css">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/page-flows.f499e587.css">
+  <script>window.i18nFetch = new Promise((res, rej) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', '/js/i18n/ru-compiled.d229fa61213aa884a102911fd18b62b0.json');
+          xhr.responseType = 'json';
+          xhr.onload = function(e) {
+            if (this.status === 200) {
+              res({ru: xhr.response});
+            } else {
+              rej(e);
+            }
+          };
+          xhr.send();
+        });</script>
+  <style>.grecaptcha-badge{visibility: hidden;}</style>
+  <meta name="habr-version" content="2.155.1">
+  <meta data-vue-meta="ssr" itemprop="image" content="/img/habr_ru.png" data-vmid="image:itemprop">
+  <meta data-vue-meta="ssr" property="og:image" content="/img/habr_ru.png" data-vmid="og:image">
+  <meta data-vue-meta="ssr" property="og:image:width" content="1200" data-vmid="og:image:width">
+  <meta data-vue-meta="ssr" property="og:image:height" content="630" data-vmid="og:image:height">
+  <meta data-vue-meta="ssr" property="aiturec:image" content="/img/habr_ru.png" data-vmid="aiturec:image">
+  <meta data-vue-meta="ssr" name="twitter:image" content="/img/habr_ru.png" data-vmid="twitter:image">
+  <meta data-vue-meta="ssr" property="vk:image" content="/img/habr_ru.png?format=vk" data-vmid="vk:image">
+  <meta data-vue-meta="ssr" property="fb:app_id" content="444736788986613">
+  <meta data-vue-meta="ssr" property="fb:pages" content="472597926099084">
+  <meta data-vue-meta="ssr" name="twitter:card" content="summary_large_image">
+  <meta data-vue-meta="ssr" name="twitter:site" content="@habr_com">
+  <meta data-vue-meta="ssr" property="og:locale" content="ru_RU" data-vmid="og:locale">
+  <meta data-vue-meta="ssr" property="og:type" content="website" data-vmid="og:type">
+  <meta data-vue-meta="ssr" property="og:site_name" content="Хабр" data-vmid="og:site_name">
+  <meta data-vue-meta="ssr" property="og:title" content="Хабы / Хабр" data-vmid="og:title">
+  <meta data-vue-meta="ssr" property="og:url" content="https://habr.com/ru/hubs/page6/" data-vmid="og:url">
+  <link data-vue-meta="ssr" rel="image_src" href="/img/habr_ru.png" data-vmid="image:href">
+  <link data-vue-meta="ssr" href="https://habr.com/ru/hubs/" rel="canonical" data-vmid="canonical">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#303b44">
+  <meta name="msapplication-TileColor" content="#629FBC">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="shortcut icon" type="image/png" sizes="16x16" href="https://assets.habr.com/habr-web/img/favicons/favicon-16.png">
+  <link rel="shortcut icon" type="image/png" sizes="32x32" href="https://assets.habr.com/habr-web/img/favicons/favicon-32.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-76.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-152.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-180.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="256x256" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-256.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1136x640.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2436x1125.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1792x828.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_828x1792.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1334x750.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2668.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2208x1242.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1125x2436.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2208.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2732x2048.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2688x1242.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2224x1668.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_750x1334.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x2732.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2388x1668.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2224.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_640x1136.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2388.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x1536.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1536x2048.png">
+  <link rel="mask-icon" color="#77a2b6" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.svg">
+  <link crossorigin="use-credentials" href="/manifest.webmanifest" rel="manifest">
+  <script async src="https://unpkg.com/pwacompat" crossorigin="anonymous"></script>
+  <script>window.yaContextCb = window.yaContextCb || []</script>
+  <script src="https://yandex.ru/ads/system/context.js" async></script>
+ </head>
+ <body>
+  <div id="app" data-server-rendered="true" data-async-called="true">
+   <div class="tm-layout__wrapper">
+    <!---->
+    <div></div><!---->
+    <header class="tm-header">
+     <div class="tm-page-width">
+      <div class="tm-header__container">
+       <!----> <span class="tm-header__logo-wrap"><a href="/ru/" class="tm-header__logo tm-header__logo_ru">
+         <svg height="16" width="16" class="tm-svg-img tm-header__icon">
+          <title>
+           Хабр
+          </title> <use xlink:href="/img/habr-logo-ru.svg#logo"></use>
+         </svg></a> <span class="tm-header__beta-sign" style="display:none;">β</span></span>
+       <div class="tm-dropdown tm-header__projects">
+        <div class="tm-dropdown__head">
+         <button class="tm-header__dropdown-toggle">
+          <svg height="16" width="16" class="tm-svg-img tm-header__icon tm-header__icon_dropdown">
+           <title>
+            Открыть список
+           </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#arrow-down"></use>
+          </svg></button>
+        </div><!---->
+       </div><a href="/ru/sandbox/start/" class="tm-header__become-author-btn"> Как стать автором </a>
+       <div class="tm-feature tm-header__feature tm-feature tm-feature_variant-inline">
+        <!---->
+       </div><!----> <!---->
+      </div>
+     </div>
+    </header>
+    <div class="tm-layout">
+     <div class="tm-page-progress-bar"></div>
+     <div data-menu-sticky="true" class="tm-base-layout__header tm-base-layout__header_is-sticky">
+      <div class="tm-page-width">
+       <div class="tm-base-layout__header-wrapper">
+        <div class="tm-main-menu">
+         <div class="tm-main-menu__section">
+          <nav class="tm-main-menu__section-content">
+           <!----> <a href="/ru/articles/" class="tm-main-menu__item tm-main-menu__item_active"> Все потоки </a> <a href="/ru/flows/develop/" class="tm-main-menu__item"> Разработка </a><a href="/ru/flows/admin/" class="tm-main-menu__item"> Администрирование </a><a href="/ru/flows/design/" class="tm-main-menu__item"> Дизайн </a><a href="/ru/flows/management/" class="tm-main-menu__item"> Менеджмент </a><a href="/ru/flows/marketing/" class="tm-main-menu__item"> Маркетинг </a><a href="/ru/flows/popsci/" class="tm-main-menu__item"> Научпоп </a>
+          </nav>
+         </div>
+        </div>
+        <div class="tm-header-user-menu tm-base-layout__user-menu">
+         <a href="/ru/search/" class="tm-header-user-menu__item tm-header-user-menu__search">
+          <svg height="24" width="24" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_search tm-header-user-menu__icon_dark">
+           <title>
+            Поиск
+           </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#search"></use>
+          </svg></a> <!----> <!----> <!---->
+         <div class="tm-header-user-menu__item">
+          <button class="tm-header-user-menu__toggle">
+           <svg height="24" width="24" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_dark">
+            <title>
+             Настройки
+            </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#page-settings"></use>
+           </svg></button>
+         </div><a href="https://habr.com/kek/v1/auth/habrahabr/?back=/ru/hubs/page6/&amp;hl=ru" rel="nofollow" class="tm-header-user-menu__item"><button type="button" class="tm-header-user-menu__login btn btn_solid btn_small"> Войти </button></a> <!---->
+         <div class="v-portal" style="display:none;"></div>
+        </div>
+       </div>
+      </div>
+     </div><!---->
+     <div class="tm-page-width"></div>
+     <main class="tm-layout__container">
+      <div class="tm-page">
+       <div class="tm-page-width">
+        <!---->
+        <div class="tm-page__wrapper">
+         <div class="tm-page__main tm-page__main_has-sidebar">
+          <div class="pull-down">
+           <!---->
+           <div class="pull-down__header" style="height:0px;">
+            <div class="pull-down__content" style="bottom:10px;">
+             <svg height="24" width="24" class="tm-svg-img pull-down__icon pull-down__arrow">
+              <title>
+               Обновить
+              </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#pull-arrow"></use>
+             </svg>
+            </div>
+           </div>
+           <div class="tm-page__top">
+            <div class="tm-section-name">
+             <h1 class="tm-section-name__text">Все потоки</h1><!----> <a href="/ru/feedback/?type=8&amp;subj=suggest_hub" class="tm-suggest-button"> Предложить хаб </a>
+            </div>
+            <div class="tm-tabs tm-tabs_page-header tm-tabs">
+             <div class="tm-tabs__scroll-area">
+              <span class="tm-tabs__tab-item"><a href="/ru/flows/all/" class="tm-tabs__tab-link tm-tabs__tab-link"> Статьи <!----> <span class="tm-tabs__tab-counter-new"> +34 </span></a></span><span class="tm-tabs__tab-item"><a href="/ru/posts/" class="tm-tabs__tab-link tm-tabs__tab-link"> Посты <!----> <span class="tm-tabs__tab-counter-new"> +3 </span></a></span><span class="tm-tabs__tab-item"><a href="/ru/news/" class="tm-tabs__tab-link tm-tabs__tab-link"> Новости <!----> <span class="tm-tabs__tab-counter-new"> +11 </span></a></span><span class="tm-tabs__tab-item"><a href="/ru/hubs/" data-test-id="tab-link-active" class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_active"> Хабы <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/ru/users/" class="tm-tabs__tab-link tm-tabs__tab-link"> Авторы <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/ru/companies/" class="tm-tabs__tab-link tm-tabs__tab-link"> Компании <!----> <!----></a></span>
+             </div><!---->
+            </div><!---->
+            <div class="tm-navigation-search__input">
+             <div autocomplete="off" maxlength="50" name="searchQuery" placeholder="Поиск" class="tm-input-text-decorated tm-input-text-decorated_has-label-after">
+              <!----> <input autocomplete="off" maxlength="50" name="searchQuery" placeholder="Поиск" class="tm-input-text-decorated__input">
+              <div class="tm-input-text-decorated__label tm-input-text-decorated__label_after">
+               <span class="tm-svg-icon__wrapper tm-search__icon">
+                <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+                 <title>
+                  Поиск
+                 </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#input-search"></use>
+                </svg></span>
+              </div>
+             </div>
+            </div>
+           </div>
+           <div data-async-called="true">
+            <!---->
+            <div class="tm-hubs-list__sorting-panel">
+             <div class="tm-navigation-sorting">
+              <div class="tm-navigation-sorting__row-option tm-navigation-sorting__row-option_sortable">
+               Название 
+               <svg height="16" width="16" class="tm-svg-img tm-navigation-sorting__arrow">
+                <title>
+                 Сортировка
+                </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#sorting-down"></use>
+               </svg>
+              </div>
+              <div class="tm-navigation-sorting__row-option tm-navigation-sorting__row-option_active tm-navigation-sorting__row-option_sortable">
+               Рейтинг 
+               <svg height="16" width="16" class="tm-svg-img tm-navigation-sorting__arrow tm-navigation-sorting__arrow_desc">
+                <title>
+                 Сортировка
+                </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#sorting-down"></use>
+               </svg>
+              </div>
+              <div class="tm-navigation-sorting__row-option tm-navigation-sorting__row-option_sortable">
+               Подписчики 
+               <svg height="16" width="16" class="tm-svg-img tm-navigation-sorting__arrow">
+                <title>
+                 Сортировка
+                </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#sorting-down"></use>
+               </svg>
+              </div><!---->
+             </div>
+            </div>
+            <div class="tm-hubs-list">
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/mssql/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/e19/4b2/55a/e194b255ac49ea6fbed18aa5b070dbd3.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/mssql/" class="tm-hub__title"><span>Microsoft SQL Server</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Relational database management system developed by Microsoft
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Bsql%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">sql</a><a href="/ru/search/?q=%5Bsql%20server%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">sql server</a><a href="/ru/search/?q=%5Bms%20sql%20server%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">ms sql server</a><a href="/ru/search/?q=%5Bpowershell%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">powershell</a><a href="/ru/search/?q=%5Bmicrosoft%20sql%20server%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">microsoft sql server</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 13.4
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 83K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/logic_games/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/geektimes/hub/36a/a91/69d/36aa9169d992483fa29455af0edd423f.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/logic_games/" class="tm-hub__title"><span>Logic games</span></a> <!---->
+                 </div>
+                 <div class="tm-hub__description">
+                  Developing logic
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Bboard%20games%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">board games</a><a href="/ru/search/?q=%5Bmicrosoft%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">microsoft</a><a href="/ru/search/?q=%5Bpuzzle%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">puzzle</a><a href="/ru/search/?q=%5Bai%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">ai</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 14.83
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 9.1K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/bughunters/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/a89/46a/c3d/a8946ac3dfeecc82aac05bb80ebe1268.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/bughunters/" class="tm-hub__title"><span>Bug hunters</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Hub for security researchers
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Bfinance%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">finance</a><a href="/ru/search/?q=%5Batm%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">atm</a><a href="/ru/search/?q=%5Bcybersecurity%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">cybersecurity</a><a href="/ru/search/?q=%5Bphdays%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">phdays</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 12.94
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 56
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/virtualization/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/864/028/84b/86402884b9a8503bfdbd34740fc9982d.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/virtualization/" class="tm-hub__title"><span>Virtualization</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  We virtualize machines, resources, applications
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Bvirtualization%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">virtualization</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 14.72
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 139K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/game_testing/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/30a/ec0/53e/30aec053eecd1f5555a8ba577a3b6266.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/game_testing/" class="tm-hub__title"><span>Game testing</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Not so funny as it seems
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Bgame%20development%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">game development</a><a href="/ru/search/?q=%5Bgamedev%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">gamedev</a><a href="/ru/search/?q=%5Bgamedesign%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">gamedesign</a><a href="/ru/search/?q=%5Bgamedevelopment%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">gamedevelopment</a><a href="/ru/search/?q=%5Bgame%20design%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">game design</a><a href="/ru/search/?q=%5Bgame%20designer%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">game designer</a><a href="/ru/search/?q=%5Bgame%20development%20industry%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">game development industry</a><a href="/ru/search/?q=%5Bgame%20engine%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">game engine</a><a href="/ru/search/?q=%5Bgame%20theory%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">game theory</a><a href="/ru/search/?q=%5Bgame%20optimization%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">game optimization</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 12.61
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 16K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/wearable_electronics/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/geektimes/hub/ab9/8c9/175/ab98c9175b8a223fcaeebfb60352c7cc.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/wearable_electronics/" class="tm-hub__title"><span>Wearable electronics</span></a> <!---->
+                 </div>
+                 <div class="tm-hub__description">
+                  All my burden on me
+                 </div><!---->
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 12.75
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 89K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/web_monetization/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/dd8/d88/01f/dd8d8801fb89b8fddca31eec3bc8f193.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/web_monetization/" class="tm-hub__title"><span>Web services monetization</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Everything about web services monetization
+                 </div><!---->
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 12.61
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 40K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/game_monetization/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/6c1/010/b5f/6c1010b5f21e20c68bb48604f8039d2f.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/game_monetization/" class="tm-hub__title"><span>Games monetization</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Learn how to monetize games
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Blocalization%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">localization</a><a href="/ru/search/?q=%5Balconost%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">alconost</a><a href="/ru/search/?q=%5Bgamedev%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">gamedev</a><a href="/ru/search/?q=%5Bgame%20development%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">game development</a><a href="/ru/search/?q=%5Benglish%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">english</a><a href="/ru/search/?q=%5Bproduct%20development%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">product development</a><a href="/ru/search/?q=%5Bgame%20localization%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">game localization</a><a href="/ru/search/?q=%5Blocalize%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">localize</a><a href="/ru/search/?q=%5Btranslation%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">translation</a><a href="/ru/search/?q=%5Bmonetization%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">monetization</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 12.49
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 61K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/apache/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/491/f0a/9b3/491f0a9b3dd805b1e97478d97ece9be6.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/apache/" class="tm-hub__title"><span>Apache</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Free and open-source cross-platform web server
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Bapache%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">apache</a><a href="/ru/search/?q=%5Bjava%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">java</a><a href="/ru/search/?q=%5Bopen%20source%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">open source</a><a href="/ru/search/?q=%5Bopen-source%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">open-source</a><a href="/ru/search/?q=%5Bpvs-studio%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">pvs-studio</a><a href="/ru/search/?q=%5Bstatic%20code%20analysis%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">static code analysis</a><a href="/ru/search/?q=%5Bkafka%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">kafka</a><a href="/ru/search/?q=%5Bspring-boot%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">spring-boot</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 12.06
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 84K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/haskell/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/138/ce5/098/138ce5098d4a2e04ee975ef25a911ddc.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/haskell/" class="tm-hub__title"><span>Haskell</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Haskell is a standardized, general-purpose compiled purely functional programming language.
+                 </div><!---->
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 12.33
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 82K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/localization/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/fd1/822/960/fd182296074702d74f02fdef7e198523.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/localization/" class="tm-hub__title"><span>Language localisation</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Translation and adaptation
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Blocalization%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">localization</a><a href="/ru/search/?q=%5Balconost%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">alconost</a><a href="/ru/search/?q=%5Blocalize%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">localize</a><a href="/ru/search/?q=%5Btranslation%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">translation</a><a href="/ru/search/?q=%5Benglish%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">english</a><a href="/ru/search/?q=%5Bproduct%20development%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">product development</a><a href="/ru/search/?q=%5Balconost%20translations%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">alconost translations</a><a href="/ru/search/?q=%5Bapp%20localization%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">app localization</a><a href="/ru/search/?q=%5Bapp%20marketing%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">app marketing</a><a href="/ru/search/?q=%5Bnitro%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">nitro</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 11.75
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 11K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/sql/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/64b/22b/8b6/64b22b8b6c4677778423e971d52eb05d.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/sql/" class="tm-hub__title"><span>SQL</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Domain-specific languageused in programming and designed for managing data held in a relational database management system, or for stream processing in a relational data stream management system
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Bpostgresql%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">postgresql</a><a href="/ru/search/?q=%5Bsql%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">sql</a><a href="/ru/search/?q=%5Bpostgres%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">postgres</a><a href="/ru/search/?q=%5Bindex%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">index</a><a href="/ru/search/?q=%5Bindexing%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">indexing</a><a href="/ru/search/?q=%5Boptimization%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">optimization</a><a href="/ru/search/?q=%5Bplanning%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">planning</a><a href="/ru/search/?q=%5Bsql%20server%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">sql server</a><a href="/ru/search/?q=%5Btuples%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">tuples</a><a href="/ru/search/?q=%5Bvacuum%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">vacuum</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 11.49
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 191K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/code_wtf/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/815/d9d/1c1/815d9d1c18d96b897a17bc06aaf51c38.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/code_wtf/" class="tm-hub__title"><span>Delirium coding</span></a> <!---->
+                 </div>
+                 <div class="tm-hub__description">
+                  Code you would be ashamed of
+                 </div><!---->
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 11.33
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 94K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/reactjs/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/e77/27d/25b/e7727d25b433a67f0e69acc74d2ba785.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/reactjs/" class="tm-hub__title"><span>ReactJS</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  JavaScript library for interfaces creation
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Breact%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">react</a><a href="/ru/search/?q=%5Bjavascript%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">javascript</a><a href="/ru/search/?q=%5Breact.js%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">react.js</a><a href="/ru/search/?q=%5Breact%20native%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">react native</a><a href="/ru/search/?q=%5Breactjs%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">reactjs</a><a href="/ru/search/?q=%5Btypescript%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">typescript</a><a href="/ru/search/?q=%5Bweb-%D1%80%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">web-разработка</a><a href="/ru/search/?q=%5Bfrontend%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">frontend</a><a href="/ru/search/?q=%5Bwebsite%20development%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">website development</a><a href="/ru/search/?q=%5Breact%20hooks%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">react hooks</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 15.42
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 99K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/angular/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/f9c/39a/77f/f9c39a77f815375969bfd1faaff8f68f.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/angular/" class="tm-hub__title"><span>Angular</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  JavaScript framework
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Bangular%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">angular</a><a href="/ru/search/?q=%5Bjavascript%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">javascript</a><a href="/ru/search/?q=%5Breact.js%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">react.js</a><a href="/ru/search/?q=%5Breact%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">react</a><a href="/ru/search/?q=%5Bangularjs%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">angularjs</a><a href="/ru/search/?q=%5Bfrontend%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">frontend</a><a href="/ru/search/?q=%5Bvue.js%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">vue.js</a><a href="/ru/search/?q=%5Bsoftware%20development%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">software development</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 10.82
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 126K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/laravel/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/0bd/b91/ce8/0bdb91ce8e124137ee8f67fa9faa943e.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/laravel/" class="tm-hub__title"><span>Laravel</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Free, open-source PHP web framework
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Bphp%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">php</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 10.52
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 31K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/visual_programming/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/790/409/5a3/7904095a3cf960350049e9fdc3414ae5.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/visual_programming/" class="tm-hub__title"><span>Visual programming</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  All about trying to visualize programming
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Bjavascript%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">javascript</a><a href="/ru/search/?q=%5Bweb-%D1%80%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">web-разработка</a><a href="/ru/search/?q=%5Bfrontend%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">frontend</a><a href="/ru/search/?q=%5Btypescript%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">typescript</a><a href="/ru/search/?q=%5Breact%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">react</a><a href="/ru/search/?q=%5Breact.js%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">react.js</a><a href="/ru/search/?q=%5Breactjs%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">reactjs</a><a href="/ru/search/?q=%5Breact%20native%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">react native</a><a href="/ru/search/?q=%5Bwebsite%20development%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">website development</a><a href="/ru/search/?q=%5Breact%20hooks%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">react hooks</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 10.72
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 1.7K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/server_side_optimization/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/918/4ec/852/9184ec852f54946682e7de3c931828b4.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/server_side_optimization/" class="tm-hub__title"><span>Server optimization</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Give your server a breather
+                 </div><!---->
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 10.23
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 198K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/latex/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/e8d/272/2d9/e8d2722d93e90da5a72cb0a1a8bfa3e8.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/latex/" class="tm-hub__title"><span>LaTeX</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  A set of macros for TeX
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Btex%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">tex</a><a href="/ru/search/?q=%5Bmetapost%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">metapost</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 10.1
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 75K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/1C/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/7f4/845/5fc/7f48455fc5cac3578d8fdd52a5bca9f9.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/1C/" class="tm-hub__title"><span>1C</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  1C programming
+                 </div><!---->
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 10.39
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 1.5K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/autogadgets/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/geektimes/hub/c0e/33d/3bd/c0e33d3bdece2e8b8c1b38907f6a3d46.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/autogadgets/" class="tm-hub__title"><span>Car Gadgets</span></a> <!---->
+                 </div>
+                 <div class="tm-hub__description">
+                  Devices and gadgets for cars
+                 </div><!---->
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 9.88
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 7.6K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/cisconetworks/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/26a/1e5/8cd/26a1e58cd83620f320800f30f8cf887d.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/cisconetworks/" class="tm-hub__title"><span>Cisco</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Cisco users united!
+                 </div><!---->
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 9.53
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 87K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/cad_cam/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/234/611/51a/23461151a8fef81c88b27a144bb6c6a0.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/cad_cam/" class="tm-hub__title"><span>CAD/CAM</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  CAD/CAM systems
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Bsolid%20modeling%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">solid modeling</a><a href="/ru/search/?q=%5Bgeometric%20kernel%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">geometric kernel</a><a href="/ru/search/?q=%5Bcircuit%20design%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">circuit design</a><a href="/ru/search/?q=%5Bcircuit%20calculator%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">circuit calculator</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 9.52
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 75K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/vuejs/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/bc3/e2f/564/bc3e2f564a54900c16f90ef53d5f62b6.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/vuejs/" class="tm-hub__title"><span>VueJS</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Progressive JavaScript framework
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Bvue.js%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">vue.js</a><a href="/ru/search/?q=%5Bjavascript%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">javascript</a><a href="/ru/search/?q=%5Bvue%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">vue</a><a href="/ru/search/?q=%5Breact.js%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">react.js</a><a href="/ru/search/?q=%5Btypescript%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">typescript</a><a href="/ru/search/?q=%5Bangular%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">angular</a><a href="/ru/search/?q=%5Bweb-%D1%80%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">web-разработка</a><a href="/ru/search/?q=%5Bsoftware%20development%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">software development</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 9.45
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 7.4K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/ecommerce_development/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/2a1/7c5/ce5/2a17c5ce59f4e6449c42b34d76235c17.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/ecommerce_development/" class="tm-hub__title"><span>Development for e-commerce</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  E-commerce systems development
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Becommerce%20platforms%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">ecommerce platforms</a><a href="/ru/search/?q=%5Becommerce%20solutions%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">ecommerce solutions</a><a href="/ru/search/?q=%5Bpim%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">pim</a><a href="/ru/search/?q=%5Bmarketplace%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">marketplace</a><a href="/ru/search/?q=%5Be-commerce%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">e-commerce</a><a href="/ru/search/?q=%5Bmagento%20ecommerce%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">magento ecommerce</a><a href="/ru/search/?q=%5Bbigcommerce%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">bigcommerce</a><a href="/ru/search/?q=%5Bphp%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">php</a><a href="/ru/search/?q=%5Becommerce%20website%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">ecommerce website</a><a href="/ru/search/?q=%5Bsoftware%20development%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">software development</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 10.6
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 30K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/sales/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/7ca/18c/6de/7ca18c6de900c26e33f5eb8fda46ece1.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/sales/" class="tm-hub__title"><span>Sales management</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Sales-manager is the one who makes money
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Bsales%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">sales</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 9.96
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 50K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/lisp/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/43f/1a4/c45/43f1a4c4588b789c5c60b793469c8214.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/lisp/" class="tm-hub__title"><span>Lisp</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Oldest high-level programming language
+                 </div><!---->
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 8.93
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 80K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/biotech/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/d0b/1f8/d21/d0b1f8d21a424e35efc5b115434c7443.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/biotech/" class="tm-hub__title"><span>Biotechnologies</span></a> <!---->
+                 </div>
+                 <div class="tm-hub__description">
+                  The use of living organisms to solve tasks
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Bophthalmology%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">ophthalmology</a><a href="/ru/search/?q=%5Bvision%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">vision</a><a href="/ru/search/?q=%5Beyes%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">eyes</a><a href="/ru/search/?q=%5Beye%20clinic%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">eye clinic</a><a href="/ru/search/?q=%5Brelex%20smile%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">relex smile</a><a href="/ru/search/?q=%5Beye%20surgery%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">eye surgery</a><a href="/ru/search/?q=%5Blens%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">lens</a><a href="/ru/search/?q=%5Bsurgery%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">surgery</a><a href="/ru/search/?q=%5Bsens%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">sens</a><a href="/ru/search/?q=%5Bbioengineering%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">bioengineering</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 9.4
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 97K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/build_automation/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/b32/c95/751/b32c95751d93477b13d637f89a7ad11a.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/build_automation/" class="tm-hub__title"><span>Build automation</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Build automation systems
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Bautomation%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">automation</a><a href="/ru/search/?q=%5Bruby%20on%20rails%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">ruby on rails</a><a href="/ru/search/?q=%5Bintegration%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">integration</a><a href="/ru/search/?q=%5Bcmake%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">cmake</a><a href="/ru/search/?q=%5Bpvs-studio%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">pvs-studio</a><a href="/ru/search/?q=%5Bci%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">ci</a><a href="/ru/search/?q=%5Bcontinuous%20integration%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">continuous integration</a><a href="/ru/search/?q=%5Bdevops%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">devops</a><a href="/ru/search/?q=%5Bruby%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">ruby</a><a href="/ru/search/?q=%5Bweb%20developement%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">web developement</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 8.81
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 7.1K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/itstandarts/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/1e8/6e3/333/1e86e33333bec80031fba0c1223545ea.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/itstandarts/" class="tm-hub__title"><span>IT Standards</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Standards in Information Technology
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Brussian%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">russian</a><a href="/ru/search/?q=%5Bamerica%20online%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">america online</a><a href="/ru/search/?q=%5Binternational%20business%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">international business</a><a href="/ru/search/?q=%5Brelocation%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">relocation</a><a href="/ru/search/?q=%5Bui%2Fux%20%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">ui/ux дизайн</a><a href="/ru/search/?q=%5Bui%2Fux%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">ui/ux</a><a href="/ru/search/?q=%5Buix%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">uix</a><a href="/ru/search/?q=%5Bpresale%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">presale</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 8.67
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 210K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/fsharp/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/580/8d5/d36/5808d5d362f5aaa86849124354e544bd.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/fsharp/" class="tm-hub__title"><span>F#</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Strongly typed, multi-paradigm programming language
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Bc%23%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">c#</a><a href="/ru/search/?q=%5Bf%23%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">f#</a><a href="/ru/search/?q=%5B.net%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">.net</a><a href="/ru/search/?q=%5Bmicrosoft%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">microsoft</a><a href="/ru/search/?q=%5Bmath%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">math</a><a href="/ru/search/?q=%5Bangourimath%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">angourimath</a><a href="/ru/search/?q=%5Bupdate%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">update</a><a href="/ru/search/?q=%5Bfsharp%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">fsharp</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 8.5
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 1.8K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/webassembly/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/787/3d5/952/7873d595250122e806fb64a28d1828b9.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/webassembly/" class="tm-hub__title"><span>WebAssembly</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Low-level bytecode for execution in the browser
+                 </div><!---->
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 8.13
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 2.8K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/unreal_engine/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/16b/526/adb/16b526adb5ab2c74d226709501032c6b.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/unreal_engine/" class="tm-hub__title"><span>Unreal Engine</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Popular game engine
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Bgamedev%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">gamedev</a><a href="/ru/search/?q=%5Bunreal%20engine%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">unreal engine</a><a href="/ru/search/?q=%5Bc%2B%2B%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">c++</a><a href="/ru/search/?q=%5Bpvs-studio%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">pvs-studio</a><a href="/ru/search/?q=%5Bunity%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">unity</a><a href="/ru/search/?q=%5Bgame%20development%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">game development</a><a href="/ru/search/?q=%5Bstatic%20code%20analysis%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">static code analysis</a><a href="/ru/search/?q=%5Btutorial%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">tutorial</a><a href="/ru/search/?q=%5Bgameplay%20ability%20system%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">gameplay ability system</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 7.75
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 12K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/mesh_networking/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/fc1/051/bce/fc1051bce0c25da604295e7a1f0f0cae.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/mesh_networking/" class="tm-hub__title"><span>Mesh networks</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  A local network topology
+                 </div><!---->
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 8
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 41K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/labview/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/f37/d50/f81/f37d50f817d9550effe350f3e9283f35.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/labview/" class="tm-hub__title"><span>LabVIEW</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  LabVIEW is a system-design platform and development environment for a visual programming language.
+                 </div><!---->
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 7.6
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 77K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/serverless/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/11c/ba1/084/11cba1084d1c532799e85c08c7f62228.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/serverless/" class="tm-hub__title"><span>Serverless</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Serverless computing technologies
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Bjavascript%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">javascript</a><a href="/ru/search/?q=%5Bredis%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">redis</a><a href="/ru/search/?q=%5Breact%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">react</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 7.55
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 18K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/crm/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/577/c52/1d4/577c521d4fb330e7d668a3676cf8d4e3.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/crm/" class="tm-hub__title"><span>CRM systems</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  A hub about CRM systems
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Bcrm%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">crm</a><a href="/ru/search/?q=%5Bmarketing%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">marketing</a><a href="/ru/search/?q=%5Bpbx%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">pbx</a><a href="/ru/search/?q=%5Be-commerce%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">e-commerce</a><a href="/ru/search/?q=%5Bmarketing%20strategy%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">marketing strategy</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 7.18
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 72K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/rust/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/b4f/bf7/3ef/b4fbf73ef0672e6db43c0547b71d2b4c.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/rust/" class="tm-hub__title"><span>Rust</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Multi-Paradigm Compiled Language
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Brust%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">rust</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 9.54
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 26K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/Atlassian/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/eea/b79/3aa/eeab793aae8d7b53389240a786308b75.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/Atlassian/" class="tm-hub__title"><span>Atlassian</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Jira, Confluence and so on
+                 </div><!---->
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 7.5
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 23K
+               </div>
+              </div>
+             </div>
+             <div class="tm-hubs-list__category-wrapper">
+              <div class="tm-hubs-list__hub">
+               <div class="tm-hub">
+                <a href="/ru/hubs/display_adv/" class="tm-hub__userpic-link">
+                 <div class="tm-entity-image">
+                  <img alt src="//habrastorage.org/getpro/habr/hub/dc3/3ff/2a1/dc33ff2a1aeb30da56be00c4bd3dd17f.png" class="tm-entity-image__pic">
+                 </div></a>
+                <div class="tm-hub__info">
+                 <div>
+                  <a href="/ru/hubs/display_adv/" class="tm-hub__title"><span>Display advertising</span></a> <span title="Профильный хаб" class="tm-hub__profiled"> * </span>
+                 </div>
+                 <div class="tm-hub__description">
+                  Everything about banners
+                 </div>
+                 <div class="tm-hubs-list__hub-tags">
+                  <a href="/ru/search/?q=%5Bcontent%20marketing%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">content marketing</a><a href="/ru/search/?q=%5Bitmo%20university%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">itmo university</a><a href="/ru/search/?q=%5Bseo%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">seo</a><a href="/ru/search/?q=%5Bppc%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">ppc</a><a href="/ru/search/?q=%5B%D0%BF%D0%BE%D0%B4%D0%BA%D0%B0%D1%81%D1%82%D1%8B%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">подкасты</a><a href="/ru/search/?q=%5Bdmitry%20kabanov%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">dmitry kabanov</a><a href="/ru/search/?q=%5Bvscextv%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">vscextv</a><a href="/ru/search/?q=%5Bmarketing%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">marketing</a><a href="/ru/search/?q=%5Bdigital%20marketing%5D&amp;target_type=posts&amp;order=relevance" class="tm-hubs-list__hub-tag">digital marketing</a>
+                 </div>
+                </div>
+               </div>
+               <div class="tm-hubs-list__hub-rating">
+                <!----> 6.96
+               </div>
+               <div class="tm-hubs-list__hub-subscribers">
+                <!----> 37K
+               </div>
+              </div>
+             </div>
+            </div>
+            <div class="tm-pagination">
+             <a href="/ru/hubs/page5/" id="pagination-prev-page" data-pagination-prev="" rel="prev" class="tm-pagination__navigation-link tm-pagination__navigation-link_active">
+              <svg height="16" width="16" class="tm-svg-img tm-pagination__arrow tm-pagination__arrow_prev">
+               <title>
+                Назад
+               </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#arrow-back"></use>
+              </svg><span class="tm-pagination__navigation-link-title"> Сюда </span></a>
+             <div class="tm-pagination__pages">
+              <div class="tm-pagination__page-group">
+               <a href="/ru/hubs/page1/" class="tm-pagination__page"> 1 </a><a href="/ru/hubs/page2/" class="tm-pagination__page"> 2 </a><a href="/ru/hubs/page3/" class="tm-pagination__page"> 3 </a><a href="/ru/hubs/page4/" class="tm-pagination__page"> 4 </a><a href="/ru/hubs/page5/" class="tm-pagination__page"> 5 </a> <!---->
+              </div><span class="tm-pagination__page tm-pagination__page_current"> 6 </span>
+              <div class="tm-pagination__page-group">
+               <a href="/ru/hubs/page7/" class="tm-pagination__page"> 7 </a><a href="/ru/hubs/page8/" class="tm-pagination__page"> 8 </a><a href="/ru/hubs/page9/" class="tm-pagination__page"> 9 </a><a href="/ru/hubs/page10/" class="tm-pagination__page"> 10 </a><a href="/ru/hubs/page11/" class="tm-pagination__page"> 11 </a> <!---->
+              </div>
+             </div><a href="/ru/hubs/page7/" id="pagination-next-page" data-pagination-next="" rel="next" class="tm-pagination__navigation-link tm-pagination__navigation-link_active"><span class="tm-pagination__navigation-link-title"> Туда </span>
+              <svg height="16" width="16" class="tm-svg-img tm-pagination__arrow tm-pagination__arrow_next">
+               <title>
+                Назад
+               </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#arrow-back"></use>
+              </svg></a>
+            </div>
+           </div>
+          </div>
+         </div>
+         <div class="tm-page__sidebar">
+          <div data-async-called="true" class="tm-layout-sidebar">
+           <div class="tm-layout-sidebar__ads tm-layout-sidebar__ads_initial">
+            <div class="tm-adfox-banner__container tm-layout-sidebar__banner tm-layout-sidebar__banner_top">
+             <!---->
+             <div id="adfox_164725680533065327" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-half-page"></div>
+            </div>
+           </div>
+           <div class="tm-sexy-sidebar tm-sexy-sidebar_initial" style="margin-top:0px;">
+            <section class="tm-block tm-block tm-block_spacing-bottom">
+             <header class="tm-block__header tm-block__header">
+              <div class="tm-block__header-container">
+               <h2 class="tm-block__title tm-block__title">Лучшие блоги</h2>
+              </div><!---->
+             </header>
+             <div class="tm-block__body tm-block__body">
+              <div class="tm-companies-rating">
+               <a href="/ru/companies/ruvds/articles/" class="tm-companies-rating__item">
+                <div class="tm-entity-image tm-companies-rating__avatar">
+                 <img alt height="36" src="//habrastorage.org/getpro/habr/company/027/b19/cea/027b19cea984722a8d806edcc56c2c00.png" width="36" class="tm-entity-image__pic">
+                </div><span class="tm-companies-rating__name">RUVDS.com</span> <span class="tm-companies-rating__rating">2969.17</span></a><a href="/ru/companies/timeweb/articles/" class="tm-companies-rating__item">
+                <div class="tm-entity-image tm-companies-rating__avatar">
+                 <img alt height="36" src="//habrastorage.org/getpro/habr/company/348/5e5/ddc/3485e5ddc997087058a03fd7327e3844.png" width="36" class="tm-entity-image__pic">
+                </div><span class="tm-companies-rating__name">Timeweb Cloud</span> <span class="tm-companies-rating__rating">1495.42</span></a><a href="/ru/companies/selectel/articles/" class="tm-companies-rating__item">
+                <div class="tm-entity-image tm-companies-rating__avatar">
+                 <img alt height="36" src="//habrastorage.org/getpro/habr/company/66a/f7d/039/66af7d03979b6d18654293d8f1e72837.png" width="36" class="tm-entity-image__pic">
+                </div><span class="tm-companies-rating__name">Selectel</span> <span class="tm-companies-rating__rating">1416.32</span></a><a href="/ru/companies/ru_mts/articles/" class="tm-companies-rating__item">
+                <div class="tm-entity-image tm-companies-rating__avatar">
+                 <img alt height="36" src="//habrastorage.org/getpro/habr/company/70c/a67/cc7/70ca67cc7ecfa889ded9b51efa3e70d3.png" width="36" class="tm-entity-image__pic">
+                </div><span class="tm-companies-rating__name">МТС</span> <span class="tm-companies-rating__rating">965.55</span></a><a href="/ru/companies/otus/articles/" class="tm-companies-rating__item">
+                <div class="tm-entity-image tm-companies-rating__avatar">
+                 <img alt height="36" src="//habrastorage.org/getpro/habr/company/2d5/0ed/b57/2d50edb57cf45fa07cc4f39f53b78395.png" width="36" class="tm-entity-image__pic">
+                </div><span class="tm-companies-rating__name">OTUS</span> <span class="tm-companies-rating__rating">639.89</span></a><a href="/ru/companies/alfa/articles/" class="tm-companies-rating__item">
+                <div class="tm-entity-image tm-companies-rating__avatar">
+                 <img alt height="36" src="//habrastorage.org/getpro/habr/company/623/4a7/52a/6234a752af61e1eb6b220f90db54aadc.png" width="36" class="tm-entity-image__pic">
+                </div><span class="tm-companies-rating__name">Альфа-Банк</span> <span class="tm-companies-rating__rating">544.97</span></a><a href="/ru/companies/lanit/articles/" class="tm-companies-rating__item">
+                <div class="tm-entity-image tm-companies-rating__avatar">
+                 <img alt height="36" src="//habrastorage.org/getpro/habr/company/933/cc3/d68/933cc3d68881b38696957eead6f4de36.jpg" width="36" class="tm-entity-image__pic">
+                </div><span class="tm-companies-rating__name">ГК ЛАНИТ</span> <span class="tm-companies-rating__rating">523.15</span></a><a href="/ru/companies/omk-it/articles/" class="tm-companies-rating__item">
+                <div class="tm-entity-image tm-companies-rating__avatar">
+                 <img alt height="36" src="//habrastorage.org/getpro/habr/company/f49/d03/9b3/f49d039b3de2caeaf324e6f4e1d8f7a3.png" width="36" class="tm-entity-image__pic">
+                </div><span class="tm-companies-rating__name">ОМК — ИТ</span> <span class="tm-companies-rating__rating">494.31</span></a><a href="/ru/companies/yandex/articles/" class="tm-companies-rating__item">
+                <div class="tm-entity-image tm-companies-rating__avatar">
+                 <img alt height="36" src="//habrastorage.org/getpro/habr/company/b02/d9b/1d4/b02d9b1d4a6e64ff069e2ab32fdedae2.png" width="36" class="tm-entity-image__pic">
+                </div><span class="tm-companies-rating__name">Яндекс</span> <span class="tm-companies-rating__rating">492.69</span></a><a href="/ru/companies/first/articles/" class="tm-companies-rating__item">
+                <div class="tm-entity-image tm-companies-rating__avatar">
+                 <img alt height="36" src="//habrastorage.org/getpro/habr/company/3a5/515/806/3a5515806f33cd7076d16cd91c9bc9e3.png" width="36" class="tm-entity-image__pic">
+                </div><span class="tm-companies-rating__name">FirstVDS</span> <span class="tm-companies-rating__rating">492.47</span></a>
+              </div>
+             </div>
+             <footer class="tm-block__footer">
+              <a href="/ru/companies/" class="tm-block-extralink"> Все компании </a>
+             </footer>
+            </section><!---->
+            <div class="tm-adfox-banner__container tm-layout-sidebar__banner tm-layout-sidebar__banner_bottom">
+             <!---->
+             <div id="adfox_164725691003361602" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-medium-rectangle"></div>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </main><!---->
+    </div>
+    <div class="tm-footer-menu">
+     <div class="tm-page-width">
+      <div class="tm-footer-menu__container">
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title">Ваш аккаунт</p>
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr/?back=/ru/hubs/page6/&amp;hl=ru" rel="nofollow" target="_self"> Войти </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr-register/?back=/ru/hubs/page6/&amp;hl=ru" rel="nofollow" target="_self"> Регистрация </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title">Разделы</p>
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/" class="footer-menu__item-link router-link-active"> Статьи </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/news/" class="footer-menu__item-link"> Новости </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/hubs/" class="footer-menu__item-link router-link-active"> Хабы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/companies/" class="footer-menu__item-link"> Компании </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/users/" class="footer-menu__item-link"> Авторы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/sandbox/" class="footer-menu__item-link"> Песочница </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title">Информация</p>
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/help/" class="footer-menu__item-link"> Устройство сайта </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/authors/codex/" class="footer-menu__item-link"> Для авторов </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/companies/corpblogs/" class="footer-menu__item-link"> Для компаний </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/docs/transparency/" class="footer-menu__item-link"> Документы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/agreement/?hl=ru_RU" target="_blank"> Соглашение </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/confidential/?hl=ru_RU" target="_blank"> Конфиденциальность </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title">Услуги</p>
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/corporate-blogs/" target="_blank"> Корпоративный блог </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/advertising/" target="_blank"> Медийная реклама </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/native-special/" target="_blank"> Нативные проекты </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/education-programs/" target="_blank"> Образовательные программы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/hello-startup/" target="_blank"> Стартапам </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/specials/" class="footer-menu__item-link"> Спецпроекты </a></li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="tm-footer">
+     <div class="tm-page-width">
+      <div class="tm-footer__container">
+       <!---->
+       <div class="tm-footer__social">
+        <a href="https://www.facebook.com/habrahabr.ru" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Facebook
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-facebook"></use>
+         </svg></a><a href="https://twitter.com/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Twitter
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-twitter"></use>
+         </svg></a><a href="https://vk.com/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           VK
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-vk"></use>
+         </svg></a><a href="https://telegram.me/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Telegram
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-telegram"></use>
+         </svg></a><a href="https://www.youtube.com/channel/UCd_sTwKqVrweTt4oAKY5y4w" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Youtube
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-youtube"></use>
+         </svg></a><a href="https://dzen.ru/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Яндекс Дзен
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-dzen"></use>
+         </svg></a>
+       </div>
+       <div class="v-portal" style="display:none;"></div><button class="tm-footer__link"><!----> Настройка языка </button> <a href="/ru/feedback/" class="tm-footer__link"> Техническая поддержка </a>
+       <div class="tm-footer-copyright">
+        <span class="tm-copyright"><span class="tm-copyright__years">© 2006–2023, </span> <span class="tm-copyright__name"><a href="https://company.habr.com/" rel="noopener" target="_blank" class="tm-copyright__link">Habr</a></span></span>
+       </div>
+      </div>
+     </div>
+    </div><!----> <!---->
+   </div>
+   <div class="vue-portal-target"></div>
+  </div>
+  <script>window.__INITIAL_STATE__={"adblock":{"hasAcceptableAdsFilter":false,"hasAdblock":false},"articlesList":{"articlesList":{},"articlesIds":{},"isLoading":false,"pagesCount":{},"route":{},"reasonsList":null,"postReasonsList":null,"view":"cards","lastVisitedRoute":{},"ssrCommentsArticleIds":[],"viewedPosts":[],"karma":{"userReasonsList":null}},"authorContribution":{"authors":{}},"betaTest":{"currentAnnouncement":null,"announcements":{},"announcementCards":null,"announcementComments":{},"announcementCommentThreads":{},"announcementCommentingStatuses":{},"archivedList":[]},"authorStatistics":{"articleRefs":{},"articleIds":{},"pagesCount":{},"route":{},"viewsCount":[],"maxStatsCount":{}},"career":{"seoLandings":[],"hubs":""},"comments":{"articleComments":{},"articlePinnedComments":{},"searchCommentsResults":null,"pagesCount":null,"commentAccess":{},"scrollParents":{},"pageArticleComments":{"lastViewedComment":0,"postId":null,"lastCommentTimestamp":"","moderated":[],"moderatedIds":[],"commentRoute":""}},"companies":{"companyRefs":{"ruvds":{"id":"3593","alias":"ruvds","titleHtml":"RUVDS.com","descriptionHtml":"VDS\u002FVPS-хостинг. Скидка 15% по коду \u003Cb\u003EHABR15\u003C\u002Fb\u003E","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fcompany\u002F027\u002Fb19\u002Fcea\u002F027b19cea984722a8d806edcc56c2c00.png","relatedData":null,"statistics":{"subscribersCount":87431,"rating":2969.17,"invest":null},"commonHubs":[{"id":"20742","alias":"read","type":"collective","title":"Читальный зал","titleHtml":"Читальный зал","isProfiled":false},{"id":"21910","alias":"popular_science","type":"collective","title":"Научно-популярное","titleHtml":"Научно-популярное","isProfiled":false},{"id":"21976","alias":"DIY","type":"collective","title":"DIY или Сделай сам","titleHtml":"DIY или Сделай сам","isProfiled":false},{"id":"359","alias":"programming","type":"collective","title":"Программирование","titleHtml":"Программирование","isProfiled":true},{"id":"22016","alias":"easyelectronics","type":"collective","title":"Электроника для начинающих","titleHtml":"Электроника для начинающих","isProfiled":false}]},"timeweb":{"id":"1461","alias":"timeweb","titleHtml":"Timeweb Cloud","descriptionHtml":null,"imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fcompany\u002F348\u002F5e5\u002Fddc\u002F3485e5ddc997087058a03fd7327e3844.png","relatedData":null,"statistics":{"subscribersCount":1534,"rating":1495.42,"invest":null},"commonHubs":[{"id":"21976","alias":"DIY","type":"collective","title":"DIY или Сделай сам","titleHtml":"DIY или Сделай сам","isProfiled":false},{"id":"21930","alias":"antikvariat","type":"collective","title":"Старое железо","titleHtml":"Старое железо","isProfiled":false},{"id":"21980","alias":"games","type":"collective","title":"Игры и игровые консоли","titleHtml":"Игры и игровые консоли","isProfiled":false},{"id":"20742","alias":"read","type":"collective","title":"Читальный зал","titleHtml":"Читальный зал","isProfiled":false},{"id":"19737","alias":"controllers","type":"collective","title":"Программирование микроконтроллеров","titleHtml":"Программирование микроконтроллеров","isProfiled":true}]},"selectel":{"id":"975","alias":"selectel","titleHtml":"Selectel","descriptionHtml":"IT-инфраструктура для бизнеса","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fcompany\u002F66a\u002Ff7d\u002F039\u002F66af7d03979b6d18654293d8f1e72837.png","relatedData":null,"statistics":{"subscribersCount":45359,"rating":1416.32,"invest":null},"commonHubs":[{"id":"22026","alias":"itcompanies","type":"collective","title":"IT-компании","titleHtml":"IT-компании","isProfiled":false},{"id":"21898","alias":"hardware","type":"collective","title":"Компьютерное железо","titleHtml":"Компьютерное железо","isProfiled":false},{"id":"21894","alias":"gadgets","type":"collective","title":"Гаджеты","titleHtml":"Гаджеты","isProfiled":false},{"id":"6398","alias":"it-infrastructure","type":"collective","title":"IT-инфраструктура","titleHtml":"IT-инфраструктура","isProfiled":true},{"id":"21484","alias":"electronics","type":"collective","title":"Производство и разработка электроники","titleHtml":"Производство и разработка электроники","isProfiled":true}]},"ru_mts":{"id":"4532","alias":"ru_mts","titleHtml":"МТС","descriptionHtml":"Экосистема цифровых сервисов","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fcompany\u002F70c\u002Fa67\u002Fcc7\u002F70ca67cc7ecfa889ded9b51efa3e70d3.png","relatedData":null,"statistics":{"subscribersCount":39424,"rating":965.55,"invest":null},"commonHubs":[{"id":"21894","alias":"gadgets","type":"collective","title":"Гаджеты","titleHtml":"Гаджеты","isProfiled":false},{"id":"21898","alias":"hardware","type":"collective","title":"Компьютерное железо","titleHtml":"Компьютерное железо","isProfiled":false},{"id":"21470","alias":"cloud_services","type":"collective","title":"Облачные сервисы","titleHtml":"Облачные сервисы","isProfiled":true},{"id":"21910","alias":"popular_science","type":"collective","title":"Научно-популярное","titleHtml":"Научно-популярное","isProfiled":false},{"id":"15585","alias":"cloud_mts","type":"corporative","title":"Блог компании CloudMTS","titleHtml":"Блог компании CloudMTS","isProfiled":false}]},"otus":{"id":"4756","alias":"otus","titleHtml":"OTUS","descriptionHtml":"Цифровые навыки от ведущих экспертов","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fcompany\u002F2d5\u002F0ed\u002Fb57\u002F2d50edb57cf45fa07cc4f39f53b78395.png","relatedData":null,"statistics":{"subscribersCount":118711,"rating":639.89,"invest":null},"commonHubs":[{"id":"359","alias":"programming","type":"collective","title":"Программирование","titleHtml":"Программирование","isProfiled":true},{"id":"340","alias":"python","type":"collective","title":"Python","titleHtml":"Python","isProfiled":true},{"id":"397","alias":"analysis_design","type":"collective","title":"Анализ и проектирование систем","titleHtml":"Анализ и проектирование систем","isProfiled":true},{"id":"19279","alias":"web_testing","type":"collective","title":"Тестирование веб-сервисов","titleHtml":"Тестирование веб-сервисов","isProfiled":true},{"id":"50","alias":"infosecurity","type":"collective","title":"Информационная безопасность","titleHtml":"Информационная безопасность","isProfiled":true}]},"alfa":{"id":"1721","alias":"alfa","titleHtml":"Альфа-Банк","descriptionHtml":"Лучший мобильный банк по версии Markswebb","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fcompany\u002F623\u002F4a7\u002F52a\u002F6234a752af61e1eb6b220f90db54aadc.png","relatedData":null,"statistics":{"subscribersCount":33967,"rating":544.97,"invest":null},"commonHubs":[{"id":"20740","alias":"career","type":"collective","title":"Карьера в IT-индустрии","titleHtml":"Карьера в IT-индустрии","isProfiled":false},{"id":"397","alias":"analysis_design","type":"collective","title":"Анализ и проектирование систем","titleHtml":"Анализ и проектирование систем","isProfiled":true},{"id":"20682","alias":"pm","type":"collective","title":"Управление проектами","titleHtml":"Управление проектами","isProfiled":true},{"id":"20754","alias":"tech_events","type":"collective","title":"Конференции","titleHtml":"Конференции","isProfiled":false},{"id":"20736","alias":"hr_management","type":"collective","title":"Управление персоналом","titleHtml":"Управление персоналом","isProfiled":true}]},"lanit":{"id":"4628","alias":"lanit","titleHtml":"ГК ЛАНИТ","descriptionHtml":"Ведущая многопрофильная группа ИТ-компаний в РФ","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fcompany\u002F933\u002Fcc3\u002Fd68\u002F933cc3d68881b38696957eead6f4de36.jpg","relatedData":null,"statistics":{"subscribersCount":63158,"rating":523.15,"invest":null},"commonHubs":[{"id":"21922","alias":"artificial_intelligence","type":"collective","title":"Искусственный интеллект","titleHtml":"Искусственный интеллект","isProfiled":false},{"id":"20740","alias":"career","type":"collective","title":"Карьера в IT-индустрии","titleHtml":"Карьера в IT-индустрии","isProfiled":false},{"id":"19439","alias":"machine_learning","type":"collective","title":"Машинное обучение","titleHtml":"Машинное обучение","isProfiled":true},{"id":"20736","alias":"hr_management","type":"collective","title":"Управление персоналом","titleHtml":"Управление персоналом","isProfiled":true},{"id":"359","alias":"programming","type":"collective","title":"Программирование","titleHtml":"Программирование","isProfiled":true}]},"omk-it":{"id":"8326","alias":"omk-it","titleHtml":"ОМК — ИТ","descriptionHtml":null,"imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fcompany\u002Ff49\u002Fd03\u002F9b3\u002Ff49d039b3de2caeaf324e6f4e1d8f7a3.png","relatedData":null,"statistics":{"subscribersCount":54,"rating":494.31,"invest":null},"commonHubs":[{"id":"397","alias":"analysis_design","type":"collective","title":"Анализ и проектирование систем","titleHtml":"Анализ и проектирование систем","isProfiled":true},{"id":"20682","alias":"pm","type":"collective","title":"Управление проектами","titleHtml":"Управление проектами","isProfiled":true},{"id":"18816","alias":"industrial_control_system","type":"collective","title":"Промышленное программирование","titleHtml":"Промышленное программирование","isProfiled":true},{"id":"17175","alias":"image_processing","type":"collective","title":"Обработка изображений","titleHtml":"Обработка изображений","isProfiled":true}]},"yandex":{"id":"1","alias":"yandex","titleHtml":"Яндекс","descriptionHtml":"Как мы делаем Яндекс","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fcompany\u002Fb02\u002Fd9b\u002F1d4\u002Fb02d9b1d4a6e64ff069e2ab32fdedae2.png","relatedData":null,"statistics":{"subscribersCount":185716,"rating":492.69,"invest":null},"commonHubs":[{"id":"19439","alias":"machine_learning","type":"collective","title":"Машинное обучение","titleHtml":"Машинное обучение","isProfiled":true},{"id":"21922","alias":"artificial_intelligence","type":"collective","title":"Искусственный интеллект","titleHtml":"Искусственный интеллект","isProfiled":false},{"id":"144","alias":"open_source","type":"collective","title":"Open source","titleHtml":"Open source","isProfiled":true},{"id":"6345","alias":"mobile_dev","type":"collective","title":"Разработка мобильных приложений","titleHtml":"Разработка мобильных приложений","isProfiled":true},{"id":"8000","alias":"algorithms","type":"collective","title":"Алгоритмы","titleHtml":"Алгоритмы","isProfiled":true}]},"first":{"id":"1726","alias":"first","titleHtml":"FirstVDS","descriptionHtml":"Виртуальные и выделенные серверы в ДЦ в Москве","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fcompany\u002F3a5\u002F515\u002F806\u002F3a5515806f33cd7076d16cd91c9bc9e3.png","relatedData":null,"statistics":{"subscribersCount":24643,"rating":492.47,"invest":null},"commonHubs":[{"id":"21910","alias":"popular_science","type":"collective","title":"Научно-популярное","titleHtml":"Научно-популярное","isProfiled":false},{"id":"50","alias":"infosecurity","type":"collective","title":"Информационная безопасность","titleHtml":"Информационная безопасность","isProfiled":true},{"id":"22014","alias":"futurenow","type":"collective","title":"Будущее здесь","titleHtml":"Будущее здесь","isProfiled":false},{"id":"21906","alias":"history","type":"collective","title":"История IT","titleHtml":"История IT","isProfiled":false},{"id":"20742","alias":"read","type":"collective","title":"Читальный зал","titleHtml":"Читальный зал","isProfiled":false}]}},"companyIds":{},"companyTopIds":["ruvds","timeweb","selectel","ru_mts","otus","alfa","lanit","omk-it","yandex","first"],"pagesCount":{},"companyProfiles":{},"companiesCategories":[],"companiesCategoriesTotalCount":0,"companiesWidgets":{},"companiesWorkers":{},"companiesFans":{},"multiwidgets":{},"route":{},"isLoading":false,"companyWorkersLoading":false,"companyFansLoading":false,"multiwidgetLoading":false,"vacancies":{},"companiesGalleries":{},"companiesBanners":{},"companiesLandingVacancies":{},"companiesTechnologies":{},"workplaceInfo":null},"companyAdmin":{"companyInfo":null,"companyInfoLoading":false,"faqArticles":null,"brandingPreviewImageUrl":null,"jivoStatus":0,"adminNotifications":null},"companiesContribution":{"hubs":{},"flows":{},"companyRefs":{}},"companyHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"conversation":{"messages":[],"respondent":null,"isLoadMore":false},"conversations":{"conversations":[],"unreadCount":0,"pagesCount":0},"docs":{"menu":{},"articles":{},"mainMenu":[],"loading":{"main":false,"dropdown":false,"article":false}},"feature":{"isProbablyVisible":true},"flows":{"updates":{"countNewPostsBySubscription":null,"countNewThreadsBySubscription":null,"countNewNewsBySubscription":null,"countNewPostsAll":34,"countNewNewsAll":11,"countNewThreadsAll":3},"flows":[{"alias":"develop","id":"1","route":{"name":"FLOW_PAGE","params":{"flowName":"develop"}}},{"alias":"admin","id":"6","route":{"name":"FLOW_PAGE","params":{"flowName":"admin"}}},{"alias":"design","id":"2","route":{"name":"FLOW_PAGE","params":{"flowName":"design"}}},{"alias":"management","id":"3","route":{"name":"FLOW_PAGE","params":{"flowName":"management"}}},{"alias":"marketing","id":"4","route":{"name":"FLOW_PAGE","params":{"flowName":"marketing"}}},{"alias":"popsci","id":"7","route":{"name":"FLOW_PAGE","params":{"flowName":"popsci"}}}]},"global":{"isPwa":false,"device":"desktop","isHabrCom":true},"hubs":{"hubRefs":{"mssql":{"id":"17378","alias":"mssql","titleHtml":"Microsoft SQL Server","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fe19\u002F4b2\u002F55a\u002Fe194b255ac49ea6fbed18aa5b070dbd3.png","descriptionHtml":"Relational database management system developed by Microsoft","relatedData":null,"statistics":{"subscribersCount":83460,"rating":13.4,"authorsCount":264,"postsCount":647},"commonTags":["sql","sql server","ms sql server","powershell","microsoft sql server"],"isProfiled":true,"isOfftop":false},"logic_games":{"id":"22000","alias":"logic_games","titleHtml":"Logic games","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002F36a\u002Fa91\u002F69d\u002F36aa9169d992483fa29455af0edd423f.png","descriptionHtml":"Developing logic","relatedData":null,"statistics":{"subscribersCount":9076,"rating":14.83,"authorsCount":224,"postsCount":460},"commonTags":["board games","microsoft","puzzle","ai"],"isProfiled":false,"isOfftop":false},"bughunters":{"id":"23272","alias":"bughunters","titleHtml":"Bug hunters","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fa89\u002F46a\u002Fc3d\u002Fa8946ac3dfeecc82aac05bb80ebe1268.png","descriptionHtml":"Hub for security researchers","relatedData":null,"statistics":{"subscribersCount":56,"rating":12.94,"authorsCount":4,"postsCount":28},"commonTags":["finance","atm","cybersecurity","phdays"],"isProfiled":true,"isOfftop":false},"virtualization":{"id":"7312","alias":"virtualization","titleHtml":"Virtualization","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F864\u002F028\u002F84b\u002F86402884b9a8503bfdbd34740fc9982d.png","descriptionHtml":"We virtualize machines, resources, applications","relatedData":null,"statistics":{"subscribersCount":138614,"rating":14.72,"authorsCount":718,"postsCount":1571},"commonTags":["virtualization"],"isProfiled":true,"isOfftop":false},"game_testing":{"id":"19289","alias":"game_testing","titleHtml":"Game testing","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F30a\u002Fec0\u002F53e\u002F30aec053eecd1f5555a8ba577a3b6266.png","descriptionHtml":"Not so funny as it seems","relatedData":null,"statistics":{"subscribersCount":16493,"rating":12.61,"authorsCount":181,"postsCount":440},"commonTags":["game development","gamedev","gamedesign","gamedevelopment","game design","game designer","game development industry","game engine","game theory","game optimization"],"isProfiled":true,"isOfftop":false},"wearable_electronics":{"id":"21972","alias":"wearable_electronics","titleHtml":"Wearable electronics","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002Fab9\u002F8c9\u002F175\u002Fab98c9175b8a223fcaeebfb60352c7cc.png","descriptionHtml":"All my burden on me","relatedData":null,"statistics":{"subscribersCount":88977,"rating":12.75,"authorsCount":294,"postsCount":1125},"commonTags":[],"isProfiled":false,"isOfftop":false},"web_monetization":{"id":"20704","alias":"web_monetization","titleHtml":"Web services monetization","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fdd8\u002Fd88\u002F01f\u002Fdd8d8801fb89b8fddca31eec3bc8f193.png","descriptionHtml":"Everything about web services monetization","relatedData":null,"statistics":{"subscribersCount":40437,"rating":12.61,"authorsCount":170,"postsCount":649},"commonTags":[],"isProfiled":true,"isOfftop":false},"game_monetization":{"id":"20708","alias":"game_monetization","titleHtml":"Games monetization","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F6c1\u002F010\u002Fb5f\u002F6c1010b5f21e20c68bb48604f8039d2f.png","descriptionHtml":"Learn how to monetize games","relatedData":null,"statistics":{"subscribersCount":60635,"rating":12.49,"authorsCount":143,"postsCount":426},"commonTags":["localization","alconost","gamedev","game development","english","product development","game localization","localize","translation","monetization"],"isProfiled":true,"isOfftop":false},"apache":{"id":"17697","alias":"apache","titleHtml":"Apache","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F491\u002Ff0a\u002F9b3\u002F491f0a9b3dd805b1e97478d97ece9be6.png","descriptionHtml":"Free and open-source cross-platform web server","relatedData":null,"statistics":{"subscribersCount":84097,"rating":12.06,"authorsCount":217,"postsCount":312},"commonTags":["apache","java","open source","open-source","pvs-studio","static code analysis","kafka","spring-boot"],"isProfiled":true,"isOfftop":false},"haskell":{"id":"8424","alias":"haskell","titleHtml":"Haskell","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F138\u002Fce5\u002F098\u002F138ce5098d4a2e04ee975ef25a911ddc.png","descriptionHtml":"Haskell is a standardized, general-purpose compiled purely functional programming language.","relatedData":null,"statistics":{"subscribersCount":81905,"rating":12.33,"authorsCount":134,"postsCount":278},"commonTags":[],"isProfiled":true,"isOfftop":false},"localization":{"id":"19341","alias":"localization","titleHtml":"Language localisation","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Ffd1\u002F822\u002F960\u002Ffd182296074702d74f02fdef7e198523.png","descriptionHtml":"Translation and adaptation","relatedData":null,"statistics":{"subscribersCount":11482,"rating":11.75,"authorsCount":151,"postsCount":265},"commonTags":["localization","alconost","localize","translation","english","product development","alconost translations","app localization","app marketing","nitro"],"isProfiled":true,"isOfftop":false},"sql":{"id":"594","alias":"sql","titleHtml":"SQL","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F64b\u002F22b\u002F8b6\u002F64b22b8b6c4677778423e971d52eb05d.png","descriptionHtml":"Domain-specific languageused in programming and designed for managing data held in a relational database management system, or for stream processing in a relational data stream management system","relatedData":null,"statistics":{"subscribersCount":191414,"rating":11.49,"authorsCount":797,"postsCount":1544},"commonTags":["postgresql","sql","postgres","index","indexing","optimization","planning","sql server","tuples","vacuum"],"isProfiled":true,"isOfftop":false},"code_wtf":{"id":"617","alias":"code_wtf","titleHtml":"Delirium coding","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F815\u002Fd9d\u002F1c1\u002F815d9d1c18d96b897a17bc06aaf51c38.png","descriptionHtml":"Code you would be ashamed of","relatedData":null,"statistics":{"subscribersCount":94487,"rating":11.33,"authorsCount":124,"postsCount":157},"commonTags":[],"isProfiled":false,"isOfftop":false},"reactjs":{"id":"19327","alias":"reactjs","titleHtml":"ReactJS","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fe77\u002F27d\u002F25b\u002Fe7727d25b433a67f0e69acc74d2ba785.png","descriptionHtml":"JavaScript library for interfaces creation","relatedData":null,"statistics":{"subscribersCount":98808,"rating":15.42,"authorsCount":791,"postsCount":1391},"commonTags":["react","javascript","react.js","react native","reactjs","typescript","web-разработка","frontend","website development","react hooks"],"isProfiled":true,"isOfftop":false},"angular":{"id":"18109","alias":"angular","titleHtml":"Angular","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Ff9c\u002F39a\u002F77f\u002Ff9c39a77f815375969bfd1faaff8f68f.png","descriptionHtml":"JavaScript framework","relatedData":null,"statistics":{"subscribersCount":126388,"rating":10.82,"authorsCount":437,"postsCount":749},"commonTags":["angular","javascript","react.js","react","angularjs","frontend","vue.js","software development"],"isProfiled":true,"isOfftop":false},"laravel":{"id":"18812","alias":"laravel","titleHtml":"Laravel","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F0bd\u002Fb91\u002Fce8\u002F0bdb91ce8e124137ee8f67fa9faa943e.png","descriptionHtml":"Free, open-source PHP web framework","relatedData":null,"statistics":{"subscribersCount":31035,"rating":10.52,"authorsCount":168,"postsCount":425},"commonTags":["php"],"isProfiled":true,"isOfftop":false},"visual_programming":{"id":"22518","alias":"visual_programming","titleHtml":"Visual programming","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F790\u002F409\u002F5a3\u002F7904095a3cf960350049e9fdc3414ae5.png","descriptionHtml":"All about trying to visualize programming","relatedData":null,"statistics":{"subscribersCount":1746,"rating":10.72,"authorsCount":93,"postsCount":136},"commonTags":["javascript","web-разработка","frontend","typescript","react","react.js","reactjs","react native","website development","react hooks"],"isProfiled":true,"isOfftop":false},"server_side_optimization":{"id":"8880","alias":"server_side_optimization","titleHtml":"Server optimization","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F918\u002F4ec\u002F852\u002F9184ec852f54946682e7de3c931828b4.png","descriptionHtml":"Give your server a breather","relatedData":null,"statistics":{"subscribersCount":198264,"rating":10.23,"authorsCount":308,"postsCount":513},"commonTags":[],"isProfiled":true,"isOfftop":false},"latex":{"id":"7589","alias":"latex","titleHtml":"LaTeX","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fe8d\u002F272\u002F2d9\u002Fe8d2722d93e90da5a72cb0a1a8bfa3e8.png","descriptionHtml":"A set of macros for TeX","relatedData":null,"statistics":{"subscribersCount":74847,"rating":10.1,"authorsCount":81,"postsCount":96},"commonTags":["tex","metapost"],"isProfiled":true,"isOfftop":false},"1C":{"id":"22624","alias":"1C","titleHtml":"1C","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F7f4\u002F845\u002F5fc\u002F7f48455fc5cac3578d8fdd52a5bca9f9.png","descriptionHtml":"1C programming","relatedData":null,"statistics":{"subscribersCount":1451,"rating":10.39,"authorsCount":160,"postsCount":310},"commonTags":[],"isProfiled":true,"isOfftop":false},"autogadgets":{"id":"21994","alias":"autogadgets","titleHtml":"Car Gadgets","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002Fc0e\u002F33d\u002F3bd\u002Fc0e33d3bdece2e8b8c1b38907f6a3d46.png","descriptionHtml":"Devices and gadgets for cars","relatedData":null,"statistics":{"subscribersCount":7601,"rating":9.88,"authorsCount":254,"postsCount":701},"commonTags":[],"isProfiled":false,"isOfftop":false},"cisconetworks":{"id":"6900","alias":"cisconetworks","titleHtml":"Cisco","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F26a\u002F1e5\u002F8cd\u002F26a1e58cd83620f320800f30f8cf887d.png","descriptionHtml":"Cisco users united!","relatedData":null,"statistics":{"subscribersCount":86555,"rating":9.53,"authorsCount":231,"postsCount":536},"commonTags":[],"isProfiled":true,"isOfftop":false},"cad_cam":{"id":"17698","alias":"cad_cam","titleHtml":"CAD\u002FCAM","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F234\u002F611\u002F51a\u002F23461151a8fef81c88b27a144bb6c6a0.png","descriptionHtml":"CAD\u002FCAM systems","relatedData":null,"statistics":{"subscribersCount":75056,"rating":9.52,"authorsCount":181,"postsCount":501},"commonTags":["solid modeling","geometric kernel","circuit design","circuit calculator"],"isProfiled":true,"isOfftop":false},"vuejs":{"id":"21296","alias":"vuejs","titleHtml":"VueJS","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fbc3\u002Fe2f\u002F564\u002Fbc3e2f564a54900c16f90ef53d5f62b6.png","descriptionHtml":"Progressive JavaScript framework","relatedData":null,"statistics":{"subscribersCount":7402,"rating":9.45,"authorsCount":257,"postsCount":397},"commonTags":["vue.js","javascript","vue","react.js","typescript","angular","web-разработка","software development"],"isProfiled":true,"isOfftop":false},"ecommerce_development":{"id":"18810","alias":"ecommerce_development","titleHtml":"Development for e-commerce","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F2a1\u002F7c5\u002Fce5\u002F2a17c5ce59f4e6449c42b34d76235c17.png","descriptionHtml":"E-commerce systems development","relatedData":null,"statistics":{"subscribersCount":30097,"rating":10.6,"authorsCount":402,"postsCount":934},"commonTags":["ecommerce platforms","ecommerce solutions","pim","marketplace","e-commerce","magento ecommerce","bigcommerce","php","ecommerce website","software development"],"isProfiled":true,"isOfftop":false},"sales":{"id":"20728","alias":"sales","titleHtml":"Sales management","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F7ca\u002F18c\u002F6de\u002F7ca18c6de900c26e33f5eb8fda46ece1.png","descriptionHtml":"Sales-manager is the one who makes money","relatedData":null,"statistics":{"subscribersCount":49549,"rating":9.96,"authorsCount":509,"postsCount":1628},"commonTags":["sales"],"isProfiled":true,"isOfftop":false},"lisp":{"id":"642","alias":"lisp","titleHtml":"Lisp","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F43f\u002F1a4\u002Fc45\u002F43f1a4c4588b789c5c60b793469c8214.png","descriptionHtml":"Oldest high-level programming language","relatedData":null,"statistics":{"subscribersCount":80301,"rating":8.93,"authorsCount":95,"postsCount":165},"commonTags":[],"isProfiled":true,"isOfftop":false},"biotech":{"id":"21912","alias":"biotech","titleHtml":"Biotechnologies","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fd0b\u002F1f8\u002Fd21\u002Fd0b1f8d21a424e35efc5b115434c7443.png","descriptionHtml":"The use of living organisms to solve tasks","relatedData":null,"statistics":{"subscribersCount":97172,"rating":9.4,"authorsCount":469,"postsCount":1986},"commonTags":["ophthalmology","vision","eyes","eye clinic","relex smile","eye surgery","lens","surgery","sens","bioengineering"],"isProfiled":false,"isOfftop":false},"build_automation":{"id":"19816","alias":"build_automation","titleHtml":"Build automation","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fb32\u002Fc95\u002F751\u002Fb32c95751d93477b13d637f89a7ad11a.png","descriptionHtml":"Build automation systems","relatedData":null,"statistics":{"subscribersCount":7061,"rating":8.81,"authorsCount":195,"postsCount":324},"commonTags":["automation","ruby on rails","integration","cmake","pvs-studio","ci","continuous integration","devops","ruby","web developement"],"isProfiled":true,"isOfftop":false},"itstandarts":{"id":"17189","alias":"itstandarts","titleHtml":"IT Standards","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F1e8\u002F6e3\u002F333\u002F1e86e33333bec80031fba0c1223545ea.png","descriptionHtml":"Standards in Information Technology","relatedData":null,"statistics":{"subscribersCount":209936,"rating":8.67,"authorsCount":731,"postsCount":1469},"commonTags":["russian","america online","international business","relocation","ui\u002Fux дизайн","ui\u002Fux","uix","presale"],"isProfiled":true,"isOfftop":false},"fsharp":{"id":"21364","alias":"fsharp","titleHtml":"F#","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F580\u002F8d5\u002Fd36\u002F5808d5d362f5aaa86849124354e544bd.png","descriptionHtml":"Strongly typed, multi-paradigm programming language","relatedData":null,"statistics":{"subscribersCount":1773,"rating":8.5,"authorsCount":60,"postsCount":105},"commonTags":["c#","f#",".net","microsoft","math","angourimath","update","fsharp"],"isProfiled":true,"isOfftop":false},"webassembly":{"id":"22083","alias":"webassembly","titleHtml":"WebAssembly","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F787\u002F3d5\u002F952\u002F7873d595250122e806fb64a28d1828b9.png","descriptionHtml":"Low-level bytecode for execution in the browser","relatedData":null,"statistics":{"subscribersCount":2776,"rating":8.13,"authorsCount":95,"postsCount":150},"commonTags":[],"isProfiled":true,"isOfftop":false},"unreal_engine":{"id":"19367","alias":"unreal_engine","titleHtml":"Unreal Engine","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F16b\u002F526\u002Fadb\u002F16b526adb5ab2c74d226709501032c6b.png","descriptionHtml":"Popular game engine","relatedData":null,"statistics":{"subscribersCount":12498,"rating":7.75,"authorsCount":125,"postsCount":247},"commonTags":["gamedev","unreal engine","c++","pvs-studio","unity","game development","static code analysis","tutorial","gameplay ability system"],"isProfiled":true,"isOfftop":false},"mesh_networking":{"id":"18290","alias":"mesh_networking","titleHtml":"Mesh networks","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Ffc1\u002F051\u002Fbce\u002Ffc1051bce0c25da604295e7a1f0f0cae.png","descriptionHtml":"A local network topology","relatedData":null,"statistics":{"subscribersCount":40809,"rating":8,"authorsCount":47,"postsCount":74},"commonTags":[],"isProfiled":true,"isOfftop":false},"labview":{"id":"17418","alias":"labview","titleHtml":"LabVIEW","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Ff37\u002Fd50\u002Ff81\u002Ff37d50f817d9550effe350f3e9283f35.png","descriptionHtml":"LabVIEW is a system-design platform and development environment for a visual programming language.","relatedData":null,"statistics":{"subscribersCount":77054,"rating":7.6,"authorsCount":18,"postsCount":33},"commonTags":[],"isProfiled":true,"isOfftop":false},"serverless":{"id":"22676","alias":"serverless","titleHtml":"Serverless","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F11c\u002Fba1\u002F084\u002F11cba1084d1c532799e85c08c7f62228.png","descriptionHtml":"Serverless computing technologies","relatedData":null,"statistics":{"subscribersCount":17836,"rating":7.55,"authorsCount":63,"postsCount":99},"commonTags":["javascript","redis","react"],"isProfiled":true,"isOfftop":false},"crm":{"id":"17739","alias":"crm","titleHtml":"CRM systems","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F577\u002Fc52\u002F1d4\u002F577c521d4fb330e7d668a3676cf8d4e3.png","descriptionHtml":"A hub about CRM systems","relatedData":null,"statistics":{"subscribersCount":72322,"rating":7.18,"authorsCount":292,"postsCount":615},"commonTags":["crm","marketing","pbx","e-commerce","marketing strategy"],"isProfiled":true,"isOfftop":false},"rust":{"id":"18961","alias":"rust","titleHtml":"Rust","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fb4f\u002Fbf7\u002F3ef\u002Fb4fbf73ef0672e6db43c0547b71d2b4c.png","descriptionHtml":"Multi-Paradigm Compiled Language","relatedData":null,"statistics":{"subscribersCount":25603,"rating":9.54,"authorsCount":278,"postsCount":613},"commonTags":["rust"],"isProfiled":true,"isOfftop":false},"Atlassian":{"id":"21116","alias":"Atlassian","titleHtml":"Atlassian","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Feea\u002Fb79\u002F3aa\u002Feeab793aae8d7b53389240a786308b75.png","descriptionHtml":"Jira, Confluence and so on","relatedData":null,"statistics":{"subscribersCount":22785,"rating":7.5,"authorsCount":105,"postsCount":168},"commonTags":[],"isProfiled":true,"isOfftop":false},"display_adv":{"id":"20712","alias":"display_adv","titleHtml":"Display advertising","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fdc3\u002F3ff\u002F2a1\u002Fdc33ff2a1aeb30da56be00c4bd3dd17f.png","descriptionHtml":"Everything about banners","relatedData":null,"statistics":{"subscribersCount":37447,"rating":6.96,"authorsCount":248,"postsCount":594},"commonTags":["content marketing","itmo university","seo","ppc","подкасты","dmitry kabanov","vscextv","marketing","digital marketing"],"isProfiled":true,"isOfftop":false}},"hubIds":{"HUBS_PAGES_6":["mssql","logic_games","bughunters","virtualization","game_testing","wearable_electronics","web_monetization","game_monetization","apache","haskell","localization","sql","code_wtf","reactjs","angular","laravel","visual_programming","server_side_optimization","latex","1C","autogadgets","cisconetworks","cad_cam","vuejs","ecommerce_development","sales","lisp","biotech","build_automation","itstandarts","fsharp","webassembly","unreal_engine","mesh_networking","labview","serverless","crm","rust","Atlassian","display_adv"]},"pagesCount":{"HUBS_PAGES_6":11},"isLoading":false,"route":{"name":"HUBS_PAGES","params":{"hl":"ru","pageNum":"6"},"query":{}}},"hubsBlock":{"hubRefs":{},"hubIds":{}},"i18n":{"fl":"ru","hl":"ru"},"info":{"welcomePage":{},"isLoading":true},"location":{"urlStruct":{"protocol":null,"slashes":null,"auth":null,"host":null,"port":null,"hostname":null,"hash":null,"query":{},"pathname":"\u002Fru\u002Fhubs\u002Fpage6\u002F","path":"\u002Fru\u002Fhubs\u002Fpage6\u002F","href":"\u002Fru\u002Fhubs\u002Fpage6\u002F"}},"me":{"user":null,"uuid":null,"ppgDemanded":false,"karmaResetInfo":{"canReincarnate":null,"wasReincarnated":null,"currentScore":null},"notes":null},"modal":{"modals":[]},"mostReadingList":{"mostReadingListIds":[],"mostReadingListRefs":null,"promoPost":null},"ppa":{"articles":{},"card":null,"transactions":null,"totalTransactions":null,"isAccessible":null},"projectsBlocks":{"activeBlocks":{}},"promoData":{"isLoading":false,"hasLoaded":false,"featurer":null,"megaposts":null,"promoLinks":null,"promoPosts":null},"pullRefresh":{"shouldRefresh":false},"sandbox":{"articleIds":[],"articleRefs":{},"pagesCount":null,"route":{},"lastVisitedRoute":{},"isLoading":false},"search":{"searchQueryError":null},"settingsOther":{"inputs":{"uiLang":{"errors":[],"ref":null,"value":""},"articlesLangEnglish":{"errors":[],"ref":null,"value":false},"articlesLangRussian":{"errors":[],"ref":null,"value":false},"agreement":{"errors":[],"ref":null,"value":false},"email":{"errors":[],"ref":null,"value":true},"digest":{"errors":[],"ref":null,"value":true}}},"similarList":{"similarListIds":[],"similarListRefs":null},"ssr":{"error":null,"isDataLoaded":false,"isDataLoading":false,"isHydrationFailed":false,"isServer":false},"stories":{"stories":[{"id":"story-634","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe80\u002F14f\u002F9b0\u002Fe8014f9b0b323e26f89fb65c07367da7.png","title":"Т1","link":"https:\u002F\u002Fu.habr.com\u002FT1"},"title":"Идём на «Импульс Т1» по дороге из жёлтого кирпича","lang":"ru","startTime":"2023-11-21T12:00:00+03:00","finishTime":"2023-12-01T23:59:00+03:00","slides":[{"id":"story-634_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fb83\u002F6f2\u002F4a3\u002Fb836f24a39bedec1aca21003cea65537.jpg","button":null},{"id":"story-634_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F267\u002F0f1\u002F28c\u002F2670f128c419da5750280fe02731a19c.jpg","button":{"title":"«Импульс Т1»","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F98d\u002Fdf8\u002F18e\u002F98ddf818ef47cbe33d8a3de0dac94864.jpg","button":{"title":"Список лекций","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F240\u002Fbc2\u002F4a1\u002F240bc24a10b8f3aa544f03bcdcddbb92.jpg","button":{"title":"Посмотреть питчинг","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F88b\u002Fa1e\u002F34f\u002F88ba1e34f63db6c2fd335c4cbed97ceb.jpg","button":{"title":"Прокачать софт-скилы","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F9a7\u002Fda6\u002F18a\u002F9a7da618aec78c4e7faa2bc7ee3cd8ec.jpg","button":{"title":"Ого! Это нам надо","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa62\u002Fd3b\u002Faaa\u002Fa62d3baaa3434123e969450ae2e99bda.jpg","button":{"title":"Записаться","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}}]},{"id":"story-632","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2d7\u002F718\u002F3c9\u002F2d77183c9e0bca19c45ba4d026645c38.png","title":"Росатом","link":"https:\u002F\u002Fu.habr.com\u002Frstm1"},"title":"Как стать супергероем","lang":"ru","startTime":"2023-11-21T09:47:00+03:00","finishTime":"2023-12-06T09:47:00+03:00","slides":[{"id":"story-632_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F659\u002F578\u002Ff3f\u002F659578f3f9579fbf36a89b2503a6aa23.jpg","button":{"title":"К реальным задачам","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}},{"id":"story-632_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8d0\u002F28d\u002F731\u002F8d028d7310db4fd62d8830795b23b6c6.jpg","button":null},{"id":"story-632_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe51\u002F332\u002F994\u002Fe51332994d7680d1568660a70ba2b9fa.png","button":{"title":"Повторить путь героя","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}},{"id":"story-632_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F374\u002F6ae\u002F4f4\u002F3746ae4f4a94208739455e21c8af57ed.jpg","button":{"title":"Повторить путь героя","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}},{"id":"story-632_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F808\u002Fcd7\u002Faa6\u002F808cd7aa68b649f6c8a460bcaf3f820f.jpg","button":{"title":"Повторить путь героя","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}},{"id":"story-632_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F021\u002F9e8\u002F162\u002F0219e81629dac451e3a44be1723eb0c5.jpg","button":null},{"id":"story-632_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8b2\u002F5b1\u002F21e\u002F8b25b121e5479943bd82d28818a5bf36.jpg","button":null},{"id":"story-632_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F73a\u002F80d\u002F744\u002F73a80d744242c9b7097f7d9c90d54046.jpg","button":null},{"id":"story-632_9","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Faec\u002Fbdd\u002Fe53\u002Faecbdde530d7eefbd0a7830502f78c39.jpg","button":{"title":"Стать супергероем","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}}]},{"id":"story-630","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd63\u002F68e\u002F29d\u002Fd6368e29d27f127a71853042a809b2ab.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002F9xZDQ"},"title":"Рейтинг IT-брендов работодателей 2023","lang":"ru","startTime":"2023-11-17T11:46:00+03:00","finishTime":"2023-12-03T23:59:00+03:00","slides":[{"id":"story-630_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F51e\u002F5eb\u002Fa38\u002F51e5eba3845ee8a1ff6f58932e40cf2c.jpg","button":{"title":"Результаты","link":"https:\u002F\u002Fu.habr.com\u002F9xZDQ","colorType":"light"}},{"id":"story-630_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbe5\u002Feac\u002Fbdc\u002Fbe5eacbdc2348ca76508d2afcef8eaeb.jpg","button":{"title":"Весь рейтинг","link":"https:\u002F\u002Fu.habr.com\u002F9xZDQ","colorType":"light"}},{"id":"story-630_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5be\u002F87f\u002F381\u002F5be87f3810e8ffc6f65bddbe6ae284e4.jpg","button":null},{"id":"story-630_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5e5\u002F2f0\u002F98b\u002F5e52f098b64e5cfbd03d537b47e72376.jpg","button":null},{"id":"story-630_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffcd\u002F665\u002F465\u002Ffcd6654656b8589a78347ede27b4935e.jpg","button":{"title":"Больше статистики","link":"https:\u002F\u002Fu.habr.com\u002F9xZDQ","colorType":"light"}}]},{"id":"story-628","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F360\u002F396\u002Fbc9\u002F360396bc9df8ca528d6ffcc23514c822.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002FxlEaI"},"title":"Активность найма в 3 квартале 2023","lang":"ru","startTime":"2023-11-16T16:16:00+03:00","finishTime":"2023-11-26T23:59:00+03:00","slides":[{"id":"story-628_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2e4\u002F053\u002Fe8d\u002F2e4053e8dedaa5220b1bbf756f8e6a64.png","button":null},{"id":"story-628_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbdd\u002F642\u002Ffe9\u002Fbdd642fe98e7ba4531b0175e4cef6d0c.png","button":null},{"id":"story-628_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff37\u002F4b7\u002Fc5f\u002Ff374b7c5feeb95e49b44d33ee1f97d24.png","button":null},{"id":"story-628_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F762\u002Ff3f\u002F2dd\u002F762f3f2dda3e5244291b3f178b014def.png","button":{"title":"Читать","link":"https:\u002F\u002Fu.habr.com\u002FxlEaI","colorType":"dark"}}]},{"id":"story-552","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F310\u002Fb6d\u002F097\u002F310b6d09710575fad755fc8ed317c7ec.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002Fcalendar_story_2"},"title":"Перевернуть календарь и добавить событие","lang":"ru","startTime":"2023-10-09T10:39:00+03:00","finishTime":"2023-11-26T23:59:00+03:00","slides":[{"id":"story-552_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffd3\u002F1a4\u002F6ab\u002Ffd31a46abecfbc6f654e64a66cb66260.jpg","button":{"title":"Прямо сюда","link":"https:\u002F\u002Fu.habr.com\u002F0RBBA","colorType":"dark"}},{"id":"story-552_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffef\u002F3e3\u002Fb5d\u002Ffef3e3b5d8379c976167169334348272.jpg","button":{"title":"Разместить событие","link":"https:\u002F\u002Fu.habr.com\u002F0RBBA","colorType":"light"}},{"id":"story-552_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8b9\u002Fea9\u002F638\u002F8b9ea9638d36013b31e365ec79b96d2d.jpg","button":{"title":"Тык","link":"https:\u002F\u002Fu.habr.com\u002F0RBBA","colorType":"dark"}}]}]},"technotext":{"years":[],"technotextDocForNominees":null,"technotextDocForWinners":null,"technotextInfo":{},"technotextInfoLoading":false,"technotextWinners":{},"technotextWinnersLoading":false},"userHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"userInvites":{"availableInvites":0,"usedInvitesIds":[],"usedInvitesRefs":{},"usedInvitesPagesCount":0,"unusedInvitesIds":[],"unusedInvitesRefs":{},"unusedInvitesPagesCount":0},"userVotes":{"karmaVotesList":[],"karmaVotesPagesCount":null,"karmaVotesListLoading":false,"commentsVotesList":[],"commentsVotesPagesCount":null,"commentsVotesListLoading":false,"postsVotesList":[],"postsVotesPagesCount":null,"postsVotesListLoading":false,"userVotesList":[],"userVotesPagesCount":null,"userVotesListLoading":false},"users":{"authorRefs":{},"authorIds":{},"pagesCount":{},"authorProfiles":{},"userHubs":{},"userInvitations":{},"authorFollowers":{},"authorFollowed":{},"userSpecialization":{},"karmaStats":[],"statistics":null,"isLoading":false,"authorFollowersLoading":false,"authorFollowedLoading":false,"userHubsLoading":false,"userInvitationsLoading":false,"route":{}},"viewport":{"prevScrollY":{},"scrollY":0,"width":0},"tracker":{"notificationsLoading":false,"notificationsList":[],"notificationsPageCount":0,"pendingMarkNotificationsRead":[],"publicationsLoading":true,"publicationsList":[],"publicationsPageCount":0,"pendingDeletePublications":false,"pendingMarkPublicationsRead":false},"events":{"events":[{"id":"events_46","titleHtml":"Битва пет-проектов","startDay":"2023-09-25","finishDay":"2023-11-30","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fq4\u002Fbl\u002Ftl\u002Fq4bltl5nykwetj_aaaauhdaow6u.png","eventUrl":"https:\u002F\u002Fpet-project.habr.com\u002F?utm_source=special&utm_medium=calendar&utm_campaign=pet_project","geo":[],"isOnline":true,"descriptionHtml":"\u003Cp\u003EСобрали две команды стажеров и&#160;джунов, которые будут работать над пет-проектами под кураторством опытных менторов. А&#160;определять победителей, которые получат стажировку в&#160;компании, будете&#160;вы.\u003C\u002Fp\u003E\u003Cp\u003EВнутри много движухи для зрителей: воркшопы по&#160;разработке, разборы резюме, публичные собеседования, Q&#38;A-сессии и&#160;даже чат, где можно найти себе команду и&#160;запилить какой-нибудь крутой пет-проект. \u003C\u002Fp\u003E\u003Cp xmlns=\"http:\u002F\u002Fwww.w3.org\u002F1999\u002Fxhtml\"\u003EЕсть отличный бонус для начинающих: будем собирать стажировки и&#160;джуновские вакансии с&#160;рынка для еженедельной рассылки в&#160;рамках битвы. \u003C\u002Fp\u003E\u003Cp xmlns=\"http:\u002F\u002Fwww.w3.org\u002F1999\u002Fxhtml\"\u003EРегистрируйтесь, чтобы ничего не&#160;пропустить!\u003C\u002Fp\u003E\u003Cbr \u002F\u003E"},{"id":"events_72","titleHtml":"Яндекс Backend Tour","startDay":"2023-11-13","finishDay":"2023-11-26","startTime":"18:00","finishTime":"23:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fye\u002F_b\u002Fyw\u002Fye_bywa1ytcnzpi5yjpdwdb0eky.png","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_ybt","geo":["Москва","Нижний Новгород","Екатеринбург","Новосибирск","Санкт-Петербург"],"isOnline":true,"descriptionHtml":"\u003Cp\u003EВ&nbsp;ноябре Яндекс организует Backend Tour по&nbsp;городам России, в&nbsp;рамках которого можно будет познакомиться офлайн с&nbsp;нанимающими командами и&nbsp;получить оффер за&nbsp;неделю.\u003C\u002Fp\u003E \u003Cp\u003EВстречи пройдут в&nbsp;Москве, Нижнем Новгороде, Екатеринбурге, Новосибирске и&nbsp;Санкт-Петербурге. Инженеры расскажут о&nbsp;своих сервисах и&nbsp;технологиях, а&nbsp;после знакомства вас ждет небольшая вечеринка с&nbsp;выступлением стендап-комика Севы Ловкачева.\u003C\u002Fp\u003E \u003Cp\u003EРасписание встреч:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003E13&nbsp;ноября Москва офлайн (будет онлайн-трансляция)\u003C\u002Fli\u003E \u003Cli\u003E14&nbsp;ноября Нижний Новгород\u003C\u002Fli\u003E \u003Cli\u003E15&nbsp;ноября Екатеринбург\u003C\u002Fli\u003E \u003Cli\u003E16&nbsp;ноября Новосибирск\u003C\u002Fli\u003E \u003Cli\u003E17&nbsp;ноября Санкт-Петербург\u003C\u002Fli\u003E\u003C\u002Ful\u003E \u003Cp\u003E20&ndash;26 ноября Week Offer Backend: все секции и&nbsp;оффер за&nbsp;неделю для соискателей с&nbsp;опытом разработки от&nbsp;трёх лет на&nbsp;С++, С#, Python, Java, Go&nbsp;и&nbsp;Scala.\u003C\u002Fp\u003E \u003Cp\u003EЗаявки на&nbsp;Week Offer принимаются до&nbsp;19&nbsp;ноября.\u003C\u002Fp\u003E"},{"id":"events_53","titleHtml":"HighLoad++ 2023","startDay":"2023-11-27","finishDay":"2023-11-28","startTime":"9:00","finishTime":"20:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fxo\u002F6u\u002Fw1\u002Fxo6uw1o3hf9y9tsxzq4pvya719y.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_hld","geo":["Москва"],"isOnline":true,"descriptionHtml":"\u003Cp\u003EHighLoad++ 2023&nbsp;&mdash; юбилейная, 20-я конференция HighLoad++. И&nbsp;это будет больше, чем конференция: 3000&nbsp;участников, 120+&nbsp;спикеров, 11&nbsp;залов, 5+&nbsp;мастер-классов.\u003C\u002Fp\u003E \u003Cp\u003EВ&nbsp;этом году в&nbsp;рамках HighLoad++ 2023 пройдет Golang Conf 2023&nbsp;&mdash; конференция для Go-разработчиков. Поговорим о&nbsp;лучших практиках, технологиях, архитектуре и&nbsp;фреймворках, добавим хардкора. И, конечно, 2&nbsp;дня живого общения с&nbsp;единомышленниками и&nbsp;коллегами, нетворкинг, интересные кейсы, последние новости индустрии и&nbsp;современные подходы в&nbsp;разработке высоконагруженных систем.\u003C\u002Fp\u003E \u003Cp\u003EЖдем вас 27&nbsp;и&nbsp;28&nbsp;ноября в&nbsp;Москве на&nbsp;HighLoad 2023&nbsp;&mdash; мероприятии с&nbsp;самой высокой концентрацией IT- профессионалов страны.\u003C\u002Fp\u003E"},{"id":"events_83","titleHtml":"Открытая трансляция Главного зала HighLoad++ 2023","startDay":"2023-11-27","finishDay":"2023-11-28","startTime":"10:00","finishTime":"20:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fnx\u002Fj7\u002F0c\u002Fnxj70czlrvofb_ilwzbxteekkao.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_hldtr","geo":[],"isOnline":true,"descriptionHtml":"\u003Cp\u003E27&nbsp;и&nbsp;28&nbsp;ноября будет открытая трансляция Главного зала HighLoad++ 2023. Это стало возможным благодаря поддержке нашего генерального партнёра, компании Яндекс.\u003C\u002Fp\u003E \u003Cp\u003EВ&nbsp;программе открытого трека&nbsp;&mdash; доклады лучших спикеров и&nbsp;трансляция церемонии награждения Премии HighLoad++ 2023.\u003C\u002Fp\u003E \u003Cp\u003EЗарегистрируйтесь, чтобы получить бесплатный доступ к&nbsp;открытому треку.\u003C\u002Fp\u003E"},{"id":"events_77","titleHtml":"Конференция «Новая эра ИТ: путь к вершинам технологий»","startDay":"2023-11-28","finishDay":"2023-11-28","startTime":"10:00","finishTime":"17:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fk_\u002F6k\u002F_l\u002Fk_6k_l-xttxdnpdk9ltuaikrvhq.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_k2","geo":["Москва"],"isOnline":true,"descriptionHtml":"\u003Cp\u003EМы&nbsp;живем в&nbsp;новой реальности российского технологического рынка. Для устойчивого развития крупным компаниям приходится перестраивать традиционные стратегии и&nbsp;искать нестандартные решения для привычных задач.\u003C\u002Fp\u003E \u003Cp\u003EПриглашаем вас обсудить актуальные сценарии развития ИТ-ландшафта с&nbsp;лидерами отрасли на&nbsp;конференции &laquo;Новая Эра&nbsp;ИТ: путь к&nbsp;вершинам технологий&raquo; 28&nbsp;ноября в&nbsp;Москве.\u003C\u002Fp\u003E \u003Cp\u003EУчастие будет полезно, если вам необходимо:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003EРазобраться в&nbsp;новой картине рынка\u003C\u002Fli\u003E\u003Cli\u003EПодобрать альтернативы для миграции с&nbsp;зарубежных ИТ-систем\u003C\u002Fli\u003E\u003Cli\u003EИнтегрировать российские и&nbsp;другие доступные решения в&nbsp;инфраструктуру\u003C\u002Fli\u003E\u003C\u002Ful\u003E"},{"id":"events_80","titleHtml":"Business Code Conference","startDay":"2023-11-30","finishDay":"2023-11-30","startTime":"17:30","finishTime":"00:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fwd\u002F7s\u002Fsr\u002Fwd7ssrwcqti7tfyvodmoho8rbcs.png","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_bcc","geo":["Москва"],"isOnline":false,"descriptionHtml":"\u003Cp\u003EКоманда платформы МТС Exolve готовит вечер-знакомство с&nbsp;передовыми фишками&nbsp;AI и&nbsp;наработками, о&nbsp;которых расскажут ведущие специалисты сервиса и&nbsp;эксперты этой сферы.\u003C\u002Fp\u003E \u003Cp\u003EГости вечера изучат процессы создания&nbsp;AI и&nbsp;практические кейсы с&nbsp;использованием AI-технологий. Каждый из&nbsp;них основан на&nbsp;реальном опыте и&nbsp;проблемах.\u003C\u002Fp\u003E \u003Cp\u003EУчастники смогут обсудить любую деталь и&nbsp;новые возможности для своих повседневных задач и&nbsp;будущих вызовов рынка, в&nbsp;том числе на&nbsp;основе опыта Китая. Спикеры конференции знают о&nbsp;внедрении&nbsp;AI в&nbsp;бизнес если не&nbsp;все, то&nbsp;больше всех и&nbsp;готовы рассказать о&nbsp;феномене его популярности и&nbsp;факторах роста технологий в&nbsp;Китае. Участники оценят темпы развития AI-компаний России и&nbsp;скачок технологических и&nbsp;AI-компаний в&nbsp;Китае, поймут все возможности и&nbsp;ограничения.\u003C\u002Fp\u003E \u003Cp\u003EМероприятие откроют первый вице-президент МТС Инесса Галактионова и&nbsp;директор MTC Exolve Рамиль Биккужин.\u003C\u002Fp\u003E"},{"id":"events_71","titleHtml":"Импульс Т1","startDay":"2023-12-01","finishDay":"2023-12-01","startTime":"12:30","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Faw\u002Fji\u002Fao\u002Fawjiaov7a6ix4aybmzwnvw0c6qq.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_t1msk","geo":["Москва"],"isOnline":true,"descriptionHtml":"\u003Cp\u003EФинальная конференция из&nbsp;цикла бесплатных IT-событий &laquo;Импульс&nbsp;Т1&raquo; в&nbsp;2023&nbsp;году. Ежегодно холдинг Т1&nbsp;проводит конференции &laquo;Импульс&nbsp;Т1&raquo; для формирования и&nbsp;укрепления российской инженерной школы в&nbsp;разных городах России.\u003C\u002Fp\u003E \u003Cp\u003EКонференции адресованы широкой аудитории IT-специалистов и&nbsp;предпринимателей в&nbsp;IT. В&nbsp;программе&nbsp;&mdash; лекции о&nbsp;разработке, тестировании, инженерном деле от&nbsp;разработчиков крупных компаний и&nbsp;научных популяризаторов.\u003C\u002Fp\u003E \u003Cp\u003EХолдинг Т1&nbsp;&mdash; одна из&nbsp;крупнейших IТ-компаний России. Цель организатора&nbsp;&mdash; привлечь молодежь в&nbsp;российские компании и&nbsp;помочь новаторам превратить идею в&nbsp;бизнес-проект.\u003C\u002Fp\u003E"},{"id":"events_81","titleHtml":"YaTalks 2023 — главная конференция Яндекса для IT сообщества","startDay":"2023-12-05","finishDay":"2023-12-06","startTime":"9:00","finishTime":"23:59","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fzu\u002Fre\u002Fcn\u002Fzurecne_sihfslk0efj2c_bcova.png","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fyatalks2023","geo":["Москва","Белград"],"isOnline":true,"descriptionHtml":"\u003Cp\u003EГлавная конференция Яндекса для IT-сообщества&nbsp;&mdash; YaTalks 2023.\u003C\u002Fp\u003E \u003Cp\u003EБолее 100 экспертов IT-индустрии и&nbsp;учёных. Технические доклады о&nbsp;разработке и&nbsp;ML. Научно-популярные лекции и&nbsp;выступления об&nbsp;управлении командами. Можно послушать вживую доклады учёных и&nbsp;экспертов индустрии, напрямую задать вопросы спикерам, познакомиться и&nbsp;пообщаться с&nbsp;коллегами из&nbsp;разных компаний и&nbsp;направлений в&nbsp;IT.\u003C\u002Fp\u003E \u003Cp\u003EГлавная тема YaTalks 2023&nbsp;&mdash; &laquo;Явления&raquo;.Обсудим макротренды и&nbsp;гейм-чейнджеры в&nbsp;технологиях и&nbsp;науке, большие процессы в&nbsp;IT, менеджерские практики и&nbsp;новые подходы.\u003C\u002Fp\u003E \u003Cp\u003E\u003Cstrong\u003EПервый день\u003C\u002Fstrong\u003E посвятим хардовым технологиям: фронтенду, мобильной разработке, бэкенду, DevOps, базам данных, GPT, NLP, а&nbsp;также трендам в&nbsp;этих направлениях.\u003C\u002Fp\u003E \u003Cp\u003E\u003Cstrong\u003EВо&nbsp;второй день\u003C\u002Fstrong\u003E узнаем об&nbsp;управленческих практиках в&nbsp;IT и&nbsp;научных фронтирах, которые вот-вот изменят индустрию.\u003C\u002Fp\u003E \u003Cp\u003EПереходите на&nbsp;сайт и&nbsp;узнайте больше о&nbsp;спикерах конференции.\u003C\u002Fp\u003E"},{"id":"events_50","titleHtml":"Курс «Разработка высокоскоростных устройств и систем передачи данных»","startDay":"2023-12-09","finishDay":"2023-12-11","startTime":"10:00","finishTime":"17:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fsc\u002Fie\u002Ffp\u002Fsciefp-fox1b1kyqn9bwa5ll2um.png","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_nish","geo":["Москва"],"isOnline":false,"descriptionHtml":"\u003Cp\u003EНовая Инженерная Школа проводит курс повышения квалификации, рассчитанный на&nbsp;инженеров-схемотехников, а&nbsp;также системных инженеров, занимающихся разработкой высокоскоростных устройств.\u003C\u002Fp\u003E\u003Cp\u003EИзучение курса позволит слушателям осознанно подходить к&nbsp;разработке, используя определенный маршрут проектирования, в&nbsp;частности:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003Eпонимать сущность высокоскоростных сигналов;\u003C\u002Fli\u003E\u003Cli\u003Eпонимать проблемы и&nbsp;риски, возникающие при разработке высокоскоростных устройств;\u003C\u002Fli\u003E\u003Cli\u003Eпрогнозировать и&nbsp;нивелировать проблемы на&nbsp;этапе эскизной разработки;\u003C\u002Fli\u003E\u003Cli\u003Eанализировать и&nbsp;устранять проблемы на&nbsp;этапе верификации разработанного устройства;\u003C\u002Fli\u003E\u003Cli\u003Eпроверять прототипы с&nbsp;использованием современной измерительной аппаратуры.\u003C\u002Fli\u003E\u003C\u002Ful\u003E\u003Cp\u003EТемы курса:\u003C\u002Fp\u003E\u003Col\u003E\u003Cli\u003EВведение. История развития проблем целостности сигналов и&nbsp;питания.\u003C\u002Fli\u003E\u003Cli\u003EОсновные положения.\u003C\u002Fli\u003E\u003Cli\u003EИдеальная линия передач.\u003C\u002Fli\u003E\u003Cli\u003EПерекрестные помехи.\u003C\u002Fli\u003E\u003Cli\u003EРеальные проводники.\u003C\u002Fli\u003E\u003Cli\u003EДиэлектрики.\u003C\u002Fli\u003E\u003Cli\u003EОсновы теории цепей.\u003C\u002Fli\u003E\u003Cli\u003EСхемотехника.\u003C\u002Fli\u003E\u003Cli\u003EЭквализация.\u003C\u002Fli\u003E\u003Cli\u003EБюджет.\u003C\u002Fli\u003E\u003Cli\u003EПримеры высокоскоростных интерфейсов.\u003C\u002Fli\u003E\u003Cli\u003EЦелостность питания.\u003C\u002Fli\u003E\u003Cli\u003EИзмерения и&nbsp;моделирование.\u003C\u002Fli\u003E\u003C\u002Fol\u003E"},{"id":"events_58","titleHtml":"Курс «Обеспечение электромагнитной совместимости изделий современной техники»","startDay":"2023-12-18","finishDay":"2023-12-20","startTime":"10:00","finishTime":"17:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fsl\u002Flv\u002Fe0\u002Fsllve0c9tpnoqnc20iidt7p9ue8.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_nsh","geo":["Москва"],"isOnline":false,"descriptionHtml":"\u003Cp\u003EНовая Инженерная Школа проводит курс повышения квалификации, направленный на&nbsp;формирование или совершенствование профессиональных компетенций в&nbsp;области внутрисистемной электромагнитной совместимости (ЭМС) изделий современной техники для конструкторов радиоэлектронных средств (РЭС).\u003C\u002Fp\u003E \u003Cp\u003EНастоящая программа рассчитана на&nbsp;инженерно-технических работников с&nbsp;высшим профессиональным образованием, занимающихся конструкторским и&nbsp;технологическим проектированием радиоэлектронной, электронно-вычислительной аппаратуры, систем автоматики и&nbsp;управления и&nbsp;т.п. различного назначения, а&nbsp;также на&nbsp;руководителей среднего звена проектных организаций.\u003C\u002Fp\u003E \u003Cp\u003EТемы курса:\u003C\u002Fp\u003E\u003Col\u003E\u003Cli\u003EВведение в&nbsp;проблему ЭМС.\u003C\u002Fli\u003E \u003Cli\u003EСертификационные требования ЭМС.\u003C\u002Fli\u003E \u003Cli\u003EСхемотехнические методы обеспечения ЭМС.\u003C\u002Fli\u003E \u003Cli\u003EПомехи в&nbsp;межсоединениях.\u003C\u002Fli\u003E \u003Cli\u003EЭкранирование аппаратуры.\u003C\u002Fli\u003E \u003Cli\u003EМощные электромагнитные воздействия на&nbsp;технические средства и&nbsp;методы защиты.\u003C\u002Fli\u003E \u003Cli\u003EОбеспечение радиационной стойкости современной РЭА.\u003C\u002Fli\u003E\u003C\u002Fol\u003E"},{"id":"events_78","titleHtml":"«Спокойно, договоримся!» — тренинг по переговорам и отношениям с клиентами в B2B","startDay":"2024-01-19","finishDay":"2024-01-20","startTime":"10:00","finishTime":"18:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fpb\u002F1w\u002Fob\u002Fpb1wobpfv_crqwdsb6eqiho4co0.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_hflb2","geo":["Москва"],"isOnline":false,"descriptionHtml":"\u003Cp\u003EПрокачаем навыки переговорщика и&nbsp;научим, как пересобрать отношения с&nbsp;клиентами в&nbsp;B2B. Мы&nbsp;не&nbsp;коучи, а&nbsp;топ-менеджеры с&nbsp;реальным опытом в&nbsp;большом бизнесе. За&nbsp;10+&nbsp;лет работы мы&nbsp;научились дружить с&nbsp;клиентами не&nbsp;только на&nbsp;начальном этапе, но&nbsp;и&nbsp;развивать зрелые проекты.\u003C\u002Fp\u003E\u003Cp\u003EТренинг будет полезен, если&nbsp;вы:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003Eотвечаете за&nbsp;отношения с&nbsp;клиентами, ведение проектов и&nbsp;управление людьми,\u003C\u002Fli\u003E \u003Cli\u003Eмного и&nbsp;тесно работаете с&nbsp;заказчиками&nbsp;&mdash; внешними и&nbsp;внутренними,\u003C\u002Fli\u003E \u003Cli\u003Eработаете в&nbsp;b2b-продажах в&nbsp;IT.\u003C\u002Fli\u003E\u003C\u002Ful\u003E \u003Cp\u003EКто проведет:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003EКонстантин Степанов, исполнительный директор HFLabs. За&nbsp;три года привлек 14&nbsp;крупных клиентов.\u003C\u002Fli\u003E \u003Cli\u003EНикита Назаров, технический директор HFLabs. Умеет делать так, чтобы клиент становился постоянным клиентом.\u003C\u002Fli\u003E\u003C\u002Ful\u003E \u003Cp\u003EСтань участником закрытого клуба по&nbsp;переговорам с&nbsp;разбором личных кейсов и&nbsp;поддержкой экспертов.\u003C\u002Fp\u003E"}]}};(function(){var s;(s=document.currentScript||document.scripts[document.scripts.length-1]).parentNode.removeChild(s);}());</script>
+  <script src="https://assets.habr.com/habr-web/js/chunk-vendors.a9207891.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/page-flows.926972ed.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/3750.d2d6f1d2.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/app.5b8f7247.js" defer></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S28W1WC23F"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    </script>
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(24049213, "init", {
+      defer:true,
+      trackLinks:true,
+      accurateTrackBounce:true,
+      webvisor:false,
+    });
+  </script>
+  <noscript>
+   <div>
+    <img src="https://mc.yandex.ru/watch/24049213" style="position:absolute; left:-9999px;" alt="">
+   </div>
+  </noscript>
+  <script type="text/javascript">
+      window.addEventListener('load', function () {
+        setTimeout(() => {
+          const img = new Image();
+          img.src = 'https://vk.com/rtrg?p=VK-RTRG-421343-57vKE';
+        }, 0);
+      });
+    </script>
+  <script src="/js/ads.js" onload="window['zhY4i4nJ9K'] = true"></script>
+ </body>
+</html>

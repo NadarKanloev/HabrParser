@@ -1,0 +1,1640 @@
+<!doctype html>
+<html lang="ru" data-vue-meta="%7B%22lang%22:%7B%22ssr%22:%22ru%22%7D%7D">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,maximum-scale=1,user-scalable=0">
+  <meta name="referrer" content="unsafe-url">
+  <title>IPv6 — Новая версия протокола IP / Хабр</title>
+  <style>
+    /* cyrillic-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSxf6TF0.woff2) format('woff2');
+      unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveQhf6TF0.woff2) format('woff2');
+      unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* latin-ext */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveSBf6TF0.woff2) format('woff2');
+      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/firasans/v11/va9B4kDNxMZdWfMOD5VnZKveRhf6.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* non-breaking hyphen */
+    @font-face {
+      font-family: 'Fira Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/l/font?kit=KFOlCnqEu92Fr1MmEU9vBh0_IsHAlmrO6g&skey=ee881451c540fdec&v=v29) format('woff2');
+      unicode-range: U+02011;
+    }
+  </style>
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/chunk-vendors.0da14ebf.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/chunk-vendors.a9207891.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/app.b42efa13.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/app.5b8f7247.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/css/page-hub.a4eacd3e.css" as="style">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/page-hub.1572dac4.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/7298.c8f1d73c.js" as="script">
+  <link rel="preload" href="https://assets.habr.com/habr-web/js/8684.f283f98f.js" as="script">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/chunk-vendors.0da14ebf.css">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/app.b42efa13.css">
+  <link rel="stylesheet" href="https://assets.habr.com/habr-web/css/page-hub.a4eacd3e.css">
+  <script>window.i18nFetch = new Promise((res, rej) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', '/js/i18n/ru-compiled.d229fa61213aa884a102911fd18b62b0.json');
+          xhr.responseType = 'json';
+          xhr.onload = function(e) {
+            if (this.status === 200) {
+              res({ru: xhr.response});
+            } else {
+              rej(e);
+            }
+          };
+          xhr.send();
+        });</script>
+  <style>.grecaptcha-badge{visibility: hidden;}</style>
+  <meta name="habr-version" content="2.155.1">
+  <meta data-vue-meta="ssr" itemprop="image" content="/img/habr_ru.png" data-vmid="image:itemprop">
+  <meta data-vue-meta="ssr" property="og:image" content="/img/habr_ru.png" data-vmid="og:image">
+  <meta data-vue-meta="ssr" property="og:image:width" content="1200" data-vmid="og:image:width">
+  <meta data-vue-meta="ssr" property="og:image:height" content="630" data-vmid="og:image:height">
+  <meta data-vue-meta="ssr" property="aiturec:image" content="/img/habr_ru.png" data-vmid="aiturec:image">
+  <meta data-vue-meta="ssr" name="twitter:image" content="/img/habr_ru.png" data-vmid="twitter:image">
+  <meta data-vue-meta="ssr" property="vk:image" content="/img/habr_ru.png?format=vk" data-vmid="vk:image">
+  <meta data-vue-meta="ssr" property="fb:app_id" content="444736788986613">
+  <meta data-vue-meta="ssr" property="fb:pages" content="472597926099084">
+  <meta data-vue-meta="ssr" name="twitter:card" content="summary_large_image">
+  <meta data-vue-meta="ssr" name="twitter:site" content="@habr_com">
+  <meta data-vue-meta="ssr" property="og:locale" content="ru_RU" data-vmid="og:locale">
+  <meta data-vue-meta="ssr" property="og:type" content="website" data-vmid="og:type">
+  <meta data-vue-meta="ssr" property="og:site_name" content="Хабр" data-vmid="og:site_name">
+  <meta data-vue-meta="ssr" property="og:url" content="https://habr.com/ru/hubs/ipv6/articles/page6/" data-vmid="og:url">
+  <meta data-vue-meta="ssr" property="og:title" content="IPv6 — Новая версия протокола IP / Хабр" data-vmid="og:title">
+  <meta data-vue-meta="ssr" name="description" content="IPv6 (англ. Internet Protocol version 6) — новая версия протокола IP, призванная решить проблемы, с которыми столкнулась предыдущая версия (IPv4) при её использовании в Интернете, за счёт использования длины адреса 128 бит (16 байт) вместо 32 (4 байта). Протокол был разработан IETF.">
+  <meta data-vue-meta="ssr" property="og:description" content="IPv6 (англ. Internet Protocol version 6) — новая версия протокола IP, призванная решить проблемы, с которыми столкнулась предыдущая версия (IPv4) при её использовании в Интернете, за счёт использования длины адреса 128 бит (16 байт) вместо 32 (4 байта). Протокол был разработан IETF.">
+  <meta data-vue-meta="ssr" name="keywords" content="ipv6,ipv4,cisco,интернет,hurricane electric,linux,ripe ncc,протоколы,сетевые технологии,dns,google,6to4,teredo,ripe,nat,iana,tunnelbroker,ipv6 launch,6in4,bgp">
+  <link data-vue-meta="ssr" rel="image_src" href="/img/habr_ru.png" data-vmid="image:href">
+  <link data-vue-meta="ssr" href="https://habr.com/ru/hubs/ipv6/" rel="canonical" data-vmid="canonical">
+  <link data-vue-meta="ssr" href="https://habr.com/ru/rss/hubs/ipv6/articles/?fl=ru" type="application/rss+xml" title="" rel="alternate" name="rss">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#303b44">
+  <meta name="msapplication-TileColor" content="#629FBC">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="shortcut icon" type="image/png" sizes="16x16" href="https://assets.habr.com/habr-web/img/favicons/favicon-16.png">
+  <link rel="shortcut icon" type="image/png" sizes="32x32" href="https://assets.habr.com/habr-web/img/favicons/favicon-32.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-76.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-152.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-180.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="256x256" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-256.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1136x640.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2436x1125.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1792x828.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_828x1792.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_1334x750.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2668.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2208x1242.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1125x2436.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1242x2208.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2732x2048.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2688x1242.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2224x1668.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_750x1334.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x2732.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2388x1668.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2224.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_640x1136.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1668x2388.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="https://assets.habr.com/habr-web/img/splashes/splash_2048x1536.png">
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="https://assets.habr.com/habr-web/img/splashes/splash_1536x2048.png">
+  <link rel="mask-icon" color="#77a2b6" href="https://assets.habr.com/habr-web/img/favicons/apple-touch-icon-120.svg">
+  <link crossorigin="use-credentials" href="/manifest.webmanifest" rel="manifest">
+  <script async src="https://unpkg.com/pwacompat" crossorigin="anonymous"></script>
+  <script>window.yaContextCb = window.yaContextCb || []</script>
+  <script src="https://yandex.ru/ads/system/context.js" async></script>
+ </head>
+ <body>
+  <div id="app" data-server-rendered="true" data-async-called="true">
+   <div class="tm-layout__wrapper">
+    <!---->
+    <div></div><!---->
+    <header class="tm-header">
+     <div class="tm-page-width">
+      <div class="tm-header__container">
+       <!----> <span class="tm-header__logo-wrap"><a href="/ru/" class="tm-header__logo tm-header__logo_ru">
+         <svg height="16" width="16" class="tm-svg-img tm-header__icon">
+          <title>
+           Хабр
+          </title> <use xlink:href="/img/habr-logo-ru.svg#logo"></use>
+         </svg></a> <span class="tm-header__beta-sign" style="display:none;">β</span></span>
+       <div class="tm-dropdown tm-header__projects">
+        <div class="tm-dropdown__head">
+         <button class="tm-header__dropdown-toggle">
+          <svg height="16" width="16" class="tm-svg-img tm-header__icon tm-header__icon_dropdown">
+           <title>
+            Открыть список
+           </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#arrow-down"></use>
+          </svg></button>
+        </div><!---->
+       </div><a href="/ru/sandbox/start/" class="tm-header__become-author-btn"> Как стать автором </a>
+       <div class="tm-feature tm-header__feature tm-feature tm-feature_variant-inline">
+        <!---->
+       </div><!----> <!---->
+      </div>
+     </div>
+    </header>
+    <div class="tm-layout">
+     <div class="tm-page-progress-bar"></div>
+     <div data-menu-sticky="true" class="tm-base-layout__header tm-base-layout__header_is-sticky">
+      <div class="tm-page-width">
+       <div class="tm-base-layout__header-wrapper">
+        <div class="tm-main-menu">
+         <div class="tm-main-menu__section">
+          <nav class="tm-main-menu__section-content">
+           <!----> <a href="/ru/articles/" class="tm-main-menu__item"> Все потоки </a> <a href="/ru/flows/develop/" class="tm-main-menu__item"> Разработка </a><a href="/ru/flows/admin/" class="tm-main-menu__item"> Администрирование </a><a href="/ru/flows/design/" class="tm-main-menu__item"> Дизайн </a><a href="/ru/flows/management/" class="tm-main-menu__item"> Менеджмент </a><a href="/ru/flows/marketing/" class="tm-main-menu__item"> Маркетинг </a><a href="/ru/flows/popsci/" class="tm-main-menu__item"> Научпоп </a>
+          </nav>
+         </div>
+        </div>
+        <div class="tm-header-user-menu tm-base-layout__user-menu">
+         <a href="/ru/search/" class="tm-header-user-menu__item tm-header-user-menu__search">
+          <svg height="24" width="24" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_search tm-header-user-menu__icon_dark">
+           <title>
+            Поиск
+           </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#search"></use>
+          </svg></a> <!----> <!----> <!---->
+         <div class="tm-header-user-menu__item">
+          <button class="tm-header-user-menu__toggle">
+           <svg height="24" width="24" class="tm-svg-img tm-header-user-menu__icon tm-header-user-menu__icon_dark">
+            <title>
+             Настройки
+            </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#page-settings"></use>
+           </svg></button>
+         </div><a href="https://habr.com/kek/v1/auth/habrahabr/?back=/ru/hubs/ipv6/articles/page6/&amp;hl=ru" rel="nofollow" class="tm-header-user-menu__item"><button type="button" class="tm-header-user-menu__login btn btn_solid btn_small"> Войти </button></a> <!---->
+         <div class="v-portal" style="display:none;"></div>
+        </div>
+       </div>
+      </div>
+     </div><!---->
+     <div class="tm-page-width"></div>
+     <main class="tm-layout__container">
+      <div data-async-called="true" class="tm-page">
+       <div class="tm-page-width">
+        <!---->
+        <div class="tm-page__wrapper">
+         <div class="tm-page__main tm-page__main_has-sidebar">
+          <div class="pull-down">
+           <!---->
+           <div class="pull-down__header" style="height:0px;">
+            <div class="pull-down__content" style="bottom:10px;">
+             <svg height="24" width="24" class="tm-svg-img pull-down__icon pull-down__arrow">
+              <title>
+               Обновить
+              </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#pull-arrow"></use>
+             </svg>
+            </div>
+           </div><!---->
+           <div class="tm-page__top">
+            <!---->
+            <div class="tm-hub-card tm-hub-card tm-hub-card_variant-base">
+             <div class="tm-hub-card__header tm-hub-card__header tm-hub-card__header_variant-base">
+              <div class="tm-hub-card__data">
+               <div class="tm-hub-card__avatar">
+                <div class="tm-entity-image">
+                 <img alt src="//habrastorage.org/getpro/habr/hub/d46/02a/36f/d4602a36f6128c6cb1ab713bcb288d80.png" class="tm-entity-image__pic">
+                </div>
+               </div>
+               <div class="tm-counter-container">
+                <div class="tm-counter-container__header">
+                 <div class="tm-votes-lever tm-votes-lever tm-votes-lever_appearance-rating">
+                  <!---->
+                  <div class="tm-votes-lever__score tm-votes-lever__score tm-votes-lever__score_appearance-rating">
+                   <span class="tm-votes-lever__score-counter tm-votes-lever__score-counter tm-votes-lever__score-counter_rating"> 24.65 </span>
+                  </div><!---->
+                 </div>
+                </div>
+                <div class="tm-counter-container__footer">
+                 <span class="tm-rating__text tm-rating__text"> Рейтинг </span>
+                </div>
+               </div>
+              </div>
+              <div></div>
+             </div>
+             <h1 class="tm-hub-card__name tm-hub-card__name tm-hub-card__name_variant-base"><span>IPv6</span> <span title="Профильный хаб" class="tm-hub-card__profiled"> *</span></h1>
+             <p class="tm-hub-card__description tm-hub-card__description tm-hub-card__description_variant-base">Новая версия протокола IP</p>
+             <div></div><!----> <!---->
+            </div>
+            <div class="tm-tabs tm-tabs_page-header tm-tabs tm-tabs_variant-default">
+             <div class="tm-tabs__scroll-area">
+              <span class="tm-tabs__tab-item"><a href="/ru/hubs/ipv6/" data-test-id="tab-link-active" class="tm-tabs__tab-link tm-tabs__tab-link tm-tabs__tab-link_active"> Статьи <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/ru/hubs/ipv6/posts/" class="tm-tabs__tab-link tm-tabs__tab-link"> Посты <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/ru/hubs/ipv6/news/" class="tm-tabs__tab-link tm-tabs__tab-link"> Новости <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/ru/hubs/ipv6/authors/" class="tm-tabs__tab-link tm-tabs__tab-link"> Авторы <!----> <!----></a></span><span class="tm-tabs__tab-item"><a href="/ru/hubs/ipv6/companies/" class="tm-tabs__tab-link tm-tabs__tab-link"> Компании <!----> <!----></a></span>
+             </div><!---->
+            </div>
+            <div class="tm-navigation-filter">
+             <div class="tm-navigation-filters-spoiler">
+              <div class="tm-navigation-filters-spoiler__wrapper">
+               <button type="button" class="tm-navigation-filters-spoiler__button"> Все подряд 
+                <svg height="16" width="16" class="tm-svg-img icon_dropdown-arrow">
+                 <title>
+                  Открыть список
+                 </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#arrow-down"></use>
+                </svg></button> <button class="tm-rss-button tm-hub__rss tm-rss-button_default"><span class="tm-svg-icon__wrapper tm-rss-button__icon">
+                 <svg height="16" width="16" class="tm-svg-img tm-svg-icon">
+                  <title>
+                   Скопировать ссылку на RSS
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#rss"></use>
+                 </svg></span></button>
+              </div>
+              <div class="tm-navigation-filters-spoiler__content">
+               <div class="tm-navigation-filters__options">
+                <div class="tm-navigation-filters__list-label">
+                 Сначала показывать
+                </div>
+                <div class="tm-navigation-filters__tabs">
+                 <ul class="tm-navigation-filters-tabs__list">
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button tm-navigation-filters-tabs__option-button_active"> Новые </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> Лучшие </button></li>
+                 </ul>
+                </div>
+                <div class="tm-navigation-filters__list-label">
+                 Порог рейтинга
+                </div>
+                <div class="tm-navigation-filters__tabs">
+                 <ul class="tm-navigation-filters-tabs__list">
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button tm-navigation-filters-tabs__option-button_active"> Все </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> ≥0 </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> ≥10 </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> ≥25 </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> ≥50 </button></li>
+                  <li class="tm-navigation-filters-tabs__option"><button tabindex="-1" class="tm-navigation-filters-tabs__option-button"> ≥100 </button></li>
+                 </ul>
+                </div>
+                <div>
+                 <div class="tm-navigation-filters__list-label">
+                  Уровень сложности
+                 </div>
+                 <ul class="tm-navigation-filters__list">
+                  <li class="tm-navigation-filters__option"><button tabindex="-1" class="tm-navigation-filters__option-button tm-navigation-filters__option-button_active"> Все </button></li>
+                  <li class="tm-navigation-filters__option"><button tabindex="-1" class="tm-navigation-filters__option-button"> Простой </button></li>
+                  <li class="tm-navigation-filters__option"><button tabindex="-1" class="tm-navigation-filters__option-button"> Средний </button></li>
+                  <li class="tm-navigation-filters__option"><button tabindex="-1" class="tm-navigation-filters__option-button"> Сложный </button></li>
+                 </ul>
+                </div><button type="button" tabindex="-1" class="tm-navigation-filters__apply btn btn_solid btn_small"> Применить </button>
+               </div>
+              </div>
+             </div>
+            </div><!---->
+           </div>
+           <div data-async-called="true" class="tm-articles-subpage">
+            <div>
+             <div class="tm-articles-list">
+              <!---->
+              <article id="71419" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/gribozavr/" title="gribozavr" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="https://assets.habr.com/habr-web/img/avatars/183.png" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/gribozavr/" class="tm-user-info__username"> gribozavr <!----></a> <span class="tm-article-datetime-published"><time datetime="2009-10-04T13:11:52.000Z" title="2009-10-04, 17:11">4 окт 2009 в 17:11</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/71419/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Есть ли у вас доступ в IPv6-Интернет?</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 1 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">4.2K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/sys_admin/" class="tm-publication-hub__link"><span>Системное администрирование</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-publication-hub__link-container"><a href="/ru/hubs/ipv6/" class="router-link-active tm-publication-hub__link"><span>IPv6</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    &nbsp;
+                   </div>
+                  </div><!----> <!---->
+                 </div><!---->
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 57: ↑39 и ↓18
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 57: ↑39 и ↓18" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+21</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 3 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/71419/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 181 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div><!---->
+              <article id="64592" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/SaveTheRbtz/" title="SaveTheRbtz" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="//habrastorage.org/r/w48/getpro/habr/avatars/b37/3dd/c4b/b373ddc4b2783a8cbe583cd7eeece149.jpg" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/SaveTheRbtz/" class="tm-user-info__username"> SaveTheRbtz <!----></a> <span class="tm-article-datetime-published"><time datetime="2009-07-16T04:20:09.000Z" title="2009-07-16, 08:20">16 июл 2009 в 08:20</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/64592/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Основы IPv6</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 11 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">124K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/sys_admin/" class="tm-publication-hub__link"><span>Системное администрирование</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-publication-hub__link-container"><a href="/ru/hubs/network_technologies/" class="tm-publication-hub__link"><span>Сетевые технологии</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-publication-hub__link-container"><a href="/ru/hubs/ipv6/" class="router-link-active tm-publication-hub__link"><span>IPv6</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    <h4><b>Предисловие</b></h4>
+                    <br>
+                     Пост является кратким конспектом <a href="http://en.wikipedia.org/wiki/IPv6">Wiki</a>, <a href="http://support.microsoft.com/default.aspx?kbid=919739">TechNet'а</a>, <a href="http://www.freebsd.org/doc/en/books/handbook/network-ipv6.html">FreeBSD'шного handbook'a</a>, <a href="http://serverfault.com/questions/tagged/ipv6">Serverfault'a</a>, множества RFC и документов <a href="https://www.iana.org/">IANA</a>, а также курсов от Специалист.Ру для сотрудников Яндекса.
+                    <br>
+                    <br>
+                     Пост можно рассматривать как копилку ссылок по <i>актуальной</i> на 2012 год спецификации IPv6. Однако он никак не <a href="http://habrahabr.ru/blogs/p2p/53625/">описывает возможные способы установки IPv6 соединения с интернетом</a> и не привязан к какой-либо определённой ОС. 
+                    <br>
+                     Учтите, что прочтение данной хабрастатьи займёт у вас не более получаса, однако крайне рекомендуется ознакомиться со всеми приведёнными в статье ссылками… Последнее может занять несколько недель.
+                    <br>
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/64592/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 70: ↑68 и ↓2
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 70: ↑68 и ↓2" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+66</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 366 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/64592/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 56 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div><!---->
+              <article id="53625" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/alex14n/" title="alex14n" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="https://assets.habr.com/habr-web/img/avatars/038.png" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/alex14n/" class="tm-user-info__username"> alex14n <!----></a> <span class="tm-article-datetime-published"><time datetime="2009-03-05T11:43:27.000Z" title="2009-03-05, 14:43">5 мар 2009 в 14:43</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/53625/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>IPv6 для P2P</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 7 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">58K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/p2p/" class="tm-publication-hub__link"><span>Децентрализованные сети</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-publication-hub__link-container"><a href="/ru/hubs/ipv6/" class="router-link-active tm-publication-hub__link"><span>IPv6</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    IPv6 обычно ассоциируется с проблемой нехватки IPv4 адресов, о которой любит писать «желтая» пресса. Что со дня на день свободных адресов не останется и переход на IPv6 будет неизбежен. Скептики считают что проблема настолько же раздута, как в своё время «ошибка 2000», когда все боялись что после 1999 года наступит 1900 и случится техногенная катастрофа.
+                    <br>
+                    <br>
+                     Для большинства пользователей, действительно, пользы от IPv6 никакой. Какая разница, например, что заголовки пакетов более удобны для маршрутизатора? Но для P2P проблема NAT (за счёт чего IPv4-адреса так ещё и не закончились) реальна, т.к. для связи peer-to-peer (даже чтобы переслать файл через Jabber или ICQ) нужно чтобы хотя бы один из участников был доступен снаружи, т.е. имел реальный IP-адрес или хотя бы пробросил себе порт. Некоторые провайдеры предоставляют внешний адрес за отдельную плату, у некоторых такой возможности нет, и именно для NAT-страдальцев будет больше всего полезно использование IPv6.
+                    <br>
+                    <br>
+                     Также это будет полезно тем, у кого провайдер режет p2p-трафик. В России это (пока?) не так распространено, а за рубежом — далеко не редкость. IPv6 трафик (точнее, обёрнутый в обычные UDP пакеты) ими не режется. Еще это может помочь в ситуации, когда p2p-трафик блокируется корпоративным фаерволом, но настроить IPv6 через туннель можно.
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/53625/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 66: ↑65 и ↓1
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 66: ↑65 и ↓1" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+64</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 141 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/53625/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 51 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div><!---->
+              <article id="51624" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/lostmsu/" title="lostmsu" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="//habrastorage.org/r/w48/getpro/habr/avatars/a2e/bb0/81c/a2ebb081c4eb8a00beaf5fa5a599c145.jpg" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/lostmsu/" class="tm-user-info__username"> lostmsu <!----></a> <span class="tm-article-datetime-published"><time datetime="2009-02-10T15:16:56.000Z" title="2009-02-10, 18:16">10 фев 2009 в 18:16</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/51624/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>IPv6 здесь и сейчас</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 1 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">1.4K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/ipv6/" class="router-link-active tm-publication-hub__link"><span>IPv6</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    Решил немного потестировать у себя на компьютере IPv6.
+                    <br>
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/51624/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 16: ↑12 и ↓4
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 16: ↑12 и ↓4" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+8</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 2 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/51624/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 6 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <div class="tm-article-feed-blocks">
+                <section data-navigatable="" tabindex="0" id="stories_block_4" data-async-called="true" class="tm-block tm-stories-block tm-block tm-block_spacing-around">
+                 <header class="tm-block__header tm-block__header">
+                  <div class="tm-block__header-container">
+                   <h2 class="tm-block__title tm-block__title">Истории</h2>
+                  </div><!---->
+                 </header>
+                 <div class="tm-block__body tm-block__body tm-block__body_variant-equal">
+                  <div class="tm-stories-empty">
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                   <div class="tm-stories-card-empty">
+                    <div class="tm-stories-card-empty__image"></div>
+                    <div class="tm-stories-card-empty__title">
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                     <div class="tm-stories-card-empty__title-block"></div>
+                    </div>
+                   </div>
+                  </div><!---->
+                 </div><!---->
+                </section>
+               </div>
+              </div><!---->
+              <article id="44787" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/nshopik/" title="nshopik" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="https://assets.habr.com/habr-web/img/avatars/165.png" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/nshopik/" class="tm-user-info__username"> nshopik <!----></a> <span class="tm-article-datetime-published"><time datetime="2008-11-17T08:27:47.000Z" title="2008-11-17, 11:27">17 ноя 2008 в 11:27</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/44787/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>IPv6 AAAA records</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 2 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">2.3K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/ipv6/" class="router-link-active tm-publication-hub__link"><span>IPv6</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    Слежу за развитием IPv6 в частности интересно когда наконец у нас начнут выдавать префиксы конечным пользователям. До сих пор только МТУ владет /32 пефиксом с февраля месяца, другие крупные операторы не замечены. В Августе Рамблер и Яндекс получили префкисы.
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/44787/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 5: ↑3 и ↓2
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 5: ↑3 и ↓2" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+1</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 1 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/44787/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 7 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div><!---->
+              <article id="44647" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/nil/" title="nil" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="https://assets.habr.com/habr-web/img/avatars/124.png" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/nil/" class="tm-user-info__username"> nil <!----></a> <span class="tm-article-datetime-published"><time datetime="2008-11-14T19:07:21.000Z" title="2008-11-14, 22:07">14 ноя 2008 в 22:07</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/44647/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Россия на первом месте в мире по использованию IPv6</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 1 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">2K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/ipv6/" class="router-link-active tm-publication-hub__link"><span>IPv6</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    <img src="https://habrastorage.org/getpro/habr/post_images/7be/a7a/00b/7bea7a00b536e8e447fbb20dc2b4c126.jpg" alt="image">
+                    <br>
+                    <br>
+                     Две недели назад на конференции <a href="http://www.ripe.net/ripe/meetings/ripe-57/">RIPE 57</a> компания Google представила <a href="http://rosie.ripe.net/ripe/meetings/ripe-57/presentations/uploads/Thursday/Plenary%2014:00/upl/Colitti-Global_IPv6_statistics_-_Measuring_the_current_state_of_IPv6_for_ordinary_users_.7gzD.pdf">доклад</a> о том, насколько использование IPv6 популярно среди конечных пользователей. Результаты показали, что среди всех компьютеров, лишь 0.238% поддерживают IPv6. При этом самым удивительным оказалось распределение по странам. Ниже приводится процент конечных пользователей с поддержкой IPv6 от общего числа пользователей страны:
+                    <br>
+                    <ul>
+                     <li>Россия — 0.76%</li>
+                     <li>Франция — 0.65%</li>
+                     <li>Украина — 0.64%</li>
+                     <li>Норвегия — 0.49%</li>
+                     <li>США — 0.45%</li>
+                     <li>...</li>
+                     <li>Китай — 0.24%</li>
+                     <li>Япония — 0.15%</li>
+                    </ul>
+                    <br>
+                     Таким образом, не более чем мифом оказалось бытующие мнение, что IPv6 больше всего популярен в азиатских странах, где сильнее всего ощущается нехватка IP адресов. 
+                    <br>
+                    <br>
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/44647/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 60: ↑57 и ↓3
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 60: ↑57 и ↓3" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+54</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 6 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/44647/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 40 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div><!---->
+              <article id="19842" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/dennydo/" title="dennydo" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="//habrastorage.org/r/w48/getpro/habr/avatars/6b5/4c1/2f0/6b54c12f05e57f47584786af3eb59096.jpg" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/dennydo/" class="tm-user-info__username"> dennydo <!----></a> <span class="tm-article-datetime-published"><time datetime="2008-02-05T19:31:36.000Z" title="2008-02-05, 22:31">5 фев 2008 в 22:31</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/19842/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>В интернете началась тотальная замена IP-адресов</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 1 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">998</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/ipv6/" class="router-link-active tm-publication-hub__link"><span>IPv6</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    Сегодня ночью организация ICANN, осуществляющая надзор за использованием интернет-протоколов, начала добавлять в DNS-сервера записи, содержащие адреса в формате протокола IPv6, что означает присвоение каждому новому доменному имени адреса в новом усовершенствованном формате.
+                    <br>
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/19842/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 73: ↑66 и ↓7
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 73: ↑66 и ↓7" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+59</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 10 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/19842/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 150 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <div class="tm-article-feed-blocks">
+                <div id="promo_block_7" data-navigatable="" tabindex="0">
+                 <div class="placeholder-wrapper">
+                  <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!---->
+                  <div class="tm-placeholder-promo">
+                   <div class="tm-placeholder-promo__header">
+                    <div class="tm-placeholder__line tm-placeholder__line_promo-title"></div>
+                   </div>
+                   <div class="tm-placeholder-promo__body">
+                    <div class="tm-placeholder-promo__posts">
+                     <div class="tm-placeholder-promo__post">
+                      <div class="tm-placeholder-promo__image"></div>
+                      <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                     </div>
+                     <div class="tm-placeholder-promo__post">
+                      <div class="tm-placeholder-promo__image"></div>
+                      <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                     </div>
+                     <div class="tm-placeholder-promo__post">
+                      <div class="tm-placeholder-promo__image"></div>
+                      <div class="tm-placeholder__line tm-placeholder__line_post-title"></div>
+                     </div>
+                    </div>
+                    <div class="tm-placeholder-promo__dots">
+                     <div class="tm-placeholder-promo__dot"></div>
+                     <div class="tm-placeholder-promo__dot"></div>
+                     <div class="tm-placeholder-promo__dot"></div>
+                    </div>
+                   </div>
+                  </div><!----> <!----> <!----> <!----> <!---->
+                 </div>
+                </div>
+               </div>
+              </div><!---->
+              <article id="15573" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/Tigger/" title="Tigger" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="//habrastorage.org/r/w48/getpro/habr/avatars/359/730/1b9/3597301b9cff775ba2314b3de622d734.jpg" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/Tigger/" class="tm-user-info__username"> Tigger <!----></a> <span class="tm-article-datetime-published"><time datetime="2007-10-30T11:44:52.000Z" title="2007-10-30, 14:44">30 окт 2007 в 14:44</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/15573/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>В Европе кончаются свободные IP-адреса</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 2 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">1.3K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/domains/" class="tm-publication-hub__link"><span>Администрирование доменных имен</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span><span class="tm-publication-hub__link-container"><a href="/ru/hubs/ipv6/" class="router-link-active tm-publication-hub__link"><span>IPv6</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    Разговоры о том, что в скором времени во Всемирной Паутине закончится свободное адресное пространство, идут уже не первый год. По <a href="http://habrahabr.ru/blog/domains/10931.html">недавним исследованиям</a>, это случится в 2012 или 2026 году. Эти даты, скорее всего не случайно, совпадают с двумя ближайшими к нам предполагаемыми «концами света»: <a href="http://ru.wikipedia.org/wiki/2012#.D0.94.D0.B5.D0.BA.D0.B0.D0.B1.D1.80.D1.8C">по календарю Майя</a> и <a href="http://ru.wikipedia.org/wiki/2026_%D0%B3%D0%BE%D0%B4">по расчетам</a> математика Хайнца фон Ферстера, который предсказал, что в 2026 году численность населения Земли достигнет предела, после которого уже не сможет себя прокормить. Но все может быть совсем не так плохо, если провайдеры в массовом порядке начнут внедрять <a href="http://ru.wikipedia.org/wiki/IPv6">IPv6</a> — новую версию протокола IP, которая лишена множества недостатков используемой сейчас повсеместно IPv4. И кажется, Европа наконец-то начала движение к этому, вслед за США.
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/15573/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 27: ↑23 и ↓4
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 27: ↑23 и ↓4" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+19</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 2 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/15573/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 36 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div><!---->
+              <article id="14945" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/alizar/" title="alizar" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="//habrastorage.org/r/w48/getpro/habr/avatars/cc3/97d/54c/cc397d54c2161005908a3034c5fabbea.png" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/alizar/" class="tm-user-info__username"> alizar <!----></a> <span class="tm-article-datetime-published"><time datetime="2007-10-11T13:09:48.000Z" title="2007-10-11, 17:09">11 окт 2007 в 17:09</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/14945/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Американцы составили атлас интернета</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 1 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">1.2K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/ipv6/" class="router-link-active tm-publication-hub__link"><span>IPv6</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    Американские исследователи пропинговали все 2<sup>32</sup> IP-адресов, которые теоретически могут существовать в адресном пространстве IPv4, и провели <a href="http://www.isi.edu/ant/address/index.html">полную перепись Всемирной сети</a> — первое столь масштабное исследование с 1982 года, когда весь интернет состоял из <a href="http://ftp.isi.edu/in-notes/rfc832.txt">315 хостов</a>.
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/14945/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Всего голосов 31: ↑28 и ↓3
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span title="Всего голосов 31: ↑28 и ↓3" class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_positive tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">+25</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 4 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/14945/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 12 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <!---->
+              </div><!---->
+              <article id="4376" data-navigatable="" tabindex="0" class="tm-articles-list__item">
+               <div class="tm-article-snippet tm-article-snippet">
+                <div class="tm-article-snippet__meta-container">
+                 <div class="tm-article-snippet__meta">
+                  <span class="tm-user-info tm-article-snippet__author"><a href="/ru/users/alizar/" title="alizar" class="tm-user-info__userpic">
+                    <div class="tm-entity-image">
+                     <img alt height="24" src="//habrastorage.org/r/w48/getpro/habr/avatars/cc3/97d/54c/cc397d54c2161005908a3034c5fabbea.png" width="24" class="tm-entity-image__pic">
+                    </div></a> <span class="tm-user-info__user tm-user-info__user_appearance-default"><a href="/ru/users/alizar/" class="tm-user-info__username"> alizar <!----></a> <span class="tm-article-datetime-published"><time datetime="2006-09-07T12:23:46.000Z" title="2006-09-07, 16:23">7 сен 2006 в 16:23</time></span></span></span>
+                 </div><!---->
+                </div>
+                <h2 class="tm-title tm-title_h2"><a href="/ru/articles/4376/" data-test-id="article-snippet-title-link" data-article-link="true" class="tm-title__link"><span>Windows Vista нагрузит систему DNS</span></a></h2>
+                <div class="tm-article-snippet__stats">
+                 <!---->
+                 <div class="tm-article-reading-time">
+                  <span class="tm-svg-icon__wrapper tm-article-reading-time__icon">
+                   <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                    <title>
+                     Время на прочтение
+                    </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#clock"></use>
+                   </svg></span> <span class="tm-article-reading-time__label"> 2 мин </span>
+                 </div><span class="tm-icon-counter tm-data-icons__item">
+                  <svg height="24" width="24" class="tm-svg-img tm-icon-counter__icon">
+                   <title>
+                    Количество просмотров
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-views"></use>
+                  </svg><span class="tm-icon-counter__value">1.2K</span></span>
+                </div>
+                <div class="tm-publication-hubs__container">
+                 <div class="tm-publication-hubs">
+                  <span class="tm-publication-hub__link-container"><a href="/ru/hubs/ipv6/" class="router-link-active tm-publication-hub__link"><span>IPv6</span> <span title="Профильный хаб" class="tm-article-snippet__profiled-hub">*</span></a></span>
+                 </div>
+                </div><!----> <!---->
+                <div class="tm-article-body tm-article-snippet__lead">
+                 <!---->
+                 <div>
+                  <div>
+                   <div class="article-formatted-body article-formatted-body article-formatted-body_version-1">
+                    Пол Мокапетрис (Paul Mockapetris), чьими усилиями в 1983 г. была создана система DNS, уверен, что с выходом новой операционной системы Windows Vista нагрузка на серверы DNS серьезно возрастет. Дело в том, что новая ОС поддерживает две версии интернет-протокола: IPv4 и IPv6. 
+                    <br>
+                   </div>
+                  </div><!----> <!---->
+                 </div><a href="/ru/articles/4376/" class="tm-article-snippet__readmore"><span>Читать дальше →</span></a>
+                </div>
+               </div>
+               <div class="tm-data-icons">
+                <!---->
+                <div class="tm-votes-meter tm-data-icons__item">
+                 <svg height="24" width="24" class="tm-svg-img tm-votes-meter__icon tm-votes-meter__icon tm-votes-meter__icon_appearance-article">
+                  <title>
+                   Рейтинг
+                  </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-rating"></use>
+                 </svg><span class="tm-votes-meter__value tm-votes-meter__value tm-votes-meter__value_appearance-article tm-votes-meter__value_rating">0</span>
+                </div><!----> <button title="Добавить в закладки" type="button" class="bookmarks-button tm-data-icons__item"><span class="tm-svg-icon__wrapper bookmarks-button__icon">
+                  <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+                   <title>
+                    Добавить в закладки
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-favorite"></use>
+                  </svg></span> <span title="Количество пользователей, добавивших публикацию в закладки" class="bookmarks-button__counter"> 0 </span></button>
+                <div title="Поделиться" class="tm-sharing tm-data-icons__item">
+                 <button type="button" class="tm-sharing__button">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="tm-sharing__icon">
+                   <path fill="currentColor" d="M13.8 13.8V18l7.2-6.6L13.8 5v3.9C5 8.9 3 18.6 3 18.6c2.5-4.4 6-4.8 10.8-4.8z"></path>
+                  </svg></button>
+                 <div class="v-portal" style="display:none;"></div>
+                </div>
+                <div title="Читать комментарии" class="tm-article-comments-counter-link tm-data-icons__item">
+                 <a href="/ru/articles/4376/comments/" class="tm-article-comments-counter-link__link">
+                  <svg height="24" width="24" class="tm-svg-img tm-article-comments-counter-link__icon">
+                   <title>
+                    Комментарии
+                   </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#counter-comments"></use>
+                  </svg><span class="tm-article-comments-counter-link__value"> 8 </span></a> <!---->
+                </div>
+                <div class="v-portal" style="display:none;"></div>
+               </div>
+              </article>
+              <div class="tm-articles-list__after-article">
+               <div class="tm-article-feed-blocks">
+                <div id="project-blocks_10" data-navigatable="" tabindex="0" class="placeholder-wrapper">
+                 <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!---->
+                 <div class="tm-placeholder-inset tm-placeholder-tasks">
+                  <div class="tm-placeholder-inset__header">
+                   <div class="tm-placeholder__line tm-placeholder__line_inset-header loads"></div>
+                  </div>
+                  <div class="tm-placeholder-inset__body">
+                   <ul class="tm-placeholder-list">
+                    <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                     <div class="tm-placeholder-list__title-container">
+                      <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                     </div>
+                     <div class="tm-project-block-items__properties">
+                      <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                     </div></li>
+                    <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                     <div class="tm-placeholder-list__title-container">
+                      <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                     </div>
+                     <div class="tm-project-block-items__properties">
+                      <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                     </div></li>
+                    <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                     <div class="tm-placeholder-list__title-container">
+                      <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                     </div>
+                     <div class="tm-project-block-items__properties">
+                      <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                     </div></li>
+                    <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                     <div class="tm-placeholder-list__title-container">
+                      <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                     </div>
+                     <div class="tm-project-block-items__properties">
+                      <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                     </div></li>
+                    <li class="tm-placeholder-list__item tm-placeholder-list__item_inset">
+                     <div class="tm-placeholder-list__title-container">
+                      <div class="tm-placeholder__line tm-placeholder__line_item-title loads"></div>
+                     </div>
+                     <div class="tm-project-block-items__properties">
+                      <span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span><span class="tm-project-block-items__property-item"><span class="tm-placeholder__line loads" style="width: 100px;"></span></span>
+                     </div></li>
+                   </ul>
+                  </div>
+                  <div class="tm-placeholder-inset__footer">
+                   <div class="tm-placeholder__line tm-placeholder__line_inset-footer loads"></div>
+                  </div>
+                 </div><!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!----> <!---->
+                </div>
+               </div>
+              </div>
+             </div><!---->
+             <div class="tm-pagination">
+              <a href="/ru/hubs/ipv6/articles/page5/" id="pagination-prev-page" data-pagination-prev="" rel="prev" class="tm-pagination__navigation-link tm-pagination__navigation-link_active">
+               <svg height="16" width="16" class="tm-svg-img tm-pagination__arrow tm-pagination__arrow_prev">
+                <title>
+                 Назад
+                </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#arrow-back"></use>
+               </svg><span class="tm-pagination__navigation-link-title"> Сюда </span></a>
+              <div class="tm-pagination__pages">
+               <div class="tm-pagination__page-group">
+                <a href="/ru/hubs/ipv6/articles/page1/" class="tm-pagination__page"> 1 </a><a href="/ru/hubs/ipv6/articles/page2/" class="tm-pagination__page"> 2 </a><a href="/ru/hubs/ipv6/articles/page3/" class="tm-pagination__page"> 3 </a><a href="/ru/hubs/ipv6/articles/page4/" class="tm-pagination__page"> 4 </a><a href="/ru/hubs/ipv6/articles/page5/" class="tm-pagination__page"> 5 </a> <!---->
+               </div><span class="tm-pagination__page tm-pagination__page_current"> 6 </span>
+              </div>
+              <div id="pagination-next-page" data-pagination-next="" event="" rel="next" class="tm-pagination__navigation-link">
+               <span class="tm-pagination__navigation-link-title"> Туда </span>
+               <svg height="16" width="16" class="tm-svg-img tm-pagination__arrow tm-pagination__arrow_next">
+                <title>
+                 Назад
+                </title> <use xlink:href="/img/megazord-v28.2fb1b1c1..svg#arrow-back"></use>
+               </svg>
+              </div>
+             </div>
+            </div>
+           </div><!---->
+          </div>
+         </div>
+         <div class="tm-page__sidebar">
+          <div data-async-called="true" class="tm-layout-sidebar">
+           <div class="tm-layout-sidebar__ads tm-layout-sidebar__ads_initial">
+            <div class="tm-adfox-banner__container tm-layout-sidebar__banner tm-layout-sidebar__banner_top">
+             <!---->
+             <div id="adfox_164725680533065327" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-half-page"></div>
+            </div>
+           </div>
+           <div class="tm-sexy-sidebar tm-sexy-sidebar_initial" style="margin-top:0px;">
+            <!---->
+            <section class="tm-block tm-block tm-block_spacing-bottom">
+             <header class="tm-block__header tm-block__header">
+              <div class="tm-block__header-container">
+               <h2 class="tm-block__title tm-block__title">Вклад авторов</h2>
+              </div><!---->
+             </header>
+             <div class="tm-block__body tm-block__body">
+              <ul class="tm-contribution-list">
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/alizar/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/cc3/97d/54c/cc397d54c2161005908a3034c5fabbea.png" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/alizar/" class="tm-authors-block__author-name">alizar</a>
+                  <div class="tm-contribution-list__contribution">
+                   275.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:100%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/salium/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="https://assets.habr.com/habr-web/img/avatars/052.png" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/salium/" class="tm-authors-block__author-name">salium</a>
+                  <div class="tm-contribution-list__contribution">
+                   174.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:63.27272727272727%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/Shapelez/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/803/5e1/6eb/8035e16eb2a755688d69bb677570e42f.jpg" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/Shapelez/" class="tm-authors-block__author-name">Shapelez</a>
+                  <div class="tm-contribution-list__contribution">
+                   164.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:59.63636363636363%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/kostik450/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/b14/c83/bed/b14c83bed7d48243057099a724af6dc6.png" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/kostik450/" class="tm-authors-block__author-name">kostik450</a>
+                  <div class="tm-contribution-list__contribution">
+                   149.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:54.18181818181818%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/olegtsss/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="https://assets.habr.com/habr-web/img/avatars/085.png" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/olegtsss/" class="tm-authors-block__author-name">olegtsss</a>
+                  <div class="tm-contribution-list__contribution">
+                   137.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:49.81818181818182%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/amarao/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/a4d/28c/40e/a4d28c40e664ad1a3632a3c0a2ca1c72.png" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/amarao/" class="tm-authors-block__author-name">amarao</a>
+                  <div class="tm-contribution-list__contribution">
+                   128.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:46.54545454545455%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/gribozavr/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="https://assets.habr.com/habr-web/img/avatars/183.png" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/gribozavr/" class="tm-authors-block__author-name">gribozavr</a>
+                  <div class="tm-contribution-list__contribution">
+                   118.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:42.90909090909091%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/aleksandrit/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="https://assets.habr.com/habr-web/img/avatars/171.png" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/aleksandrit/" class="tm-authors-block__author-name">aleksandrit</a>
+                  <div class="tm-contribution-list__contribution">
+                   97.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:35.27272727272727%;"></div>
+                 </div>
+                </div></li>
+               <li class="tm-contribution-list__item">
+                <aside class="tm-contribution-list__aside">
+                 <a href="/ru/users/dimka_kravchuk/">
+                  <div class="tm-entity-image">
+                   <img alt height="36" src="//habrastorage.org/getpro/habr/avatars/8dd/696/29e/8dd69629e9358dd57ab4c859341b80a1.jpg" width="36" class="tm-entity-image__pic">
+                  </div></a>
+                </aside>
+                <div class="tm-contribution-list__main">
+                 <header class="tm-contribution-list__header">
+                  <a href="/ru/users/dimka_kravchuk/" class="tm-authors-block__author-name">dimka_kravchuk</a>
+                  <div class="tm-contribution-list__contribution">
+                   93.0
+                  </div>
+                 </header>
+                 <div class="tm-contribution-list__progress-bar">
+                  <div class="tm-contribution-list__progress" style="width:33.81818181818182%;"></div>
+                 </div>
+                </div></li>
+              </ul>
+             </div>
+             <footer class="tm-block__footer">
+              <a href="/ru/hubs/ipv6/authors/" class="tm-block-extralink"> 100 лучших авторов </a>
+             </footer>
+            </section><!----> <!---->
+            <div class="tm-adfox-banner__container tm-layout-sidebar__banner tm-layout-sidebar__banner_bottom">
+             <!---->
+             <div id="adfox_164725691003361602" class="tm-adfox-banner tm-adfox-banner tm-adfox-banner_variant-medium-rectangle"></div>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </main><!---->
+    </div>
+    <div class="tm-footer-menu">
+     <div class="tm-page-width">
+      <div class="tm-footer-menu__container">
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title">Ваш аккаунт</p>
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr/?back=/ru/hubs/ipv6/articles/page6/&amp;hl=ru" rel="nofollow" target="_self"> Войти </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/kek/v1/auth/habrahabr-register/?back=/ru/hubs/ipv6/articles/page6/&amp;hl=ru" rel="nofollow" target="_self"> Регистрация </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title">Разделы</p>
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/" class="footer-menu__item-link router-link-active"> Статьи </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/news/" class="footer-menu__item-link"> Новости </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/hubs/" class="footer-menu__item-link router-link-active"> Хабы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/companies/" class="footer-menu__item-link"> Компании </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/users/" class="footer-menu__item-link"> Авторы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/sandbox/" class="footer-menu__item-link"> Песочница </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title">Информация</p>
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/help/" class="footer-menu__item-link"> Устройство сайта </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/authors/codex/" class="footer-menu__item-link"> Для авторов </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/companies/corpblogs/" class="footer-menu__item-link"> Для компаний </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/docs/docs/transparency/" class="footer-menu__item-link"> Документы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/agreement/?hl=ru_RU" target="_blank"> Соглашение </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://account.habr.com/info/confidential/?hl=ru_RU" target="_blank"> Конфиденциальность </a></li>
+         </ul>
+        </div>
+       </div>
+       <div class="tm-footer-menu__block">
+        <p class="tm-footer-menu__block-title">Услуги</p>
+        <div class="tm-footer-menu__block-content">
+         <ul class="tm-footer-menu__list">
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/corporate-blogs/" target="_blank"> Корпоративный блог </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/advertising/" target="_blank"> Медийная реклама </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/native-special/" target="_blank"> Нативные проекты </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/education-programs/" target="_blank"> Образовательные программы </a></li>
+          <li class="tm-footer-menu__list-item"><a href="https://company.habr.com/ru/hello-startup/" target="_blank"> Стартапам </a></li>
+          <li class="tm-footer-menu__list-item"><a href="/ru/specials/" class="footer-menu__item-link"> Спецпроекты </a></li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="tm-footer">
+     <div class="tm-page-width">
+      <div class="tm-footer__container">
+       <!---->
+       <div class="tm-footer__social">
+        <a href="https://www.facebook.com/habrahabr.ru" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Facebook
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-facebook"></use>
+         </svg></a><a href="https://twitter.com/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Twitter
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-twitter"></use>
+         </svg></a><a href="https://vk.com/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           VK
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-vk"></use>
+         </svg></a><a href="https://telegram.me/habr_com" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Telegram
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-telegram"></use>
+         </svg></a><a href="https://www.youtube.com/channel/UCd_sTwKqVrweTt4oAKY5y4w" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Youtube
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-youtube"></use>
+         </svg></a><a href="https://dzen.ru/habr" rel="nofollow noopener noreferrer" target="_blank" class="tm-svg-icon__wrapper tm-social-icons__icon">
+         <svg height="24" width="24" class="tm-svg-img tm-svg-icon">
+          <title>
+           Яндекс Дзен
+          </title> <use xlink:href="/img/new-social-icons-sprite.svg#social-logo-dzen"></use>
+         </svg></a>
+       </div>
+       <div class="v-portal" style="display:none;"></div><button class="tm-footer__link"><!----> Настройка языка </button> <a href="/ru/feedback/" class="tm-footer__link"> Техническая поддержка </a>
+       <div class="tm-footer-copyright">
+        <span class="tm-copyright"><span class="tm-copyright__years">© 2006–2023, </span> <span class="tm-copyright__name"><a href="https://company.habr.com/" rel="noopener" target="_blank" class="tm-copyright__link">Habr</a></span></span>
+       </div>
+      </div>
+     </div>
+    </div><!----> <!---->
+   </div>
+   <div class="vue-portal-target"></div>
+  </div>
+  <script>window.__INITIAL_STATE__={"adblock":{"hasAcceptableAdsFilter":false,"hasAdblock":false},"articlesList":{"articlesList":{"4376":{"id":"4376","timePublished":"2006-09-07T12:23:46+00:00","isCorporative":false,"lang":"ru","titleHtml":"Windows Vista нагрузит систему DNS","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"5","alias":"alizar","fullname":"Анатолий Ализар","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fcc3\u002F97d\u002F54c\u002Fcc397d54c2161005908a3034c5fabbea.png","speciality":"автор, фрилансер"},"statistics":{"commentsCount":8,"favoritesCount":0,"readingCount":1199,"score":0,"votesCount":0,"votesCountPlus":0,"votesCountMinus":0},"hubs":[{"id":"18754","alias":"ipv6","type":"collective","title":"IPv6","titleHtml":"IPv6","isProfiled":true,"relatedData":null}],"flows":[{"id":"6","alias":"admin","title":"Администрирование","titleHtml":"Администрирование"}],"relatedData":null,"leadData":{"textHtml":"Пол Мокапетрис (Paul Mockapetris), чьими усилиями в 1983 г. была создана система DNS, уверен, что с выходом новой операционной системы Windows Vista нагрузка на серверы DNS серьезно возрастет. Дело в том, что новая ОС поддерживает две версии интернет-протокола: IPv4 и IPv6. \u003Cbr\u002F\u003E\r\n","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":2,"complexity":null,"tags":[{"titleHtml":"DNS"},{"titleHtml":"Пол Мокапетрис"},{"titleHtml":"DNS-серверы"},{"titleHtml":"Windows"},{"titleHtml":"Vista"},{"titleHtml":"IPv4"},{"titleHtml":"IPv6"}]},"14945":{"id":"14945","timePublished":"2007-10-11T13:09:48+00:00","isCorporative":false,"lang":"ru","titleHtml":"Американцы составили атлас интернета","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"5","alias":"alizar","fullname":"Анатолий Ализар","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fcc3\u002F97d\u002F54c\u002Fcc397d54c2161005908a3034c5fabbea.png","speciality":"автор, фрилансер"},"statistics":{"commentsCount":12,"favoritesCount":4,"readingCount":1163,"score":25,"votesCount":31,"votesCountPlus":28,"votesCountMinus":3},"hubs":[{"id":"18754","alias":"ipv6","type":"collective","title":"IPv6","titleHtml":"IPv6","isProfiled":true,"relatedData":null}],"flows":[{"id":"6","alias":"admin","title":"Администрирование","titleHtml":"Администрирование"}],"relatedData":null,"leadData":{"textHtml":"Американские исследователи пропинговали все 2\u003Csup\u003E32\u003C\u002Fsup\u003E IP-адресов, которые теоретически могут существовать в адресном пространстве IPv4, и провели \u003Ca href=\"http:\u002F\u002Fwww.isi.edu\u002Fant\u002Faddress\u002Findex.html\"\u003Eполную перепись Всемирной сети\u003C\u002Fa\u003E — первое столь масштабное исследование с 1982 года, когда весь интернет состоял из \u003Ca href=\"http:\u002F\u002Fftp.isi.edu\u002Fin-notes\u002Frfc832.txt\"\u003E315 хостов\u003C\u002Fa\u003E.","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":1,"complexity":null,"tags":[{"titleHtml":"Юрий Прядкин"},{"titleHtml":"Джон Хейдеманн"},{"titleHtml":"атлас интернета"},{"titleHtml":"IPv4"},{"titleHtml":"IPv6"}]},"15573":{"id":"15573","timePublished":"2007-10-30T11:44:52+00:00","isCorporative":false,"lang":"ru","titleHtml":"В Европе кончаются свободные IP-адреса","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"96","alias":"Tigger","fullname":"Алексей Казьмин","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F359\u002F730\u002F1b9\u002F3597301b9cff775ba2314b3de622d734.jpg","speciality":"Менеджер по продуктам в ИТ"},"statistics":{"commentsCount":36,"favoritesCount":2,"readingCount":1317,"score":19,"votesCount":27,"votesCountPlus":23,"votesCountMinus":4},"hubs":[{"id":"183","alias":"domains","type":"collective","title":"Администрирование доменных имен","titleHtml":"Администрирование доменных имен","isProfiled":true,"relatedData":null},{"id":"18754","alias":"ipv6","type":"collective","title":"IPv6","titleHtml":"IPv6","isProfiled":true,"relatedData":null}],"flows":[{"id":"6","alias":"admin","title":"Администрирование","titleHtml":"Администрирование"}],"relatedData":null,"leadData":{"textHtml":"Разговоры о том, что в скором времени во Всемирной Паутине закончится свободное адресное пространство, идут уже не первый год. По \u003Ca href=\"http:\u002F\u002Fhabrahabr.ru\u002Fblog\u002Fdomains\u002F10931.html\"\u003Eнедавним исследованиям\u003C\u002Fa\u003E, это случится в 2012 или 2026 году. Эти даты, скорее всего не случайно, совпадают с двумя ближайшими к нам предполагаемыми «концами света»: \u003Ca href=\"http:\u002F\u002Fru.wikipedia.org\u002Fwiki\u002F2012#.D0.94.D0.B5.D0.BA.D0.B0.D0.B1.D1.80.D1.8C\"\u003Eпо календарю Майя\u003C\u002Fa\u003E и \u003Ca href=\"http:\u002F\u002Fru.wikipedia.org\u002Fwiki\u002F2026_%D0%B3%D0%BE%D0%B4\"\u003Eпо расчетам\u003C\u002Fa\u003E математика Хайнца фон Ферстера, который предсказал, что в 2026 году численность населения Земли достигнет предела, после которого уже не сможет себя прокормить. Но все может быть совсем не так плохо, если провайдеры в массовом порядке начнут внедрять \u003Ca href=\"http:\u002F\u002Fru.wikipedia.org\u002Fwiki\u002FIPv6\"\u003EIPv6\u003C\u002Fa\u003E &mdash; новую версию протокола IP, которая лишена множества недостатков используемой сейчас повсеместно IPv4. И кажется, Европа наконец-то начала движение к этому, вслед за США.","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":2,"complexity":null,"tags":[{"titleHtml":"IPv4"},{"titleHtml":"IPv6"},{"titleHtml":"Европа"},{"titleHtml":"ARIN"},{"titleHtml":"RIPE NCC"},{"titleHtml":"прогресс"},{"titleHtml":"конец света"}]},"19842":{"id":"19842","timePublished":"2008-02-05T19:31:36+00:00","isCorporative":false,"lang":"ru","titleHtml":"В интернете началась тотальная замена IP-адресов","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"23079","alias":"dennydo","fullname":"dennydo","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F6b5\u002F4c1\u002F2f0\u002F6b54c12f05e57f47584786af3eb59096.jpg","speciality":""},"statistics":{"commentsCount":150,"favoritesCount":10,"readingCount":998,"score":59,"votesCount":73,"votesCountPlus":66,"votesCountMinus":7},"hubs":[{"id":"18754","alias":"ipv6","type":"collective","title":"IPv6","titleHtml":"IPv6","isProfiled":true,"relatedData":null}],"flows":[{"id":"6","alias":"admin","title":"Администрирование","titleHtml":"Администрирование"}],"relatedData":null,"leadData":{"textHtml":"Сегодня ночью организация ICANN, осуществляющая надзор за использованием интернет-протоколов, начала добавлять в DNS-сервера записи, содержащие адреса в формате протокола IPv6, что означает присвоение каждому новому доменному имени адреса в новом усовершенствованном формате.\u003Cbr\u002F\u003E\r\n","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":1,"complexity":null,"tags":[{"titleHtml":"интернет"},{"titleHtml":"IPv6"}]},"44647":{"id":"44647","timePublished":"2008-11-14T19:07:21+00:00","isCorporative":false,"lang":"ru","titleHtml":"Россия на первом месте в мире по использованию IPv6","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"46513","alias":"nil","fullname":null,"avatarUrl":"","speciality":""},"statistics":{"commentsCount":40,"favoritesCount":6,"readingCount":2037,"score":54,"votesCount":60,"votesCountPlus":57,"votesCountMinus":3},"hubs":[{"id":"18754","alias":"ipv6","type":"collective","title":"IPv6","titleHtml":"IPv6","isProfiled":true,"relatedData":null}],"flows":[{"id":"6","alias":"admin","title":"Администрирование","titleHtml":"Администрирование"}],"relatedData":null,"leadData":{"textHtml":"\u003Cimg src=\"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fpost_images\u002F7be\u002Fa7a\u002F00b\u002F7bea7a00b536e8e447fbb20dc2b4c126.jpg\" alt=\"image\"\u002F\u003E\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nДве недели назад на конференции \u003Ca href=\"http:\u002F\u002Fwww.ripe.net\u002Fripe\u002Fmeetings\u002Fripe-57\u002F\"\u003ERIPE 57\u003C\u002Fa\u003E компания Google представила \u003Ca href=\"http:\u002F\u002Frosie.ripe.net\u002Fripe\u002Fmeetings\u002Fripe-57\u002Fpresentations\u002Fuploads\u002FThursday\u002FPlenary%2014:00\u002Fupl\u002FColitti-Global_IPv6_statistics_-_Measuring_the_current_state_of_IPv6_for_ordinary_users_.7gzD.pdf\"\u003Eдоклад\u003C\u002Fa\u003E о том, насколько использование IPv6 популярно среди конечных пользователей. Результаты показали, что среди всех компьютеров, лишь 0.238% поддерживают IPv6. При этом самым удивительным оказалось распределение по странам. Ниже приводится процент конечных пользователей с поддержкой IPv6 от общего числа пользователей страны:\u003Cbr\u002F\u003E\r\n\u003Cul\u003E\r\n\u003Cli\u003EРоссия — 0.76%\u003C\u002Fli\u003E\r\n\u003Cli\u003EФранция — 0.65%\u003C\u002Fli\u003E\r\n\u003Cli\u003EУкраина — 0.64%\u003C\u002Fli\u003E\r\n\u003Cli\u003EНорвегия — 0.49%\u003C\u002Fli\u003E\r\n\u003Cli\u003EСША — 0.45%\u003C\u002Fli\u003E\r\n\u003Cli\u003E...\u003C\u002Fli\u003E\r\n\u003Cli\u003EКитай — 0.24%\u003C\u002Fli\u003E\r\n\u003Cli\u003EЯпония — 0.15%\u003C\u002Fli\u003E\r\n\u003C\u002Ful\u003E\u003Cbr\u002F\u003E\r\nТаким образом, не более чем мифом оказалось бытующие мнение, что IPv6 больше всего популярен в азиатских странах, где сильнее всего ощущается нехватка IP адресов. \u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\n","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":1,"complexity":null,"tags":[{"titleHtml":"ipv6"},{"titleHtml":"россия"},{"titleHtml":"google"}]},"44787":{"id":"44787","timePublished":"2008-11-17T08:27:47+00:00","isCorporative":false,"lang":"ru","titleHtml":"IPv6 AAAA records","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"46607","alias":"nshopik","fullname":"Николай","avatarUrl":"","speciality":""},"statistics":{"commentsCount":7,"favoritesCount":1,"readingCount":2268,"score":1,"votesCount":5,"votesCountPlus":3,"votesCountMinus":2},"hubs":[{"id":"18754","alias":"ipv6","type":"collective","title":"IPv6","titleHtml":"IPv6","isProfiled":true,"relatedData":null}],"flows":[{"id":"6","alias":"admin","title":"Администрирование","titleHtml":"Администрирование"}],"relatedData":null,"leadData":{"textHtml":"Слежу за развитием IPv6 в частности интересно когда наконец у нас начнут выдавать префиксы конечным пользователям. До сих пор только МТУ владет \u002F32 пефиксом с февраля месяца, другие крупные операторы не замечены. В Августе Рамблер и Яндекс получили префкисы. ","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":2,"complexity":null,"tags":[{"titleHtml":"ipv6"},{"titleHtml":"dns"}]},"51624":{"id":"51624","timePublished":"2009-02-10T15:16:56+00:00","isCorporative":false,"lang":"ru","titleHtml":"IPv6 здесь и сейчас","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"37875","alias":"lostmsu","fullname":"Милованов Виктор","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fa2e\u002Fbb0\u002F81c\u002Fa2ebb081c4eb8a00beaf5fa5a599c145.jpg","speciality":"Пользователь"},"statistics":{"commentsCount":6,"favoritesCount":2,"readingCount":1413,"score":8,"votesCount":16,"votesCountPlus":12,"votesCountMinus":4},"hubs":[{"id":"18754","alias":"ipv6","type":"collective","title":"IPv6","titleHtml":"IPv6","isProfiled":true,"relatedData":null}],"flows":[{"id":"6","alias":"admin","title":"Администрирование","titleHtml":"Администрирование"}],"relatedData":null,"leadData":{"textHtml":"Решил немного потестировать у себя на компьютере IPv6.\u003Cbr\u002F\u003E\r\n","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":1,"complexity":null,"tags":[{"titleHtml":"IPv6"}]},"53625":{"id":"53625","timePublished":"2009-03-05T11:43:27+00:00","isCorporative":false,"lang":"ru","titleHtml":"IPv6 для P2P","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"33778","alias":"alex14n","fullname":"alex14n","avatarUrl":"","speciality":""},"statistics":{"commentsCount":51,"favoritesCount":141,"readingCount":57601,"score":64,"votesCount":66,"votesCountPlus":65,"votesCountMinus":1},"hubs":[{"id":"33","alias":"p2p","type":"collective","title":"Децентрализованные сети","titleHtml":"Децентрализованные сети","isProfiled":true,"relatedData":null},{"id":"18754","alias":"ipv6","type":"collective","title":"IPv6","titleHtml":"IPv6","isProfiled":true,"relatedData":null}],"flows":[{"id":"6","alias":"admin","title":"Администрирование","titleHtml":"Администрирование"}],"relatedData":null,"leadData":{"textHtml":"IPv6 обычно ассоциируется с проблемой нехватки IPv4 адресов, о которой любит писать «желтая» пресса. Что со дня на день свободных адресов не останется и переход на IPv6 будет неизбежен. Скептики считают что проблема настолько же раздута, как в своё время «ошибка 2000», когда все боялись что после 1999 года наступит 1900 и случится техногенная катастрофа.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nДля большинства пользователей, действительно, пользы от IPv6 никакой. Какая разница, например, что заголовки пакетов более удобны для маршрутизатора? Но для P2P проблема NAT (за счёт чего IPv4-адреса так ещё и не закончились) реальна, т.к. для связи peer-to-peer (даже чтобы переслать файл через Jabber или ICQ) нужно чтобы хотя бы один из участников был доступен снаружи, т.е. имел реальный IP-адрес или хотя бы пробросил себе порт. Некоторые провайдеры предоставляют внешний адрес за отдельную плату, у некоторых такой возможности нет, и именно для NAT-страдальцев будет больше всего полезно использование IPv6.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nТакже это будет полезно тем, у кого провайдер режет p2p-трафик. В России это (пока?) не так распространено, а за рубежом — далеко не редкость. IPv6 трафик (точнее, обёрнутый в обычные UDP пакеты) ими не режется. Еще это может помочь в ситуации, когда p2p-трафик блокируется корпоративным фаерволом, но настроить IPv6 через туннель можно.","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":7,"complexity":null,"tags":[{"titleHtml":"ipv6"},{"titleHtml":"p2p"},{"titleHtml":"torrent"}]},"64592":{"id":"64592","timePublished":"2009-07-16T04:20:09+00:00","isCorporative":false,"lang":"ru","titleHtml":"Основы IPv6","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"38942","alias":"SaveTheRbtz","fullname":"Алексей","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fb37\u002F3dd\u002Fc4b\u002Fb373ddc4b2783a8cbe583cd7eeece149.jpg","speciality":"SRE"},"statistics":{"commentsCount":56,"favoritesCount":366,"readingCount":123645,"score":66,"votesCount":70,"votesCountPlus":68,"votesCountMinus":2},"hubs":[{"id":"221","alias":"sys_admin","type":"collective","title":"Системное администрирование","titleHtml":"Системное администрирование","isProfiled":true,"relatedData":null},{"id":"17123","alias":"network_technologies","type":"collective","title":"Сетевые технологии","titleHtml":"Сетевые технологии","isProfiled":true,"relatedData":null},{"id":"18754","alias":"ipv6","type":"collective","title":"IPv6","titleHtml":"IPv6","isProfiled":true,"relatedData":null}],"flows":[{"id":"6","alias":"admin","title":"Администрирование","titleHtml":"Администрирование"}],"relatedData":null,"leadData":{"textHtml":"\u003Ch4\u003E\u003Cb\u003EПредисловие\u003C\u002Fb\u003E\u003C\u002Fh4\u003E\u003Cbr\u002F\u003E\r\nПост является кратким конспектом \u003Ca href=\"http:\u002F\u002Fen.wikipedia.org\u002Fwiki\u002FIPv6\"\u003EWiki\u003C\u002Fa\u003E, \u003Ca href=\"http:\u002F\u002Fsupport.microsoft.com\u002Fdefault.aspx?kbid=919739\"\u003ETechNet'а\u003C\u002Fa\u003E, \u003Ca href=\"http:\u002F\u002Fwww.freebsd.org\u002Fdoc\u002Fen\u002Fbooks\u002Fhandbook\u002Fnetwork-ipv6.html\"\u003EFreeBSD'шного handbook'a\u003C\u002Fa\u003E, \u003Ca href=\"http:\u002F\u002Fserverfault.com\u002Fquestions\u002Ftagged\u002Fipv6\"\u003EServerfault'a\u003C\u002Fa\u003E, множества RFC и документов \u003Ca href=\"https:\u002F\u002Fwww.iana.org\u002F\"\u003EIANA\u003C\u002Fa\u003E, а также курсов от Специалист.Ру для сотрудников Яндекса.\u003Cbr\u002F\u003E\r\n\u003Cbr\u002F\u003E\r\nПост можно рассматривать как копилку ссылок по \u003Ci\u003Eактуальной\u003C\u002Fi\u003E на 2012 год спецификации IPv6. Однако он никак не \u003Ca href=\"http:\u002F\u002Fhabrahabr.ru\u002Fblogs\u002Fp2p\u002F53625\u002F\"\u003Eописывает возможные способы установки IPv6 соединения с интернетом\u003C\u002Fa\u003E и не привязан к какой-либо определённой ОС. \u003Cbr\u002F\u003E\r\nУчтите, что прочтение данной хабрастатьи займёт у вас не более получаса, однако крайне рекомендуется ознакомиться со всеми приведёнными в статье ссылками… Последнее может занять несколько недель.\u003Cbr\u002F\u003E\r\n","imageUrl":null,"buttonTextHtml":"Читать дальше &rarr;","image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":11,"complexity":null,"tags":[{"titleHtml":"ipv6"},{"titleHtml":"ip"},{"titleHtml":"icmp"},{"titleHtml":"icmpv6"},{"titleHtml":"ndp"},{"titleHtml":"mld"},{"titleHtml":"multicast"},{"titleHtml":"anycast"},{"titleHtml":"dns"},{"titleHtml":"сеть"},{"titleHtml":"интернет"},{"titleHtml":"security"},{"titleHtml":"безопасность"},{"titleHtml":"rfc"}]},"71419":{"id":"71419","timePublished":"2009-10-04T13:11:52+00:00","isCorporative":false,"lang":"ru","titleHtml":"Есть ли у вас доступ в IPv6-Интернет?","editorVersion":"1.0","postType":"article","postLabels":[],"author":{"id":"8353","alias":"gribozavr","fullname":"gribozavr","avatarUrl":"","speciality":"Пользователь"},"statistics":{"commentsCount":181,"favoritesCount":3,"readingCount":4195,"score":21,"votesCount":57,"votesCountPlus":39,"votesCountMinus":18},"hubs":[{"id":"221","alias":"sys_admin","type":"collective","title":"Системное администрирование","titleHtml":"Системное администрирование","isProfiled":true,"relatedData":null},{"id":"18754","alias":"ipv6","type":"collective","title":"IPv6","titleHtml":"IPv6","isProfiled":true,"relatedData":null}],"flows":[{"id":"6","alias":"admin","title":"Администрирование","titleHtml":"Администрирование"}],"relatedData":null,"leadData":{"textHtml":"&nbsp;","imageUrl":null,"buttonTextHtml":null,"image":null},"status":"published","plannedPublishTime":null,"checked":null,"format":null,"readingTime":1,"complexity":null,"tags":[{"titleHtml":"IPv6"},{"titleHtml":"6to4"},{"titleHtml":"туннель"},{"titleHtml":"Hurricane Electric"},{"titleHtml":"SixXS"},{"titleHtml":"Freenet6"},{"titleHtml":"teredo"},{"titleHtml":"miredo"}]}},"articlesIds":{"ARTICLES_LIST_BY_HUB_ALL_PAGES_IPV6_6":["71419","64592","53625","51624","44787","44647","19842","15573","14945","4376"]},"isLoading":false,"pagesCount":{"ARTICLES_LIST_BY_HUB_ALL_PAGES_IPV6_6":6},"route":{"name":"ARTICLES_LIST_BY_HUB_ALL_PAGES","params":{"hl":"ru","hubName":"ipv6","pageNum":"6"},"query":{}},"reasonsList":null,"postReasonsList":null,"view":"cards","lastVisitedRoute":{},"ssrCommentsArticleIds":[],"viewedPosts":[],"karma":{"userReasonsList":null}},"authorContribution":{"authors":{"hub_ipv6":[{"id":"5","alias":"alizar","fullname":"Анатолий Ализар","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fcc3\u002F97d\u002F54c\u002Fcc397d54c2161005908a3034c5fabbea.png","speciality":"автор, фрилансер","scoreStats":{"score":1040,"votesCount":4240},"rating":344,"invest":275,"relatedData":null,"lastPost":null},{"id":"61074","alias":"salium","fullname":null,"avatarUrl":null,"speciality":null,"scoreStats":{"score":136,"votesCount":158},"rating":0,"invest":174,"relatedData":null,"lastPost":null},{"id":"25440","alias":"Shapelez","fullname":"Alex Shapelez","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F803\u002F5e1\u002F6eb\u002F8035e16eb2a755688d69bb677570e42f.jpg","speciality":"Storycaster","scoreStats":{"score":364,"votesCount":1144},"rating":0,"invest":164,"relatedData":null,"lastPost":{"id":"518650","timePublished":"2020-09-10T15:54:15+00:00","isCorporative":true,"lang":"en","titleHtml":"The 2020 National Internet Segment Reliability Research","postType":"article","hubs":[{"id":"11571","alias":"qrator","type":"corporative","title":"Qrator Labs corporate blog","titleHtml":"Qrator Labs corporate blog","isProfiled":false},{"id":"50","alias":"infosecurity","type":"collective","title":"Information Security","titleHtml":"Information Security","isProfiled":true},{"id":"6398","alias":"it-infrastructure","type":"collective","title":"IT Infrastructure","titleHtml":"IT Infrastructure","isProfiled":true},{"id":"17123","alias":"network_technologies","type":"collective","title":"Network technologies","titleHtml":"Network technologies","isProfiled":true},{"id":"18754","alias":"ipv6","type":"collective","title":"IPv6","titleHtml":"IPv6","isProfiled":true}]}},{"id":"63312","alias":"kostik450","fullname":"Константин Рассказов","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fb14\u002Fc83\u002Fbed\u002Fb14c83bed7d48243057099a724af6dc6.png","speciality":"Пользователь","scoreStats":{"score":116,"votesCount":210},"rating":0,"invest":149,"relatedData":null,"lastPost":null},{"id":"1465194","alias":"olegtsss","fullname":null,"avatarUrl":null,"speciality":null,"scoreStats":{"score":74,"votesCount":94},"rating":-3.8,"invest":137,"relatedData":null,"lastPost":null},{"id":"55867","alias":"amarao","fullname":"Георгий Шуклин","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002Fa4d\u002F28c\u002F40e\u002Fa4d28c40e664ad1a3632a3c0a2ca1c72.png","speciality":"Забанен за упоминание войны. Больше не на хабре.","scoreStats":{"score":266,"votesCount":2936},"rating":0,"invest":128,"relatedData":null,"lastPost":null},{"id":"8353","alias":"gribozavr","fullname":"gribozavr","avatarUrl":null,"speciality":"Пользователь","scoreStats":{"score":214,"votesCount":350},"rating":0,"invest":118,"relatedData":null,"lastPost":null},{"id":"44229","alias":"aleksandrit","fullname":null,"avatarUrl":null,"speciality":null,"scoreStats":{"score":60,"votesCount":912},"rating":0,"invest":97,"relatedData":null,"lastPost":null},{"id":"20420","alias":"dimka_kravchuk","fullname":"Дмитрий","avatarUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Favatars\u002F8dd\u002F696\u002F29e\u002F8dd69629e9358dd57ab4c859341b80a1.jpg","speciality":null,"scoreStats":{"score":66,"votesCount":80},"rating":0,"invest":93,"relatedData":null,"lastPost":null}]}},"betaTest":{"currentAnnouncement":null,"announcements":{},"announcementCards":null,"announcementComments":{},"announcementCommentThreads":{},"announcementCommentingStatuses":{},"archivedList":[]},"authorStatistics":{"articleRefs":{},"articleIds":{},"pagesCount":{},"route":{},"viewsCount":[],"maxStatsCount":{}},"career":{"seoLandings":[],"hubs":"ipv6"},"comments":{"articleComments":{},"articlePinnedComments":{},"searchCommentsResults":null,"pagesCount":null,"commentAccess":{},"scrollParents":{},"pageArticleComments":{"lastViewedComment":0,"postId":null,"lastCommentTimestamp":"","moderated":[],"moderatedIds":[],"commentRoute":""}},"companies":{"companyRefs":{},"companyIds":{},"companyTopIds":{},"pagesCount":{},"companyProfiles":{},"companiesCategories":[],"companiesCategoriesTotalCount":0,"companiesWidgets":{},"companiesWorkers":{},"companiesFans":{},"multiwidgets":{},"route":{},"isLoading":false,"companyWorkersLoading":false,"companyFansLoading":false,"multiwidgetLoading":false,"vacancies":{},"companiesGalleries":{},"companiesBanners":{},"companiesLandingVacancies":{},"companiesTechnologies":{},"workplaceInfo":null},"companyAdmin":{"companyInfo":null,"companyInfoLoading":false,"faqArticles":null,"brandingPreviewImageUrl":null,"jivoStatus":0,"adminNotifications":null},"companiesContribution":{"hubs":{},"flows":{},"companyRefs":{}},"companyHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"conversation":{"messages":[],"respondent":null,"isLoadMore":false},"conversations":{"conversations":[],"unreadCount":0,"pagesCount":0},"docs":{"menu":{},"articles":{},"mainMenu":[],"loading":{"main":false,"dropdown":false,"article":false}},"feature":{"isProbablyVisible":true},"flows":{"updates":{"countNewPostsBySubscription":null,"countNewThreadsBySubscription":null,"countNewNewsBySubscription":null,"countNewPostsAll":34,"countNewNewsAll":12,"countNewThreadsAll":3},"flows":[{"alias":"develop","id":"1","route":{"name":"FLOW_PAGE","params":{"flowName":"develop"}}},{"alias":"admin","id":"6","route":{"name":"FLOW_PAGE","params":{"flowName":"admin"}}},{"alias":"design","id":"2","route":{"name":"FLOW_PAGE","params":{"flowName":"design"}}},{"alias":"management","id":"3","route":{"name":"FLOW_PAGE","params":{"flowName":"management"}}},{"alias":"marketing","id":"4","route":{"name":"FLOW_PAGE","params":{"flowName":"marketing"}}},{"alias":"popsci","id":"7","route":{"name":"FLOW_PAGE","params":{"flowName":"popsci"}}}]},"global":{"isPwa":false,"device":"desktop","isHabrCom":true},"hubs":{"hubRefs":{"ipv6":{"id":"18754","alias":"ipv6","titleHtml":"IPv6","descriptionHtml":"Новая версия протокола IP","fullDescriptionHtml":"IPv6 (англ. Internet Protocol version 6) — новая версия протокола IP, призванная решить проблемы, с которыми столкнулась предыдущая версия (IPv4) при её использовании в Интернете, за счёт использования длины адреса 128 бит (16 байт) вместо 32 (4 байта). Протокол был разработан IETF.","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fd46\u002F02a\u002F36f\u002Fd4602a36f6128c6cb1ab713bcb288d80.png","relatedData":null,"statistics":{"subscribersCount":38046,"rating":24.65,"authorsCount":86,"postsCount":113},"sponsorship":null,"keywords":["ipv6","ipv4","cisco","интернет","hurricane electric","linux","ripe ncc","протоколы","сетевые технологии","dns","google","6to4","teredo","ripe","nat","iana","tunnelbroker","ipv6 launch","6in4","bgp"],"flow":{"id":"6","alias":"admin","title":"Администрирование","titleHtml":"Администрирование"},"isProfiled":true}},"hubIds":{},"pagesCount":{},"isLoading":false,"route":{}},"hubsBlock":{"hubRefs":{"infosecurity":{"id":"50","alias":"infosecurity","titleHtml":"Information Security","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F135\u002F2db\u002F187\u002F1352db18765addaa6e0b2ac013d386d8.png","descriptionHtml":"Data protection","relatedData":null,"statistics":{"subscribersCount":575291,"rating":728.41,"authorsCount":4765,"postsCount":18569},"commonTags":["cybersecurity","elliptic curve cryptography","digital signature","drp","elliptics","signature"],"isProfiled":true,"isOfftop":false},"programming":{"id":"359","alias":"programming","titleHtml":"Programming","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fdb2\u002Fc8f\u002F4a1\u002Fdb2c8f4a1974bf334d01595732f339c1.png","descriptionHtml":"The art of creating computer programs","relatedData":null,"statistics":{"subscribersCount":352023,"rating":707.89,"authorsCount":6673,"postsCount":17828},"commonTags":["java","программирование","dsl","programming languages","python","c","chatgpt","spring data jpa","kotlin"],"isProfiled":true,"isOfftop":false},"popular_science":{"id":"21910","alias":"popular_science","titleHtml":"Popular science","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002F02f\u002F206\u002F0b9\u002F02f2060b99e6f4d9403eee0420d7d5b8.png","descriptionHtml":"Popular science as is","relatedData":null,"statistics":{"subscribersCount":174827,"rating":575.63,"authorsCount":2108,"postsCount":15162},"commonTags":["gravity","special relativity"],"isProfiled":false,"isOfftop":false},"career":{"id":"20740","alias":"career","titleHtml":"IT career","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fcab\u002Ff82\u002F067\u002Fcabf82067c7be08c90a5903f860c9abf.png","descriptionHtml":"Work, work and work (in IT)","relatedData":null,"statistics":{"subscribersCount":79261,"rating":452.75,"authorsCount":3117,"postsCount":8141},"commonTags":["career","presale","russian","america online","international business","relocation"],"isProfiled":false,"isOfftop":false},"games":{"id":"21980","alias":"games","titleHtml":"Games and game consoles","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002F250\u002Fe19\u002F5fa\u002F250e195faa1708e4df5cb8664394a54f.png","descriptionHtml":"Rock Paper Scissors","relatedData":null,"statistics":{"subscribersCount":107941,"rating":448.48,"authorsCount":1101,"postsCount":5587},"commonTags":[],"isProfiled":false,"isOfftop":false},"DIY":{"id":"21976","alias":"DIY","titleHtml":"DIY","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002F0ac\u002F9b4\u002F828\u002F0ac9b48281cd7ba7401b4a4f5d9cd8d8.png","descriptionHtml":"For those who is not all thumbs","relatedData":null,"statistics":{"subscribersCount":426018,"rating":418.89,"authorsCount":2564,"postsCount":6200},"commonTags":["circuit calculator","electronics design","circuit design","diy","arduino","robotics","active filter","dso138 upgrade","servo","bldc"],"isProfiled":false,"isOfftop":false},"antikvariat":{"id":"21930","alias":"antikvariat","titleHtml":"Old hardware","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002F064\u002Fe29\u002F0f4\u002F064e290f484ad3bf745ebe9163b9276a.png","descriptionHtml":"How it was when we were young","relatedData":null,"statistics":{"subscribersCount":161810,"rating":382.21,"authorsCount":606,"postsCount":2195},"commonTags":["музыка","chiptune","demoscene","z80","nes","assembler","6502"],"isProfiled":false,"isOfftop":false},"machine_learning":{"id":"19439","alias":"machine_learning","titleHtml":"Machine learning","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002F882\u002F37a\u002Fb33\u002F88237ab33b6f8acc090d443651c4f2f9.png","descriptionHtml":"The basis of artificial intelligence","relatedData":null,"statistics":{"subscribersCount":80520,"rating":383.98,"authorsCount":2402,"postsCount":6575},"commonTags":["neural networks","image processing","ml","ai","artificial intelligence","machine learning","transformers","graphic design","neural paintings","stablediffusion"],"isProfiled":true,"isOfftop":false},"artificial_intelligence":{"id":"21922","alias":"artificial_intelligence","titleHtml":"Artificial Intelligence","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fgeektimes\u002Fhub\u002F445\u002F6b9\u002F287\u002F4456b92870815e30ca14f4f66b6cb443.png","descriptionHtml":"AI, ANN and other forms of an artificial Intelligence\n","relatedData":null,"statistics":{"subscribersCount":113943,"rating":386.52,"authorsCount":2087,"postsCount":6291},"commonTags":["chatgpt","ai","artificial intelligence"],"isProfiled":false,"isOfftop":false},"network_technologies":{"id":"17123","alias":"network_technologies","titleHtml":"Network technologies","imageUrl":"\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fhub\u002Fb2e\u002F13f\u002F8fc\u002Fb2e13f8fcaf2711677c87418b98e85fe.png","descriptionHtml":"From Ethernet to IPv6","relatedData":null,"statistics":{"subscribersCount":159554,"rating":353.17,"authorsCount":1467,"postsCount":4130},"commonTags":["bgp","qrator labs","ddos attack","python","bgp incidents","network","network security","ddos attacks","ipv6","cisco"],"isProfiled":true,"isOfftop":false}},"hubIds":{"all":["infosecurity","programming","popular_science","career","games","DIY","antikvariat","machine_learning","artificial_intelligence","network_technologies"]}},"i18n":{"fl":"ru","hl":"ru"},"info":{"welcomePage":{},"isLoading":true},"location":{"urlStruct":{"protocol":null,"slashes":null,"auth":null,"host":null,"port":null,"hostname":null,"hash":null,"query":{},"pathname":"\u002F","path":"\u002F","href":"\u002F"}},"me":{"user":null,"uuid":null,"ppgDemanded":false,"karmaResetInfo":{"canReincarnate":null,"wasReincarnated":null,"currentScore":null},"notes":null},"modal":{"modals":[]},"mostReadingList":{"mostReadingListIds":[],"mostReadingListRefs":null,"promoPost":null},"ppa":{"articles":{},"card":null,"transactions":null,"totalTransactions":null,"isAccessible":null},"projectsBlocks":{"activeBlocks":{"tasks":"project-blocks_10"}},"promoData":{"isLoading":false,"hasLoaded":false,"featurer":null,"megaposts":null,"promoLinks":null,"promoPosts":null},"pullRefresh":{"shouldRefresh":false},"sandbox":{"articleIds":[],"articleRefs":{},"pagesCount":null,"route":{},"lastVisitedRoute":{},"isLoading":false},"search":{"searchQueryError":null},"settingsOther":{"inputs":{"uiLang":{"errors":[],"ref":null,"value":""},"articlesLangEnglish":{"errors":[],"ref":null,"value":false},"articlesLangRussian":{"errors":[],"ref":null,"value":false},"agreement":{"errors":[],"ref":null,"value":false},"email":{"errors":[],"ref":null,"value":true},"digest":{"errors":[],"ref":null,"value":true}}},"similarList":{"similarListIds":[],"similarListRefs":null},"ssr":{"error":null,"isDataLoaded":false,"isDataLoading":false,"isHydrationFailed":false,"isServer":false},"stories":{"stories":[{"id":"story-634","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe80\u002F14f\u002F9b0\u002Fe8014f9b0b323e26f89fb65c07367da7.png","title":"Т1","link":"https:\u002F\u002Fu.habr.com\u002FT1"},"title":"Идём на «Импульс Т1» по дороге из жёлтого кирпича","lang":"ru","startTime":"2023-11-21T12:00:00+03:00","finishTime":"2023-12-01T23:59:00+03:00","slides":[{"id":"story-634_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fb83\u002F6f2\u002F4a3\u002Fb836f24a39bedec1aca21003cea65537.jpg","button":null},{"id":"story-634_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F267\u002F0f1\u002F28c\u002F2670f128c419da5750280fe02731a19c.jpg","button":{"title":"«Импульс Т1»","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F98d\u002Fdf8\u002F18e\u002F98ddf818ef47cbe33d8a3de0dac94864.jpg","button":{"title":"Список лекций","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F240\u002Fbc2\u002F4a1\u002F240bc24a10b8f3aa544f03bcdcddbb92.jpg","button":{"title":"Посмотреть питчинг","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F88b\u002Fa1e\u002F34f\u002F88ba1e34f63db6c2fd335c4cbed97ceb.jpg","button":{"title":"Прокачать софт-скилы","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F9a7\u002Fda6\u002F18a\u002F9a7da618aec78c4e7faa2bc7ee3cd8ec.jpg","button":{"title":"Ого! Это нам надо","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}},{"id":"story-634_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fa62\u002Fd3b\u002Faaa\u002Fa62d3baaa3434123e969450ae2e99bda.jpg","button":{"title":"Записаться","link":"https:\u002F\u002Fu.habr.com\u002FT1","colorType":"light"}}]},{"id":"story-632","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2d7\u002F718\u002F3c9\u002F2d77183c9e0bca19c45ba4d026645c38.png","title":"Росатом","link":"https:\u002F\u002Fu.habr.com\u002Frstm1"},"title":"Как стать супергероем","lang":"ru","startTime":"2023-11-21T09:47:00+03:00","finishTime":"2023-12-06T09:47:00+03:00","slides":[{"id":"story-632_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F659\u002F578\u002Ff3f\u002F659578f3f9579fbf36a89b2503a6aa23.jpg","button":{"title":"К реальным задачам","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}},{"id":"story-632_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8d0\u002F28d\u002F731\u002F8d028d7310db4fd62d8830795b23b6c6.jpg","button":null},{"id":"story-632_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fe51\u002F332\u002F994\u002Fe51332994d7680d1568660a70ba2b9fa.png","button":{"title":"Повторить путь героя","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}},{"id":"story-632_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F374\u002F6ae\u002F4f4\u002F3746ae4f4a94208739455e21c8af57ed.jpg","button":{"title":"Повторить путь героя","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}},{"id":"story-632_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F808\u002Fcd7\u002Faa6\u002F808cd7aa68b649f6c8a460bcaf3f820f.jpg","button":{"title":"Повторить путь героя","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}},{"id":"story-632_6","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F021\u002F9e8\u002F162\u002F0219e81629dac451e3a44be1723eb0c5.jpg","button":null},{"id":"story-632_7","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8b2\u002F5b1\u002F21e\u002F8b25b121e5479943bd82d28818a5bf36.jpg","button":null},{"id":"story-632_8","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F73a\u002F80d\u002F744\u002F73a80d744242c9b7097f7d9c90d54046.jpg","button":null},{"id":"story-632_9","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Faec\u002Fbdd\u002Fe53\u002Faecbdde530d7eefbd0a7830502f78c39.jpg","button":{"title":"Стать супергероем","link":"https:\u002F\u002Fu.habr.com\u002Frstm2","colorType":"light"}}]},{"id":"story-630","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fd63\u002F68e\u002F29d\u002Fd6368e29d27f127a71853042a809b2ab.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002F9xZDQ"},"title":"Рейтинг IT-брендов работодателей 2023","lang":"ru","startTime":"2023-11-17T11:46:00+03:00","finishTime":"2023-12-03T23:59:00+03:00","slides":[{"id":"story-630_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F51e\u002F5eb\u002Fa38\u002F51e5eba3845ee8a1ff6f58932e40cf2c.jpg","button":{"title":"Результаты","link":"https:\u002F\u002Fu.habr.com\u002F9xZDQ","colorType":"light"}},{"id":"story-630_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbe5\u002Feac\u002Fbdc\u002Fbe5eacbdc2348ca76508d2afcef8eaeb.jpg","button":{"title":"Весь рейтинг","link":"https:\u002F\u002Fu.habr.com\u002F9xZDQ","colorType":"light"}},{"id":"story-630_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5be\u002F87f\u002F381\u002F5be87f3810e8ffc6f65bddbe6ae284e4.jpg","button":null},{"id":"story-630_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F5e5\u002F2f0\u002F98b\u002F5e52f098b64e5cfbd03d537b47e72376.jpg","button":null},{"id":"story-630_5","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffcd\u002F665\u002F465\u002Ffcd6654656b8589a78347ede27b4935e.jpg","button":{"title":"Больше статистики","link":"https:\u002F\u002Fu.habr.com\u002F9xZDQ","colorType":"light"}}]},{"id":"story-628","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F360\u002F396\u002Fbc9\u002F360396bc9df8ca528d6ffcc23514c822.png","title":"Хабр Карьера","link":"https:\u002F\u002Fu.habr.com\u002FxlEaI"},"title":"Активность найма в 3 квартале 2023","lang":"ru","startTime":"2023-11-16T16:16:00+03:00","finishTime":"2023-11-26T23:59:00+03:00","slides":[{"id":"story-628_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F2e4\u002F053\u002Fe8d\u002F2e4053e8dedaa5220b1bbf756f8e6a64.png","button":null},{"id":"story-628_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Fbdd\u002F642\u002Ffe9\u002Fbdd642fe98e7ba4531b0175e4cef6d0c.png","button":null},{"id":"story-628_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ff37\u002F4b7\u002Fc5f\u002Ff374b7c5feeb95e49b44d33ee1f97d24.png","button":null},{"id":"story-628_4","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F762\u002Ff3f\u002F2dd\u002F762f3f2dda3e5244291b3f178b014def.png","button":{"title":"Читать","link":"https:\u002F\u002Fu.habr.com\u002FxlEaI","colorType":"dark"}}]},{"id":"story-552","author":{"logo":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F310\u002Fb6d\u002F097\u002F310b6d09710575fad755fc8ed317c7ec.png","title":"Хабр","link":"https:\u002F\u002Fu.habr.com\u002Fcalendar_story_2"},"title":"Перевернуть календарь и добавить событие","lang":"ru","startTime":"2023-10-09T10:39:00+03:00","finishTime":"2023-11-26T23:59:00+03:00","slides":[{"id":"story-552_1","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffd3\u002F1a4\u002F6ab\u002Ffd31a46abecfbc6f654e64a66cb66260.jpg","button":{"title":"Прямо сюда","link":"https:\u002F\u002Fu.habr.com\u002F0RBBA","colorType":"dark"}},{"id":"story-552_2","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002Ffef\u002F3e3\u002Fb5d\u002Ffef3e3b5d8379c976167169334348272.jpg","button":{"title":"Разместить событие","link":"https:\u002F\u002Fu.habr.com\u002F0RBBA","colorType":"light"}},{"id":"story-552_3","image":"https:\u002F\u002Fhabrastorage.org\u002Fgetpro\u002Fhabr\u002Fupload_files\u002F8b9\u002Fea9\u002F638\u002F8b9ea9638d36013b31e365ec79b96d2d.jpg","button":{"title":"Тык","link":"https:\u002F\u002Fu.habr.com\u002F0RBBA","colorType":"dark"}}]}]},"technotext":{"years":[],"technotextDocForNominees":null,"technotextDocForWinners":null,"technotextInfo":{},"technotextInfoLoading":false,"technotextWinners":{},"technotextWinnersLoading":false},"userHubsContribution":{"contributionRefs":{"hubRefs":{},"hubIds":{}}},"userInvites":{"availableInvites":0,"usedInvitesIds":[],"usedInvitesRefs":{},"usedInvitesPagesCount":0,"unusedInvitesIds":[],"unusedInvitesRefs":{},"unusedInvitesPagesCount":0},"userVotes":{"karmaVotesList":[],"karmaVotesPagesCount":null,"karmaVotesListLoading":false,"commentsVotesList":[],"commentsVotesPagesCount":null,"commentsVotesListLoading":false,"postsVotesList":[],"postsVotesPagesCount":null,"postsVotesListLoading":false,"userVotesList":[],"userVotesPagesCount":null,"userVotesListLoading":false},"users":{"authorRefs":{},"authorIds":{},"pagesCount":{},"authorProfiles":{},"userHubs":{},"userInvitations":{},"authorFollowers":{},"authorFollowed":{},"userSpecialization":{},"karmaStats":[],"statistics":null,"isLoading":false,"authorFollowersLoading":false,"authorFollowedLoading":false,"userHubsLoading":false,"userInvitationsLoading":false,"route":{}},"viewport":{"prevScrollY":{},"scrollY":0,"width":0},"tracker":{"notificationsLoading":false,"notificationsList":[],"notificationsPageCount":0,"pendingMarkNotificationsRead":[],"publicationsLoading":true,"publicationsList":[],"publicationsPageCount":0,"pendingDeletePublications":false,"pendingMarkPublicationsRead":false},"events":{"events":[{"id":"events_46","titleHtml":"Битва пет-проектов","startDay":"2023-09-25","finishDay":"2023-11-30","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fq4\u002Fbl\u002Ftl\u002Fq4bltl5nykwetj_aaaauhdaow6u.png","eventUrl":"https:\u002F\u002Fpet-project.habr.com\u002F?utm_source=special&utm_medium=calendar&utm_campaign=pet_project","geo":[],"isOnline":true,"descriptionHtml":"\u003Cp\u003EСобрали две команды стажеров и&#160;джунов, которые будут работать над пет-проектами под кураторством опытных менторов. А&#160;определять победителей, которые получат стажировку в&#160;компании, будете&#160;вы.\u003C\u002Fp\u003E\u003Cp\u003EВнутри много движухи для зрителей: воркшопы по&#160;разработке, разборы резюме, публичные собеседования, Q&#38;A-сессии и&#160;даже чат, где можно найти себе команду и&#160;запилить какой-нибудь крутой пет-проект. \u003C\u002Fp\u003E\u003Cp xmlns=\"http:\u002F\u002Fwww.w3.org\u002F1999\u002Fxhtml\"\u003EЕсть отличный бонус для начинающих: будем собирать стажировки и&#160;джуновские вакансии с&#160;рынка для еженедельной рассылки в&#160;рамках битвы. \u003C\u002Fp\u003E\u003Cp xmlns=\"http:\u002F\u002Fwww.w3.org\u002F1999\u002Fxhtml\"\u003EРегистрируйтесь, чтобы ничего не&#160;пропустить!\u003C\u002Fp\u003E\u003Cbr \u002F\u003E"},{"id":"events_72","titleHtml":"Яндекс Backend Tour","startDay":"2023-11-13","finishDay":"2023-11-26","startTime":"18:00","finishTime":"23:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fye\u002F_b\u002Fyw\u002Fye_bywa1ytcnzpi5yjpdwdb0eky.png","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_ybt","geo":["Москва","Нижний Новгород","Екатеринбург","Новосибирск","Санкт-Петербург"],"isOnline":true,"descriptionHtml":"\u003Cp\u003EВ&nbsp;ноябре Яндекс организует Backend Tour по&nbsp;городам России, в&nbsp;рамках которого можно будет познакомиться офлайн с&nbsp;нанимающими командами и&nbsp;получить оффер за&nbsp;неделю.\u003C\u002Fp\u003E \u003Cp\u003EВстречи пройдут в&nbsp;Москве, Нижнем Новгороде, Екатеринбурге, Новосибирске и&nbsp;Санкт-Петербурге. Инженеры расскажут о&nbsp;своих сервисах и&nbsp;технологиях, а&nbsp;после знакомства вас ждет небольшая вечеринка с&nbsp;выступлением стендап-комика Севы Ловкачева.\u003C\u002Fp\u003E \u003Cp\u003EРасписание встреч:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003E13&nbsp;ноября Москва офлайн (будет онлайн-трансляция)\u003C\u002Fli\u003E \u003Cli\u003E14&nbsp;ноября Нижний Новгород\u003C\u002Fli\u003E \u003Cli\u003E15&nbsp;ноября Екатеринбург\u003C\u002Fli\u003E \u003Cli\u003E16&nbsp;ноября Новосибирск\u003C\u002Fli\u003E \u003Cli\u003E17&nbsp;ноября Санкт-Петербург\u003C\u002Fli\u003E\u003C\u002Ful\u003E \u003Cp\u003E20&ndash;26 ноября Week Offer Backend: все секции и&nbsp;оффер за&nbsp;неделю для соискателей с&nbsp;опытом разработки от&nbsp;трёх лет на&nbsp;С++, С#, Python, Java, Go&nbsp;и&nbsp;Scala.\u003C\u002Fp\u003E \u003Cp\u003EЗаявки на&nbsp;Week Offer принимаются до&nbsp;19&nbsp;ноября.\u003C\u002Fp\u003E"},{"id":"events_53","titleHtml":"HighLoad++ 2023","startDay":"2023-11-27","finishDay":"2023-11-28","startTime":"9:00","finishTime":"20:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fxo\u002F6u\u002Fw1\u002Fxo6uw1o3hf9y9tsxzq4pvya719y.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_hld","geo":["Москва"],"isOnline":true,"descriptionHtml":"\u003Cp\u003EHighLoad++ 2023&nbsp;&mdash; юбилейная, 20-я конференция HighLoad++. И&nbsp;это будет больше, чем конференция: 3000&nbsp;участников, 120+&nbsp;спикеров, 11&nbsp;залов, 5+&nbsp;мастер-классов.\u003C\u002Fp\u003E \u003Cp\u003EВ&nbsp;этом году в&nbsp;рамках HighLoad++ 2023 пройдет Golang Conf 2023&nbsp;&mdash; конференция для Go-разработчиков. Поговорим о&nbsp;лучших практиках, технологиях, архитектуре и&nbsp;фреймворках, добавим хардкора. И, конечно, 2&nbsp;дня живого общения с&nbsp;единомышленниками и&nbsp;коллегами, нетворкинг, интересные кейсы, последние новости индустрии и&nbsp;современные подходы в&nbsp;разработке высоконагруженных систем.\u003C\u002Fp\u003E \u003Cp\u003EЖдем вас 27&nbsp;и&nbsp;28&nbsp;ноября в&nbsp;Москве на&nbsp;HighLoad 2023&nbsp;&mdash; мероприятии с&nbsp;самой высокой концентрацией IT- профессионалов страны.\u003C\u002Fp\u003E"},{"id":"events_83","titleHtml":"Открытая трансляция Главного зала HighLoad++ 2023","startDay":"2023-11-27","finishDay":"2023-11-28","startTime":"10:00","finishTime":"20:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fnx\u002Fj7\u002F0c\u002Fnxj70czlrvofb_ilwzbxteekkao.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_hldtr","geo":[],"isOnline":true,"descriptionHtml":"\u003Cp\u003E27&nbsp;и&nbsp;28&nbsp;ноября будет открытая трансляция Главного зала HighLoad++ 2023. Это стало возможным благодаря поддержке нашего генерального партнёра, компании Яндекс.\u003C\u002Fp\u003E \u003Cp\u003EВ&nbsp;программе открытого трека&nbsp;&mdash; доклады лучших спикеров и&nbsp;трансляция церемонии награждения Премии HighLoad++ 2023.\u003C\u002Fp\u003E \u003Cp\u003EЗарегистрируйтесь, чтобы получить бесплатный доступ к&nbsp;открытому треку.\u003C\u002Fp\u003E"},{"id":"events_77","titleHtml":"Конференция «Новая эра ИТ: путь к вершинам технологий»","startDay":"2023-11-28","finishDay":"2023-11-28","startTime":"10:00","finishTime":"17:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fk_\u002F6k\u002F_l\u002Fk_6k_l-xttxdnpdk9ltuaikrvhq.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_k2","geo":["Москва"],"isOnline":true,"descriptionHtml":"\u003Cp\u003EМы&nbsp;живем в&nbsp;новой реальности российского технологического рынка. Для устойчивого развития крупным компаниям приходится перестраивать традиционные стратегии и&nbsp;искать нестандартные решения для привычных задач.\u003C\u002Fp\u003E \u003Cp\u003EПриглашаем вас обсудить актуальные сценарии развития ИТ-ландшафта с&nbsp;лидерами отрасли на&nbsp;конференции &laquo;Новая Эра&nbsp;ИТ: путь к&nbsp;вершинам технологий&raquo; 28&nbsp;ноября в&nbsp;Москве.\u003C\u002Fp\u003E \u003Cp\u003EУчастие будет полезно, если вам необходимо:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003EРазобраться в&nbsp;новой картине рынка\u003C\u002Fli\u003E\u003Cli\u003EПодобрать альтернативы для миграции с&nbsp;зарубежных ИТ-систем\u003C\u002Fli\u003E\u003Cli\u003EИнтегрировать российские и&nbsp;другие доступные решения в&nbsp;инфраструктуру\u003C\u002Fli\u003E\u003C\u002Ful\u003E"},{"id":"events_80","titleHtml":"Business Code Conference","startDay":"2023-11-30","finishDay":"2023-11-30","startTime":"17:30","finishTime":"00:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fwd\u002F7s\u002Fsr\u002Fwd7ssrwcqti7tfyvodmoho8rbcs.png","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_bcc","geo":["Москва"],"isOnline":false,"descriptionHtml":"\u003Cp\u003EКоманда платформы МТС Exolve готовит вечер-знакомство с&nbsp;передовыми фишками&nbsp;AI и&nbsp;наработками, о&nbsp;которых расскажут ведущие специалисты сервиса и&nbsp;эксперты этой сферы.\u003C\u002Fp\u003E \u003Cp\u003EГости вечера изучат процессы создания&nbsp;AI и&nbsp;практические кейсы с&nbsp;использованием AI-технологий. Каждый из&nbsp;них основан на&nbsp;реальном опыте и&nbsp;проблемах.\u003C\u002Fp\u003E \u003Cp\u003EУчастники смогут обсудить любую деталь и&nbsp;новые возможности для своих повседневных задач и&nbsp;будущих вызовов рынка, в&nbsp;том числе на&nbsp;основе опыта Китая. Спикеры конференции знают о&nbsp;внедрении&nbsp;AI в&nbsp;бизнес если не&nbsp;все, то&nbsp;больше всех и&nbsp;готовы рассказать о&nbsp;феномене его популярности и&nbsp;факторах роста технологий в&nbsp;Китае. Участники оценят темпы развития AI-компаний России и&nbsp;скачок технологических и&nbsp;AI-компаний в&nbsp;Китае, поймут все возможности и&nbsp;ограничения.\u003C\u002Fp\u003E \u003Cp\u003EМероприятие откроют первый вице-президент МТС Инесса Галактионова и&nbsp;директор MTC Exolve Рамиль Биккужин.\u003C\u002Fp\u003E"},{"id":"events_71","titleHtml":"Импульс Т1","startDay":"2023-12-01","finishDay":"2023-12-01","startTime":"12:30","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Faw\u002Fji\u002Fao\u002Fawjiaov7a6ix4aybmzwnvw0c6qq.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_t1msk","geo":["Москва"],"isOnline":true,"descriptionHtml":"\u003Cp\u003EФинальная конференция из&nbsp;цикла бесплатных IT-событий &laquo;Импульс&nbsp;Т1&raquo; в&nbsp;2023&nbsp;году. Ежегодно холдинг Т1&nbsp;проводит конференции &laquo;Импульс&nbsp;Т1&raquo; для формирования и&nbsp;укрепления российской инженерной школы в&nbsp;разных городах России.\u003C\u002Fp\u003E \u003Cp\u003EКонференции адресованы широкой аудитории IT-специалистов и&nbsp;предпринимателей в&nbsp;IT. В&nbsp;программе&nbsp;&mdash; лекции о&nbsp;разработке, тестировании, инженерном деле от&nbsp;разработчиков крупных компаний и&nbsp;научных популяризаторов.\u003C\u002Fp\u003E \u003Cp\u003EХолдинг Т1&nbsp;&mdash; одна из&nbsp;крупнейших IТ-компаний России. Цель организатора&nbsp;&mdash; привлечь молодежь в&nbsp;российские компании и&nbsp;помочь новаторам превратить идею в&nbsp;бизнес-проект.\u003C\u002Fp\u003E"},{"id":"events_81","titleHtml":"YaTalks 2023 — главная конференция Яндекса для IT сообщества","startDay":"2023-12-05","finishDay":"2023-12-06","startTime":"9:00","finishTime":"23:59","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fzu\u002Fre\u002Fcn\u002Fzurecne_sihfslk0efj2c_bcova.png","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fyatalks2023","geo":["Москва","Белград"],"isOnline":true,"descriptionHtml":"\u003Cp\u003EГлавная конференция Яндекса для IT-сообщества&nbsp;&mdash; YaTalks 2023.\u003C\u002Fp\u003E \u003Cp\u003EБолее 100 экспертов IT-индустрии и&nbsp;учёных. Технические доклады о&nbsp;разработке и&nbsp;ML. Научно-популярные лекции и&nbsp;выступления об&nbsp;управлении командами. Можно послушать вживую доклады учёных и&nbsp;экспертов индустрии, напрямую задать вопросы спикерам, познакомиться и&nbsp;пообщаться с&nbsp;коллегами из&nbsp;разных компаний и&nbsp;направлений в&nbsp;IT.\u003C\u002Fp\u003E \u003Cp\u003EГлавная тема YaTalks 2023&nbsp;&mdash; &laquo;Явления&raquo;.Обсудим макротренды и&nbsp;гейм-чейнджеры в&nbsp;технологиях и&nbsp;науке, большие процессы в&nbsp;IT, менеджерские практики и&nbsp;новые подходы.\u003C\u002Fp\u003E \u003Cp\u003E\u003Cstrong\u003EПервый день\u003C\u002Fstrong\u003E посвятим хардовым технологиям: фронтенду, мобильной разработке, бэкенду, DevOps, базам данных, GPT, NLP, а&nbsp;также трендам в&nbsp;этих направлениях.\u003C\u002Fp\u003E \u003Cp\u003E\u003Cstrong\u003EВо&nbsp;второй день\u003C\u002Fstrong\u003E узнаем об&nbsp;управленческих практиках в&nbsp;IT и&nbsp;научных фронтирах, которые вот-вот изменят индустрию.\u003C\u002Fp\u003E \u003Cp\u003EПереходите на&nbsp;сайт и&nbsp;узнайте больше о&nbsp;спикерах конференции.\u003C\u002Fp\u003E"},{"id":"events_50","titleHtml":"Курс «Разработка высокоскоростных устройств и систем передачи данных»","startDay":"2023-12-09","finishDay":"2023-12-11","startTime":"10:00","finishTime":"17:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fsc\u002Fie\u002Ffp\u002Fsciefp-fox1b1kyqn9bwa5ll2um.png","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_nish","geo":["Москва"],"isOnline":false,"descriptionHtml":"\u003Cp\u003EНовая Инженерная Школа проводит курс повышения квалификации, рассчитанный на&nbsp;инженеров-схемотехников, а&nbsp;также системных инженеров, занимающихся разработкой высокоскоростных устройств.\u003C\u002Fp\u003E\u003Cp\u003EИзучение курса позволит слушателям осознанно подходить к&nbsp;разработке, используя определенный маршрут проектирования, в&nbsp;частности:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003Eпонимать сущность высокоскоростных сигналов;\u003C\u002Fli\u003E\u003Cli\u003Eпонимать проблемы и&nbsp;риски, возникающие при разработке высокоскоростных устройств;\u003C\u002Fli\u003E\u003Cli\u003Eпрогнозировать и&nbsp;нивелировать проблемы на&nbsp;этапе эскизной разработки;\u003C\u002Fli\u003E\u003Cli\u003Eанализировать и&nbsp;устранять проблемы на&nbsp;этапе верификации разработанного устройства;\u003C\u002Fli\u003E\u003Cli\u003Eпроверять прототипы с&nbsp;использованием современной измерительной аппаратуры.\u003C\u002Fli\u003E\u003C\u002Ful\u003E\u003Cp\u003EТемы курса:\u003C\u002Fp\u003E\u003Col\u003E\u003Cli\u003EВведение. История развития проблем целостности сигналов и&nbsp;питания.\u003C\u002Fli\u003E\u003Cli\u003EОсновные положения.\u003C\u002Fli\u003E\u003Cli\u003EИдеальная линия передач.\u003C\u002Fli\u003E\u003Cli\u003EПерекрестные помехи.\u003C\u002Fli\u003E\u003Cli\u003EРеальные проводники.\u003C\u002Fli\u003E\u003Cli\u003EДиэлектрики.\u003C\u002Fli\u003E\u003Cli\u003EОсновы теории цепей.\u003C\u002Fli\u003E\u003Cli\u003EСхемотехника.\u003C\u002Fli\u003E\u003Cli\u003EЭквализация.\u003C\u002Fli\u003E\u003Cli\u003EБюджет.\u003C\u002Fli\u003E\u003Cli\u003EПримеры высокоскоростных интерфейсов.\u003C\u002Fli\u003E\u003Cli\u003EЦелостность питания.\u003C\u002Fli\u003E\u003Cli\u003EИзмерения и&nbsp;моделирование.\u003C\u002Fli\u003E\u003C\u002Fol\u003E"},{"id":"events_58","titleHtml":"Курс «Обеспечение электромагнитной совместимости изделий современной техники»","startDay":"2023-12-18","finishDay":"2023-12-20","startTime":"10:00","finishTime":"17:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fsl\u002Flv\u002Fe0\u002Fsllve0c9tpnoqnc20iidt7p9ue8.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_nsh","geo":["Москва"],"isOnline":false,"descriptionHtml":"\u003Cp\u003EНовая Инженерная Школа проводит курс повышения квалификации, направленный на&nbsp;формирование или совершенствование профессиональных компетенций в&nbsp;области внутрисистемной электромагнитной совместимости (ЭМС) изделий современной техники для конструкторов радиоэлектронных средств (РЭС).\u003C\u002Fp\u003E \u003Cp\u003EНастоящая программа рассчитана на&nbsp;инженерно-технических работников с&nbsp;высшим профессиональным образованием, занимающихся конструкторским и&nbsp;технологическим проектированием радиоэлектронной, электронно-вычислительной аппаратуры, систем автоматики и&nbsp;управления и&nbsp;т.п. различного назначения, а&nbsp;также на&nbsp;руководителей среднего звена проектных организаций.\u003C\u002Fp\u003E \u003Cp\u003EТемы курса:\u003C\u002Fp\u003E\u003Col\u003E\u003Cli\u003EВведение в&nbsp;проблему ЭМС.\u003C\u002Fli\u003E \u003Cli\u003EСертификационные требования ЭМС.\u003C\u002Fli\u003E \u003Cli\u003EСхемотехнические методы обеспечения ЭМС.\u003C\u002Fli\u003E \u003Cli\u003EПомехи в&nbsp;межсоединениях.\u003C\u002Fli\u003E \u003Cli\u003EЭкранирование аппаратуры.\u003C\u002Fli\u003E \u003Cli\u003EМощные электромагнитные воздействия на&nbsp;технические средства и&nbsp;методы защиты.\u003C\u002Fli\u003E \u003Cli\u003EОбеспечение радиационной стойкости современной РЭА.\u003C\u002Fli\u003E\u003C\u002Fol\u003E"},{"id":"events_78","titleHtml":"«Спокойно, договоримся!» — тренинг по переговорам и отношениям с клиентами в B2B","startDay":"2024-01-19","finishDay":"2024-01-20","startTime":"10:00","finishTime":"18:00","imageUrl":"https:\u002F\u002Fhabrastorage.org\u002Fwebt\u002Fpb\u002F1w\u002Fob\u002Fpb1wobpfv_crqwdsb6eqiho4co0.jpeg","eventUrl":"https:\u002F\u002Fu.habr.com\u002Fcldr_hflb2","geo":["Москва"],"isOnline":false,"descriptionHtml":"\u003Cp\u003EПрокачаем навыки переговорщика и&nbsp;научим, как пересобрать отношения с&nbsp;клиентами в&nbsp;B2B. Мы&nbsp;не&nbsp;коучи, а&nbsp;топ-менеджеры с&nbsp;реальным опытом в&nbsp;большом бизнесе. За&nbsp;10+&nbsp;лет работы мы&nbsp;научились дружить с&nbsp;клиентами не&nbsp;только на&nbsp;начальном этапе, но&nbsp;и&nbsp;развивать зрелые проекты.\u003C\u002Fp\u003E\u003Cp\u003EТренинг будет полезен, если&nbsp;вы:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003Eотвечаете за&nbsp;отношения с&nbsp;клиентами, ведение проектов и&nbsp;управление людьми,\u003C\u002Fli\u003E \u003Cli\u003Eмного и&nbsp;тесно работаете с&nbsp;заказчиками&nbsp;&mdash; внешними и&nbsp;внутренними,\u003C\u002Fli\u003E \u003Cli\u003Eработаете в&nbsp;b2b-продажах в&nbsp;IT.\u003C\u002Fli\u003E\u003C\u002Ful\u003E \u003Cp\u003EКто проведет:\u003C\u002Fp\u003E\u003Cul\u003E\u003Cli\u003EКонстантин Степанов, исполнительный директор HFLabs. За&nbsp;три года привлек 14&nbsp;крупных клиентов.\u003C\u002Fli\u003E \u003Cli\u003EНикита Назаров, технический директор HFLabs. Умеет делать так, чтобы клиент становился постоянным клиентом.\u003C\u002Fli\u003E\u003C\u002Ful\u003E \u003Cp\u003EСтань участником закрытого клуба по&nbsp;переговорам с&nbsp;разбором личных кейсов и&nbsp;поддержкой экспертов.\u003C\u002Fp\u003E"}]}};(function(){var s;(s=document.currentScript||document.scripts[document.scripts.length-1]).parentNode.removeChild(s);}());</script>
+  <script src="https://assets.habr.com/habr-web/js/chunk-vendors.a9207891.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/page-hub.1572dac4.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/7298.c8f1d73c.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/8684.f283f98f.js" defer></script>
+  <script src="https://assets.habr.com/habr-web/js/app.5b8f7247.js" defer></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S28W1WC23F"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    </script>
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(24049213, "init", {
+      defer:true,
+      trackLinks:true,
+      accurateTrackBounce:true,
+      webvisor:false,
+    });
+  </script>
+  <noscript>
+   <div>
+    <img src="https://mc.yandex.ru/watch/24049213" style="position:absolute; left:-9999px;" alt="">
+   </div>
+  </noscript>
+  <script type="text/javascript">
+      window.addEventListener('load', function () {
+        setTimeout(() => {
+          const img = new Image();
+          img.src = 'https://vk.com/rtrg?p=VK-RTRG-421343-57vKE';
+        }, 0);
+      });
+    </script>
+  <script src="/js/ads.js" onload="window['zhY4i4nJ9K'] = true"></script>
+ </body>
+</html>
