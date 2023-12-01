@@ -24,7 +24,6 @@ public class HubParser {
         if (!directory.exists()) {
             directory.mkdirs();
         }
-
         try (FileWriter writer = new FileWriter(filePath)) {
             for (String[] line : data) {
                 writer.write(String.join(",", line) + "\n");
@@ -33,15 +32,12 @@ public class HubParser {
     }
     public static void writeCsv(Path hubDir, List<String[]> data, String[] header) throws IOException {
         String fileName = "articles.csv";
-
         Path filePath = hubDir.resolve(fileName);
-
         Files.createDirectories(filePath.getParent());
-
         try (BufferedWriter writer = Files.newBufferedWriter(filePath, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
             writer.write(String.join(",", header));
             writer.newLine();
-            
+
             for (String[] row : data) {
                 writer.write(String.join(",", row));
                 writer.newLine();
@@ -54,7 +50,6 @@ public class HubParser {
             for(int i = 1; i < 11; i++){
                 File input = new File(String.format("./hubs_pages/page_%d.html", i));
                 Document doc = Jsoup.parse(input, "UTF-8");
-
                 Elements hubs = doc.select("div.tm-hub__info");
                 for(Element hub : hubs){
                     Element name = hub.selectFirst("a.tm-hub__title");

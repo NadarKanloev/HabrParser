@@ -30,7 +30,6 @@ public class HubPageSaver {
     }
     public static void saveHubData(String pageUrl, String hubDir){
         String folderName = "hubs/" + hubDir;
-
         File directory = new File(folderName);
         if(!directory.exists()){
             directory.mkdirs();

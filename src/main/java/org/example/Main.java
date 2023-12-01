@@ -38,12 +38,10 @@ public class Main {
         //save_hubs_pages_data("https://habr.com/ru/hubs/");
         saveAllFlowsData();
         //parseHubsPages();
-        String hubPathString = "D:\\untitled3\\hubs\\1c";
+        String hubPathString = "D:\\untitled3\\hubs\\weban";
         String flow = "develop";
-
         Path hubPath = Paths.get(hubPathString);
-
-       ArticleParser.parseHub(hubPath, flow);
+        ArticleParser.parseHub(hubPath, flow);
         parse_all_posts();
     }
 }

@@ -31,8 +31,9 @@ public class ArticleParser {
                 Document doc = Jsoup.parse(src);
                 Elements articles = doc.select("article.tm-articles-list__item");
                 for(Element article : articles){
-                    String author =  article.selectFirst("a.tm-user-info__username").text();
-                    Element companyLinkElement = article.selectFirst("a.tm-article-snippet__hubs-item-link");
+                    Element authorElement = article.selectFirst("a.tm-user-info__username");
+                    String author = (authorElement != null) ? authorElement.text() : "unknown_author";
+                    Element companyLinkElement = article.selectFirst("a.tm-publication-hub__link");
                     String companyLink = (companyLinkElement != null) ? companyLinkElement.attr("href") : "without_company";
                     String rating = article.select("span.tm-icon-counter__value").text();
                     String views = article.select("span.tm-icon-counter__value").text();
@@ -48,8 +49,8 @@ public class ArticleParser {
                         Element pubDatetimeElement = article.selectFirst("span.tm-article-snippet__datetime-published");
                         pubDatetime = (pubDatetimeElement != null) ? pubDatetimeElement.nextElementSibling().attr("datetime") : "";
                     }
-                    if(companyLink == null){
-                        companyLinkElement = article.selectFirst("a");
+                    if (companyLink.equals("without_company")) {
+                        companyLinkElement = article.selectFirst("a.tm-article-snippet__title-link");
                         companyLink = (companyLinkElement != null) ? companyLinkElement.attr("href") : "without_company";
                     }
                     String[] articleData = {
