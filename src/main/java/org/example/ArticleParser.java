@@ -63,7 +63,7 @@ public class ArticleParser {
                 e.printStackTrace();
             }
         }
-        if (allArticles.size() == 200) {
+        if (allArticles.size() >= 0) {
             String[] header = {"hub_id", "flow", "article_id", "author", "pub_datetime", "rating", "rating_des",
                     "views", "bookmarks", "comments", "company_link"};
             try {
