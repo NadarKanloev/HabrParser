@@ -52,7 +52,7 @@ public class ArticlePageSaverThroughCSV {
                     String articleId = line[2].trim();
                     if (!articleId.isEmpty()) {
                         String articleUrl = "https://habr.com/ru/articles/" + articleId;
-                        saveArticle(articleUrl, hubFolder);
+                        saveArticle(articleUrl, hubFolder, articleId);
                     }
                 }
             }
@@ -62,7 +62,7 @@ public class ArticlePageSaverThroughCSV {
             throw new RuntimeException(e);
         }
     }
-    private static void saveArticle(String articleUrl, File hubFolder) {
+    private static void saveArticle(String articleUrl, File hubFolder, String articleId) {
         try {
             Document articleDocument = Jsoup.connect(articleUrl).get();
             Element titleElement = articleDocument.selectFirst("meta[property=og:title]");

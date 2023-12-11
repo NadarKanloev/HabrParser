@@ -1,33 +1,8 @@
 package org.example;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClients;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import javax.print.Doc;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
-import static org.example.ArticlePageSaverThroughCSV.downloadHubPages;
-import static org.example.ArticleParser.parse_all_posts;
-import static org.example.FlowParser.saveAllFlowsData;
-import static org.example.HubParser.parseHubsPages;
+import static org.example.ArticleBodySaver.*;
 
 public class Main {
     Map<String, String> headers = new HashMap<String, String>() {{
@@ -47,7 +22,7 @@ public class Main {
         //ArticlePageSaver.downloadHubPages(hubsFolderPath);
         String hubsFolder = "D:\\untitled3\\hubs";
         //downloadHubPages(hubsFolder);
-        ArticleBodySaver articleBodySaver = new ArticleBodySaver();
-        articleBodySaver.saveArticleBodies(hubsFolder);
+        ArticleBodySaver articleBodySaverr = new ArticleBodySaver();
+        processHubs(hubsFolder);
     }
 }
