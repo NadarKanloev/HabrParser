@@ -9,11 +9,41 @@ import org.jsoup.nodes.Element;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.*;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class ArticleBodySaver {
     private static String hubsDirectory;
+    private static final String DB_URL = "jdbc:postgresql://localhost:5432/SpringSceurity";
+    private static final String DB_USERNAME = "postgres";
+    private static final String DB_PASSWORD = "admin";
+    private static final String CREATE_TABLE_SQL = "CREATE TABLE IF NOT EXISTS articles_bodies (" +
+            "article_id VARCHAR(255) PRIMARY KEY," +
+            "article_body TEXT)";
+
+    private static void saveToDatabase(String articleId, String articleBody) {
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+            try (Statement statement = connection.createStatement()) {
+                // Создаем таблицу, если ее нет
+                statement.executeUpdate(CREATE_TABLE_SQL);
+
+                // Вставляем данные, если они не пусты
+                if (!articleId.isEmpty() && !articleBody.isEmpty()) {
+                    String insertSql = "INSERT INTO articles_bodies (article_id, article_body) VALUES (?, ?)";
+                    try (PreparedStatement preparedStatement = connection.prepareStatement(insertSql)) {
+                        preparedStatement.setString(1, articleId);
+                        preparedStatement.setString(2, articleBody);
+                        preparedStatement.executeUpdate();
+                        System.out.println("Сохранено в базу данных");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public static void processHubs(String directoryPath) {
         String hubsDirectory = directoryPath;
         File hubsFolder = new File(hubsDirectory);
@@ -56,7 +86,7 @@ public class ArticleBodySaver {
         String articleBody = getArticleBody(articleFile);
 
         if (articleId != null && articleBody != null) {
-            saveToCsv(articleId, articleBody);
+            saveToDatabase(articleId, articleBody);
         }
     }
 
@@ -88,39 +118,5 @@ public class ArticleBodySaver {
             e.printStackTrace();
         }
         return null;
-    }
-
-    private static void saveToCsv(String articleId, String articleBody) {
-        String csvFilePath = "D://untitled3//hubs//articles_body.csv";
-
-        try (FileWriter writer = new FileWriter(csvFilePath, true)) {
-            CSVUtils.writeLine(writer, Arrays.asList(articleId, articleBody));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static class CSVUtils {
-        private static final char DEFAULT_SEPARATOR = ',';
-
-        public static void writeLine(FileWriter writer, List<String> values) throws IOException {
-            boolean first = true;
-
-            for (String value : values) {
-                if (!first) {
-                    writer.append(DEFAULT_SEPARATOR);
-                }
-                writer.append(escapeSpecialCharacters(value));
-                first = false;
-            }
-            writer.append(System.lineSeparator());
-        }
-
-        private static String escapeSpecialCharacters(String value) {
-            if (value.contains(String.valueOf(DEFAULT_SEPARATOR)) || value.contains("\"") || value.contains("\n")) {
-                value = "\"" + value.replace("\"", "\"\"") + "\"";
-            }
-            return value;
-        }
     }
 }
